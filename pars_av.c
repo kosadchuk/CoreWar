@@ -23,18 +23,19 @@ void	validate_champ_name(char *str)
 		i++;
 	if (ft_strcmp(arr[i - 1], "cor"))
 		ft_err(ft_printf("ERROR! -> %s <- is invalid champion name!\n", str));
+	ft_free_array(arr);
 }
 
 void	save_players(char *pl, int pl_id)
 {
 	t_player	*player;
 
-	player = ft_memalloc(sizeof(t_player*));
+	player = ft_memalloc(sizeof(t_player));
 	player->n_id = pl_id;
 	player->id = 1;
 	pars_champs(pl, player); //<-- парсим байт лист
-//	ft_printf("save : %s\n", player->comment);
 	push_array(g_players, player); // типа по очереди запушили игроков в глобальную структуру, можно с ними делать все что захочешь и где захочешь
+//	free(&player);
 }
 
 void	check_flag(char **av, int *i)
@@ -50,7 +51,7 @@ void	check_flag(char **av, int *i)
 		else if (av[(*i) + 1] != NULL)
 		{
 			validate_champ_name(av[++(*i)]);
-			save_players(av[(*i) + 1], num);
+			save_players(av[(*i)], num);
 		}
 		else
 			ft_error(USAGE);

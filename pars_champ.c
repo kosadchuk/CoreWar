@@ -30,16 +30,17 @@ int32_t		bytes_in_int(int fd) // считали 4 байта, интерпрет
 
 char		*save_chars(int fd, int str_size) //сохраняет имя, коммент и исполняемый код
 {
-	int				size;
-	unsigned char	buf[str_size + 1];
+	int		size;
+	char	*buff;
 
-	size = read(fd, &buf, str_size);
+	buff = (char*)ft_memalloc(sizeof(char) * str_size + 1);
+	size = read(fd, buff, str_size);
 	if (size == -1)
 		ft_error(ERR_FILE_READ);
 	if (size < str_size)
 		ft_error(NAME_COMM_ERR);
-	buf[str_size + 1] = '\0';
-	return (buf);
+	buff[str_size + 1] = '\0';
+	return (buff);
 }
 
 void		pars_champs(char *file, t_player *player)
@@ -47,7 +48,7 @@ void		pars_champs(char *file, t_player *player)
 	int				fd;
 	int32_t			res;
 
-	fd = open(file, O_RDWR);
+	fd = open(file, O_RDONLY);
 	if ((res = bytes_in_int(fd)) != COREWAR_EXEC_MAGIC)
 		ft_error(ERR_MG_HEADER);
 	ft_strcpy(player->name, save_chars(fd, PROG_NAME_LENGTH));
@@ -61,4 +62,5 @@ void		pars_champs(char *file, t_player *player)
 		ft_error(MISS_NULL);
 	player->code = ft_memalloc(sizeof(unsigned char*) * player->size);
 	ft_memcpy(player->code, save_chars(fd, player->size), player->size + 1);
+	close(fd);
 }

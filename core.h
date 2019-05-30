@@ -23,8 +23,9 @@
 
 typedef struct	s_player	t_player;
 typedef struct	s_players	t_players;
-typedef struct	s_carr		t_carr;
-typedef struct	s_op		t_op;
+typedef struct	s_karetka	t_karetka;
+typedef struct	s_op_tab	t_op_tab;
+typedef struct	s_virt		t_virt;
 
 struct				s_player // структура игрока
 {
@@ -34,9 +35,10 @@ struct				s_player // структура игрока
 	char 			comment[COMMENT_LENGTH + 1]; // его коммент
 	int32_t 		size; // размер бота
 	unsigned char 	*code; // его executable code для битвы
+	int 			last_live;
 };
 
-struct				s_carr // структура каретки (еще в стадии разработки)
+struct				s_karetka // структура каретки (еще в стадии разработки)
 {
 	int 			parrent_id; // номер игрока который породил эту дичь (каретку)
 	int 			cur_pos; // текущая позиция каретки
@@ -57,21 +59,26 @@ struct				s_players // глобальная структура для хране
 struct				s_op // структура для той здоровой ереси, что находится в самом конце (пока разбираюсь)
 {
 	char 			*name; //имя команды
-	int 			types_num; // сколько разных типов агрументов может принимать
-	int				*args; // всякие аргументы которые поддерживает эта команда
-	int 			num; // идентификационный номер команды (он и записан в executable code для чемпиона)
-	int 			cycles; // колличество циклов до выполнения этой команды
+	uint8_t 		types_num; // сколько разных типов агрументов может принимать
+	uint8_t			args[3]; // всякие аргументы которые поддерживает эта команда
+	uint32_t 		num; // идентификационный номер команды (он и записан в executable code для чемпиона)
+	uint32_t 		cycles; // колличество циклов до выполнения этой команды
 	char 			*comment; // комментарий
-	int 			ne_znayu; // название переменной говорит само за себя (еще не дошла)
-	int 			tozhe_ne_znayu;
+	uint8_t 		args_code;
+	uint8_t			mod_carry;
+//	uint8_t 		dir_size;
+};
+
+struct 				s_virt
+{
+	uint8_t			map[MEM_SIZE];
 };
 
 t_players			*g_players;
 void				pars_av(int ac, char **av);
 void				pars_champs(char *file, t_player *player);
 
-//t_op    g_op_tab[] =
-//		{
+//static t_op_tab    g_op_tab[17] = {
 //				{0, 0, {0}, 0, 0, 0, 0, 0},
 //				{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 //				{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},

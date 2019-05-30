@@ -30,10 +30,9 @@ struct				s_player // структура игрока
 {
 	unsigned int	id;	// его уникальный идентификационный номер
 	unsigned int	n_id; // это надо для корректного присвоения id, больше не понадобиться
-	unsigned int	magic; // сюда сохраним magic header (возможно удалю нахер эту переменную)
 	char 			name[PROG_NAME_LENGTH + 1]; // имя игрока, для вывода в консоль или визуализатор
 	char 			comment[COMMENT_LENGTH + 1]; // его коммент
-	int 			bot_size; // размер бота
+	int32_t 		size; // размер бота
 	unsigned char 	*code; // его executable code для битвы
 };
 
@@ -55,7 +54,7 @@ struct				s_players // глобальная структура для хране
 	ssize_t 		full;
 };
 
-struct				s_op // структура для той здоровой ереси, то находится в самом конце (пока разбираюсь)
+struct				s_op // структура для той здоровой ереси, что находится в самом конце (пока разбираюсь)
 {
 	char 			*name; //имя команды
 	int 			types_num; // сколько разных типов агрументов может принимать
@@ -69,7 +68,7 @@ struct				s_op // структура для той здоровой ереси, 
 
 t_players			*g_players;
 void				pars_av(int ac, char **av);
-void				pars_champs(char *file);
+void				pars_champs(char *file, t_player *player);
 
 //t_op    g_op_tab[] =
 //		{

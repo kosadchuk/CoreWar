@@ -32,8 +32,9 @@ void	save_players(char *pl, int pl_id)
 	player = ft_memalloc(sizeof(t_player*));
 	player->n_id = pl_id;
 	player->id = 1;
+	pars_champs(pl, player); //<-- парсим байт лист
+//	ft_printf("save : %s\n", player->comment);
 	push_array(g_players, player); // типа по очереди запушили игроков в глобальную структуру, можно с ними делать все что захочешь и где захочешь
-	pars_champs(pl); //<-- парсим байт лист
 }
 
 void	check_flag(char **av, int *i)

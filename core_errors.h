@@ -20,5 +20,10 @@
 # define USAGE			"Usage: ./corewar [-dump nbr_cycles] [[-n number] champion1.cor] ...\n"
 # define WRONG_N_NUM	"ERROR! The player number can't be more then their count!\n"
 # define UNC_COMND		"is unknown command!\n"
+# define ERR_FILE_READ	"ERROR in reading champion file!\n"
+# define ERR_MG_HEADER	"ERROR! Didn't find or incorrect magic header!\n"
+# define NAME_COMM_ERR	"ERROR! Champion's name/comment size so small!\n"
+# define MISS_NULL		"ERROR! After name/comment miss NULL bytes!\n"
+# define BOT_SIZE		"ERROR! Champion size is too big!\n"
 
 #endif

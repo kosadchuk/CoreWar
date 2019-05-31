@@ -22,7 +22,7 @@ void	validate_champ_name(char *str)
 	while (arr[i])
 		i++;
 	if (ft_strcmp(arr[i - 1], "cor"))
-		ft_err(ft_printf("ERROR! -> %s <- is invalid champion name!\n", str));
+		ft_err(ft_printf(ERR_CHAMP_NAME, str));
 	ft_free_array(arr);
 }
 

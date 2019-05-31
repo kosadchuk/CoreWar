@@ -25,5 +25,7 @@
 # define NAME_COMM_ERR	"ERROR! Champion's name/comment size so small!\n"
 # define MISS_NULL		"ERROR! After name/comment miss NULL bytes!\n"
 # define BOT_SIZE		"ERROR! Champion size is too big!\n"
+# define NO_PLAYER		"Please, choose a players for blood war!\n"
+# define ERR_CHAMP_NAME	"ERROR! -> %s <- is invalid champion name!\n"
 
 #endif

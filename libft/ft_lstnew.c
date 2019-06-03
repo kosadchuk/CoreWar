@@ -5,30 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 15:24:29 by kosadchu          #+#    #+#             */
-/*   Updated: 2018/11/20 13:59:11 by kosadchu         ###   ########.fr       */
+/*   Created: 2019/06/01 11:58:04 by kosadchu          #+#    #+#             */
+/*   Updated: 2019/06/01 11:58:09 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void const *content, size_t content_size)
+t_list_elem	*ft_lstnew(void const *content, size_t content_size)
 {
-	t_list	*new;
+	t_list_elem	*new_obj;
+	void		*data;
 
-	if (!(new = (t_list*)malloc(sizeof(t_list))))
-		return (NULL);
-	if (content == NULL)
+	data = NULL;
+	if (content)
 	{
-		new->content = NULL;
-		new->content_size = 0;
+		data = ft_memalloc(content_size);
+		ft_memcpy(data, content, content_size);
 	}
 	else
-	{
-		new->content = (char *)malloc(sizeof(char) * content_size);
-		new->content_size = content_size;
-		ft_memcpy(new->content, content, content_size);
-	}
-	new->next = NULL;
-	return (new);
+		content_size = 0;
+	new_obj = (t_list_elem *)ft_memalloc(sizeof(t_list_elem));
+	new_obj->content = data;
+	new_obj->content_size = content_size;
+	return (new_obj);
+}
+
+t_list_elem	*ft_lstnew_ref(void *content, size_t content_size)
+{
+	t_list_elem	*new_obj;
+
+	if (!content)
+		content_size = 0;
+	new_obj = (t_list_elem *)ft_memalloc(sizeof(t_list_elem));
+	new_obj->content = content;
+	new_obj->content_size = content_size;
+	return (new_obj);
 }

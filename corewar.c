@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core.h"
+#include "includes/core.h"
 #define	INTRDC	"* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n"
 
 void	introduce_players(void)
@@ -21,7 +21,7 @@ void	introduce_players(void)
 	i = 0;
 	id = 1;
 	ft_printf("Introducing contestants...\n");
-	while (i <= g_players->len)
+	while (i <= g_players->len && id <= g_players->len)
 	{
 		if (g_players->team[i]->id == id)
 		{
@@ -39,10 +39,12 @@ int 	main(int ac, char **av)
 	if (ac == 1)
 		ft_error(NO_PLAYER);
 	pars_av(ac, av);//Валидация агрументов и парсинг игроков
-	make_map();
-	introduce_players();
-//	for (int i = 0; i < 4096; ++i) {
-//		printf("%.2x ", g_virt->map[i]);
-//	}
+	make_map(); // созадли карту и разместили код игроков на свои позиции
+	introduce_players(); // представили игроков перед битвой
+	start_war();
+	for (int i = 0; i < MEM_SIZE; ++i) {
+		printf("%.2x ", g_vm->map[i]);
+	}
+//	system("leaks -q Corewar");
 	return (0);
 }

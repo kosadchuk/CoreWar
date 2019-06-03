@@ -15,18 +15,44 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdint.h>
 # include "ft_printf/ft_printf.h"
+
+typedef int8_t	t_bool;
+enum			{ false, true };
+
+typedef void	(*t_fatal_exit_func)(const char *message);
+extern t_fatal_exit_func g_fef;
 
 typedef struct s_list		t_list;
 typedef struct s_gnl		t_gnl;
 typedef struct s_ray		t_ray;
 
-struct				s_list
+typedef struct s_list_elem	t_list_elem;
+
+typedef void	(*t_lst_iter_f)(t_list_elem *elem);
+typedef t_list_elem *(*t_lst_map_f)(t_list_elem *elem);
+typedef t_bool	(*t_lst_sort_f)(const void *left_cnt, const void *right_cnt);
+typedef void	(*t_delptr)(void *ptr, size_t ptr_size);
+
+struct					s_list_elem
 {
-	void			*content;
-	size_t			content_size;
-	t_list			*next;
+	void				*content;
+	size_t				content_size;
+	struct s_list_elem	*next;
+	struct s_list_elem	*prev;
 };
+
+struct					s_list
+{
+	t_list_elem			*start;
+	t_list_elem			*end;
+	size_t				list_size;
+	t_delptr			del;
+};
+
 struct				s_gnl
 {
 	int				fd;
@@ -41,12 +67,21 @@ struct				s_ray
 	ssize_t			full;
 };
 
-t_list				*ft_lstnew(void const *content, size_t content_size);
-void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+void				ft_cnt_delptr(void *ptr, size_t ptr_size);
+void				ft_lstinit(t_list *lst, t_delptr del_list_func);
+t_list_elem			*ft_lstnew(void const *content, size_t content_size);
+t_list_elem			*ft_lstnew_ref(void *content, size_t content_size);
+void				ft_lstpush_back(t_list *lst, t_list_elem *new_obj);
+void				ft_lstpush_front(t_list *lst, t_list_elem *new_obj);
+void				ft_lstpop_back(t_list *lst);
+void				ft_lstpop_front(t_list *lst);
+void				ft_lstdel(t_list *lst);
+void				ft_lstdel_one(t_list_elem **elem, t_delptr f);
+void				ft_lstdel_by_obj(t_list *lst, t_list_elem *obj);
+void				ft_lstiter(t_list *lst, t_lst_iter_f f);
+t_list				ft_lstmap(t_list *lst, t_lst_map_f f);
+void				ft_lstrev(t_list *lst);
+void				ft_lstsort(t_list *lst, t_lst_sort_f f);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -112,5 +147,6 @@ void				ft_error(char *errstr);
 void				*new_array(size_t size);
 void				*push_array(void *dst, void *src);
 void				ft_err(int num);
+void				ft_perror_exit(const char *message);
 
 #endif

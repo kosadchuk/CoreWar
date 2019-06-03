@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core.h"
+#include "includes/core.h"
 
 void	validate_champ_name(char *str)
 {

@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   ft_lstinit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 14:09:30 by kosadchu          #+#    #+#             */
-/*   Updated: 2018/11/27 13:18:42 by kosadchu         ###   ########.fr       */
+/*   Created: 2019/06/01 11:57:01 by kosadchu          #+#    #+#             */
+/*   Updated: 2019/06/01 11:57:09 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_fatal_exit_func g_fef = &ft_perror_exit;
-
-void	*ft_memalloc(size_t size)
+void	ft_lstinit(t_list *lst, t_delptr del_list_func)
 {
-	char	*m;
-
-	m = malloc(sizeof(*m) * size);
-	if (!m)
-		g_fef("malloc() failed");
-	ft_bzero(m, size);
-	return (m);
+	ft_bzero(lst, sizeof(t_list));
+	lst->del = del_list_func;
 }

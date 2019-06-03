@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   ft_perror_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/20 15:53:27 by kosadchu          #+#    #+#             */
-/*   Updated: 2018/11/20 15:54:07 by kosadchu         ###   ########.fr       */
+/*   Created: 2019/06/01 19:24:13 by kosadchu          #+#    #+#             */
+/*   Updated: 2019/06/01 19:26:55 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+void	ft_perror_exit(const char *message)
 {
-	if (!new)
-		return ;
-	new->next = *alst;
-	*alst = new;
+	perror(message);
+	exit(EXIT_FAILURE);
 }

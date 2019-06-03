@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "core.h"
+#include "includes/core.h"
 
 int32_t		bytes_in_int(int fd) // считали 4 байта, интерпретировали в интовое число и сравнили хэдэры
 {
@@ -47,20 +47,24 @@ void		pars_champs(char *file, t_player *player)
 {
 	int				fd;
 	int32_t			res;
+	char 			*tmp;
 
 	fd = open(file, O_RDONLY);
 	if ((res = bytes_in_int(fd)) != COREWAR_EXEC_MAGIC)
 		ft_error(ERR_MG_HEADER);
-	ft_strcpy(player->name, save_chars(fd, PROG_NAME_LENGTH));
+	ft_strcpy(player->name, tmp = save_chars(fd, PROG_NAME_LENGTH));
+	ft_strdel(&tmp);
 	if ((res = bytes_in_int(fd)) != 0)
 		ft_error(MISS_NULL);
 	if ((res = bytes_in_int(fd)) > CHAMP_MAX_SIZE)
 		ft_error(BOT_SIZE);
 	player->size = res;
-	ft_strcpy(player->comment, save_chars(fd, COMMENT_LENGTH));
+	ft_strcpy(player->comment, tmp = save_chars(fd, COMMENT_LENGTH));
+	ft_strdel(&tmp);
 	if ((res = bytes_in_int(fd)) != 0)
 		ft_error(MISS_NULL);
 	player->code = ft_memalloc(sizeof(unsigned char*) * player->size);
-	ft_memcpy(player->code, save_chars(fd, player->size), player->size + 1);
+	ft_memcpy(player->code, tmp = save_chars(fd, player->size), player->size + 1);
+	ft_strdel(&tmp);
 	close(fd);
 }

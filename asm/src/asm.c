@@ -33,10 +33,11 @@ int			main(int ac, char **av)
 	char	*file_content;
 
 	file_name = pre_run_validation(ac, av);
-	ft_putendl(file_name);
-	file_content = read_file(av[1]);
-	show_file_line_by_line(file_content);
-	parse(file_content);
+	if ((file_content = read_file(av[1])))
+	{
+		show_file_line_by_line(file_content);
+		parse(file_content);
+	}
 	ft_memdel((void **)&file_name);
 	ft_memdel((void **)&file_content);
 	return (0);

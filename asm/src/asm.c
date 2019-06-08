@@ -21,7 +21,7 @@ static void	show_file_line_by_line(char const *file_content)
 	len = ft_strlen(file_content);
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
-		ft_printf("%s$\n", line);
+		ft_putendl(line);
 		ft_memdel((void **)&line);
 	}
 	get_line_from_src(0, 0, 0);

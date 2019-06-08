@@ -24,7 +24,7 @@ NORM_CHECK		:= $(shell command -v norminette)
 DIRS			:= $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$(shell find $(SRC_DIR) -type d))
 SRCS			:= $(shell find $(SRC_DIR) -type f -name "*.c")
 OBJS			:= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
-LIBS			:= ../libft/libft.a
+LIBS			:= libft/libft.a
 
 all: libft $(TARGET)
 
@@ -42,16 +42,16 @@ $(OBJ_DIR):
 #		Block			#
 #	creating libft		#
 libft:
-	@make -C ../libft
+	@make -C libft
 
 #		Block			#
 #	describing commands	#
 clean:
-	@make clean -C ../libft
+	@make clean -C libft
 	@rm -fR $(OBJ_DIR)
 
 fclean: clean
-	@make fclean -C ../libft
+	@make fclean -C libft
 	@rm -fR $(TARGET)
 
 re: fclean all

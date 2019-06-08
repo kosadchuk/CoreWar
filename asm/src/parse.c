@@ -13,10 +13,9 @@
 #include "../inc/asm.h"
 #include "../libft/inc/libft.h"
 
-char		*parse(char const *file_content)
+char		*parse(char const *file_content, t_asm *dst)
 {
-	char	*ret;
-
-	ret = (char *)file_content;
-	return (ret);
+	(void)file_content;
+	(void)dst;
+	return (0);
 }

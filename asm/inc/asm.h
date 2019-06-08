@@ -36,7 +36,7 @@ char		*pre_run_validation(int const ac, char **av);
 **				parser/
 */
 int			parse(char const *file_content, t_asm *dst);
-int			parse_header(char const *file_content, char const *part, void **name, t_ull *name_size);
+int			parse_header(char const *file_content, t_asm *dst, t_ull len);
 int			parse_code(char const *file_content, void **code, t_ull *code_size);
 /*
 **				reader.c
@@ -51,8 +51,9 @@ void		write_file(char const* file_name, t_asm *content);
 /*
 **				utility.c
 */
-int			is_white_space_only(char const *line);
-int			get_count(char const *line, char c);
+int			is_skipable(char const *line);
+void		skip_whitespaces(char const **str);
+void		mass_memdel(void *a, void *b, void *c, void *d);
 /*
 **				error.c
 */

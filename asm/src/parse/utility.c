@@ -1,42 +1,34 @@
 #include "../../inc/asm.h"
 #include "../../libft/inc/libft.h"
 
-int				is_white_space_only(char const *line)
+void			skip_whitespaces(char const **str)
 {
 	t_ull		i;
+	char const	*tmp;
 
+	tmp = *str;
 	i = 0;
-	while (line[i])
+	while (tmp[i])
 	{
-		if (!ft_isspace(line[i]))
-			return (0);
-		i++;
+		if (!ft_isspace(tmp[i]))
+			break;
+		++i;
 	}
-	return (1);
+	*str = tmp + i;
 }
 
-int			get_count(char const *line, char c)
+int				is_skipable(char const *line)
 {
-	int		ret;
-
-	ret = 0;
-	while (*line)
-	{
-		if (*line == c)
-			ret++;
-		++line;
-	}
-	return (ret);
+	skip_whitespaces(&line);
+	if (*line == '#' || *line == '\0')
+		return (1);
+	return (0);
 }
 
-int				get_br(char const *line, int reset)
+void		mass_memdel(void *a, void *b, void *c, void *d)
 {
-	static int	br = 0;
-
-	if (reset)
-		br = 0;
-	if (!line)
-		return (br);
-	br += get_count(line, '\"');
-	return (br);
+	ft_memdel(&a);
+	ft_memdel(&b);
+	ft_memdel(&c);
+	ft_memdel(&d);
 }

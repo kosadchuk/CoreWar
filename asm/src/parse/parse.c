@@ -14,25 +14,17 @@
 #include "../../libft/inc/libft.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
-int		parse(char const *file_content, t_asm *dst)
-{
-	if (!parse_header(file_content, ".name", &(dst->name), &dst->name_size))
+int				parse(char const *file_content, t_asm *dst)
+{//printf("%s\n", __func__);
+	t_ull const	len = ft_strlen(file_content);
+
+	get_line_from_src(file_content, 0, 0);
+	if (!parse_header(file_content, dst, len))
 	{
-		ft_putendl("Error while parse header (probably .name)");
-		return (0);
-	}
-	printf(".name = [%s]\n", (char *)dst->name);
-	if (!parse_header(file_content, ".comment", &(dst->comment), &dst->comment_size))
-	{
-		ft_putendl("Error while parse header (probably .comment)");
-		return (0);
-	}
-	printf(".comment = [%s]\n", (char *)dst->comment);
-	if (!parse_code(file_content, &(dst->code), &dst->code_size))
-	{
-		ft_putendl("Error while parse code");
-		return (0);
+		wrong_asm_in_file(-1);
+		exit(4);
 	}
 	return (1);
 }

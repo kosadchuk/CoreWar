@@ -4,119 +4,122 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define CALL_ERR_FLAG(x) wrong_asm_in_file(x); exit(1);
-#define CALL_ERR1_IF(x) if (!(is_white_space_only((x)))) { CALL_ERR_FLAG(1); }
-#define CALL_ERR2_IF(x) if ((x)) { CALL_ERR_FLAG(2); }
-#define CALL_ERR3_IF(x) if (!(is_white_space_only((x)))) { CALL_ERR_FLAG(3); }
-#define DOUBLE_MEM_DEL(x, y) ft_memdel((void **)&(x)); ft_memdel((void **)&(y));
+#define SKIP(x) ft_memdel((void **)&(x)); continue;
+#define TRY_SKIP(x) if (is_skipable((x))) { SKIP(x); }
 
-static t_ull	is_part_command(char const *line, char const *part)
+#define STREQU(x, y) ft_strequ((x), (y))
+
+#define PARSE_NAME(x) try_parse_header(file_content, line, x, &dst->name);
+#define PROCESS_NAME() PARSE_NAME(".name");
+#define TRY_PARS_NAME(x) if (STREQU(x, ".name")){ PROCESS_NAME(); }
+
+#define PARSE_COMMENT(x) try_parse_header(file_content, line, x, &dst->comment);
+#define PROCESS_COMMENT() PARSE_COMMENT(".comment");
+#define TRY_PARS_COMMENT(x) if (STREQU(x, ".comment")){ PROCESS_COMMENT(); }
+
+static int		has_errors(char const* str)
 {
-	t_ull		i;
-	t_ull		len;
-	t_ull const	part_len = ft_strlen(part);
+	char const	*end;
 
-	if ((get_br(0, 0) % 2 && !ft_strchr(line, '\"')) ||
-		(get_br(0, 0) % 2 == 0 && get_count(line, '\"') % 2 == 1))
+	if (!(end = ft_strchr(str, '\"')))
 		return (0);
-	i = -1;
-	while (line[++i])
+	end += 1;
+	skip_whitespaces(&end);
+	if (*end == '#' || *end == '\0')
+		return (0);
+	return (1);
+}
+
+static char const	*get_header_part(char const *line)
+{//printf("%s\n", __func__);
+	skip_whitespaces(&line);
+	if (ft_strlen(line) > 5 && !ft_memcmp((void *)line, (void *)".name", 5))
 	{
-		if (ft_isspace(line[i]))
-			continue;
-		break;
+		line += 5;
+		skip_whitespaces(&line);
+		return (*line == '\"' ? ".name" : 0);
 	}
-	len = ft_strlen(line + i);
-	if (len <= part_len)
-		return (0);
-	if (!ft_memcmp((void *)(line + i), (void *)part, part_len))
-		return (i + part_len);
+	if (ft_strlen(line) > 8 && !ft_memcmp((void *)line, (void *)".comment", 8))
+	{
+		line += 8;
+		skip_whitespaces(&line);
+		return (*line == '\"' ? ".comment" : 0);
+	}
 	return (0);
 }
 
-static char		*get_part(char const *file_content, char const *part)
+static char		*get_full_field(char const *file_content, char const *curr)
 {
+	t_ull const	len = ft_strlen(file_content);
+	char		*line;
 	char		*ret;
 	char		*tmp;
-	char		*line;
 	char		*end;
-	t_ull const	len = ft_strlen(file_content);
 
-	ret = ft_strdup(part);
+	ret = ft_strdup(curr);
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
-		get_br(line, 0);
+		if (has_errors(line))
+			break;
 		if ((end = ft_strchr(line, '\"')))
 		{
 			tmp = ft_strsub(line, 0, end - line);
-			CALL_ERR1_IF(end + 1);
-			ft_memdel((void **)&line);
 			end = ft_strjoin(ret, tmp);
-			DOUBLE_MEM_DEL(tmp, ret);
+			mass_memdel((void *)ret, (void *)tmp, (void *)line, 0);
 			return (end);
 		}
-		tmp = ft_strjoin(ret, line);
-		DOUBLE_MEM_DEL(ret, line);
-		ret = tmp;
+		tmp = ret;
+		ret = ft_strjoin(ret, line);
+		mass_memdel((void *)tmp, (void *)line, 0, 0);
 	}
-	ft_memdel((void **)&ret);
-	return (ret);
+	mass_memdel((void *)ret, (void *)line, 0, 0);
+	return (0);
 }
 
-static int		init_part_field(char const *file_content, char const *line, void **dst, t_ull *dst_size)
-{
-	t_ull		i;
+void			try_parse_header(char const *file_content, char const *curr, char const *part, void **dst)
+{//printf("%s\n", __func__);
 	char		*end;
 
-	CALL_ERR2_IF(*dst);
-	i = -1;
-	while (line[++i])
+	if (*dst)
 	{
-		if (ft_isspace(line[i]))
-			continue;
-		break;
+		wrong_asm_in_file(1);
+		exit(1);
 	}
-	if (line[i] != '\"')
-		return (0);
-	if ((end = ft_strchr(line + ++i, '\"')))
-	{
-		*dst_size = end - line - i;
-		*dst = (void *)ft_strsub(line + i, 0, *dst_size);
-		CALL_ERR3_IF(line + i + *dst_size + 1);
-	}
+	skip_whitespaces(&curr);
+	curr += ft_strlen(part);
+	skip_whitespaces(&curr);
+	curr += 1;
+	if (has_errors(curr))
+		return;
+	if ((end = ft_strchr(curr, '\"')))
+		*dst = ft_strsub(curr, 0, ft_strlen(curr) - ft_strlen(end));
 	else
+		*dst = get_full_field(file_content, curr);
+	if (!*dst)
 	{
-		*dst = (void *)get_part(file_content, line + i);
-		*dst_size = ft_strlen((char *)*dst);
+		wrong_asm_in_file(0);
+		exit(1);
 	}
-	return (*dst == 0 ? 0 : 1);
+	printf("%s = [%s]\n", part, (char *)*dst);
 }
 
-int				parse_header(char const *file_content, char const *part, void **dst, t_ull *dst_size)
+int				parse_header(char const *file_content, t_asm *dst, t_ull len)
 {
-	t_ull const	len = ft_strlen(file_content);
-	t_ull		after_part_index;
 	char		*line;
-	int			ret;
+	char const	*header_part;
+	int			breaker;
 
-	ret = get_br(0, 1);
-	get_line_from_src(file_content, 0, 1);
+	breaker = 0;
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
-		get_br(line, 0);
-		if (line[0] != '#' && !is_white_space_only(line))
-		{
-			if ((after_part_index = is_part_command(line, part)))
-			{
-				ret = init_part_field(file_content, line + after_part_index, dst, dst_size);
-				if (ret && 0)
-				{
-					ft_memdel((void **)&line);
-					break;
-				}
-			}
-		}
+		TRY_SKIP(line);
+		header_part = get_header_part(line);
+		++breaker;
+		TRY_PARS_NAME(header_part);
+		TRY_PARS_COMMENT(header_part);
 		ft_memdel((void **)&line);
+		if (breaker == 2)
+			break;
 	}
-	return (ret);
+	return (dst->name && dst->comment);
 }

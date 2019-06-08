@@ -49,8 +49,6 @@ libft:
 clean:
 	@make clean -C ../libft
 	@rm -fR $(OBJ_DIR)
-	@rm -f filler.trace
-	@rm -f trace
 
 fclean: clean
 	@make fclean -C ../libft

@@ -13,6 +13,7 @@
 #include "../inc/asm.h"
 #include "../libft/inc/libft.h"
 
+#include <unistd.h>
 #include <fcntl.h>
 
 char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)

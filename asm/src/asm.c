@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../libft/inc/libft.h"
 #include "../inc/asm.h"
 
 static void	show_file_line_by_line(char const *file_content)

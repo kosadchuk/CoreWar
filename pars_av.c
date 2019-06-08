@@ -34,8 +34,7 @@ void	save_players(char *pl, int pl_id)
 	player->n_id = pl_id;
 	player->id = 1;
 	pars_champs(pl, player); //<-- парсим байт лист
-	push_array(g_players, player); // типа по очереди запушили игроков в глобальную структуру, можно с ними делать все что захочешь и где захочешь
-//	free(&player);
+	push_array(g_save_pl, player); // типа по очереди запушили игроков в глобальную структуру, можно с ними делать все что захочешь и где захочешь
 }
 
 void	check_flag(char **av, int *i)
@@ -66,26 +65,26 @@ void	check_players_id(void)
 	int		j;
 
 	i = -1;
-	while (++i < g_players->len)
+	while (++i < g_save_pl->len)
 	{
-		(g_players->team[i]->n_id > g_players->len) ? ft_error(WRONG_N_NUM) : 0;
-		if (g_players->team[i]->n_id == 0)
+		(g_save_pl->team[i]->n_id > g_save_pl->len) ? ft_error(WRONG_N_NUM) : 0;
+		if (g_save_pl->team[i]->n_id == 0)
 		{
 			j = -1;
-			while (++j < g_players->len)
+			while (++j < g_save_pl->len)
 			{
-				(j == i && j + 1 < g_players->len) ? j++ : 0;
-				(j == i && j + 1 > g_players->len) ? j = 0 : 0;
-				if (g_players->team[j]->n_id == g_players->team[i]->id)
+				(j == i && j + 1 < g_save_pl->len) ? j++ : 0;
+				(j == i && j + 1 > g_save_pl->len) ? j = 0 : 0;
+				if (g_save_pl->team[j]->n_id == g_save_pl->team[i]->id)
 				{
-					g_players->team[i]->id++;
+					g_save_pl->team[i]->id++;
 					j = -1;
 				}
 			}
-			g_players->team[i]->n_id = g_players->team[i]->id;
+			g_save_pl->team[i]->n_id = g_save_pl->team[i]->id;
 		}
 		else
-			g_players->team[i]->id = g_players->team[i]->n_id;
+			g_save_pl->team[i]->id = g_save_pl->team[i]->n_id;
 	}
 }
 
@@ -94,7 +93,7 @@ void	pars_av(int ac, char **av)
 	int			i;
 
 	i = 0;
-	g_players = new_array(4);
+	g_save_pl = new_array(4);
 	while (++i < ac)
 	{
 		if (ft_strchr("-", av[i][0]))
@@ -102,8 +101,9 @@ void	pars_av(int ac, char **av)
 		else
 		{
 			validate_champ_name(av[i]); //проверяем на валидность имя чемпиона
-			save_players(av[i], 0); //сохраняем игроков в глобальный массив структур g_players
+			save_players(av[i], 0); //сохраняем игроков в глобальный массив структур g_save_pl
 		}
 	}
 	check_players_id(); //по итогам присваиваем игрокам id номер
+	save_norm_players();
 }

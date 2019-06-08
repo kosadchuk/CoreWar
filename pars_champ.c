@@ -12,7 +12,27 @@
 
 #include "includes/core.h"
 
-int32_t		bytes_in_int(int fd) // считали 4 байта, интерпретировали в интовое число и сравнили хэдэры
+void	save_norm_players(void)
+{
+	int		i;
+	int		id;
+
+	i = 0;
+	id = 1;
+	g_players = new_array(4);
+	while (i < g_save_pl->len)
+	{
+		if (g_save_pl->team[i]->id == id)
+		{
+			push_array(g_players, g_save_pl->team[i]);
+			i = -1;
+			id++;
+		}
+		i++;
+	}
+}
+
+int32_t		take_magic_header(int fd) // считали 4 байта, интерпретировали в интовое число и сравнили хэдэры
 {
 	int			size;
 	uint8_t		buf[4];
@@ -50,18 +70,18 @@ void		pars_champs(char *file, t_player *player)
 	char 			*tmp;
 
 	fd = open(file, O_RDONLY);
-	if ((res = bytes_in_int(fd)) != COREWAR_EXEC_MAGIC)
+	if ((res = take_magic_header(fd)) != COREWAR_EXEC_MAGIC)
 		ft_error(ERR_MG_HEADER);
 	ft_strcpy(player->name, tmp = save_chars(fd, PROG_NAME_LENGTH));
 	ft_strdel(&tmp);
-	if ((res = bytes_in_int(fd)) != 0)
+	if ((res = take_magic_header(fd)) != 0)
 		ft_error(MISS_NULL);
-	if ((res = bytes_in_int(fd)) > CHAMP_MAX_SIZE)
+	if ((res = take_magic_header(fd)) > CHAMP_MAX_SIZE)
 		ft_error(BOT_SIZE);
 	player->size = res;
 	ft_strcpy(player->comment, tmp = save_chars(fd, COMMENT_LENGTH));
 	ft_strdel(&tmp);
-	if ((res = bytes_in_int(fd)) != 0)
+	if ((res = take_magic_header(fd)) != 0)
 		ft_error(MISS_NULL);
 	player->code = ft_memalloc(sizeof(unsigned char*) * player->size);
 	ft_memcpy(player->code, tmp = save_chars(fd, player->size), player->size + 1);

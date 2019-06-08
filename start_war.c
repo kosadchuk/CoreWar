@@ -12,82 +12,166 @@
 
 #include "includes/core.h"
 
-//void	show_elements(t_list_elem *elem)
-//{
-//	ft_printf("id = %d\n", ((t_kar *)elem->content)->parent_id);
-//	ft_printf("cp = %d\n", ((t_kar *)elem->content)->cur_pos);
-//	ft_printf("code = %.2x\n", g_vm->map[((t_kar *)elem->content)->cur_pos]);
-//}
-
-void 	*init_start_positions(t_list *list) // создаем первые каретки и делаем двусвязный список
+void	take_args_value(t_op *op, t_prcs *pr)
 {
-	t_prcs	prcs;
-	int 	i;
-	int 	place;
+	int		i;
+	int32_t	reg_num;
 
-	i = 0;
-	place = 0;
-	ft_lstinit(list, NULL);
-	while (i < g_players->len)
+	i = -1;
+	pr->reg_err = 0;
+	while (++i < 3)
 	{
-		prcs.parent_id = i + 1;
-		prcs.cur_pos = place;
-		prcs.reg[0] = (i + 1) * -1;
-		ft_lstpush_back(list, ft_lstnew(&prcs, sizeof(t_prcs)));
-		i++;
-		place += MEM_SIZE / g_players->len;
+		if (op->args[i].tp == REG_CODE)
+		{
+			op->args[i].sz = 1;
+			reg_num = bytes_in_int(pr, op->args[i].sz);
+			if (reg_num >= 0 && reg_num <= 15)
+			{
+				op->args[i].value = pr->reg[reg_num];
+				op->args[i].reg_num = reg_num;
+			}
+			else
+				pr->reg_err = 1;
+		}
+		if (op->args[i].tp == DIR_CODE)
+		{
+			op->args[i].sz = op->lable_size;
+			op->args[i].value = bytes_in_int(pr, op->args[i].sz);
+		}
+		if (op->args[i].tp == IND_CODE)
+		{
+			op->args[i].sz = IND_SIZE;
+			op->args[i].value = bytes_in_int(pr, op->args[i].sz);
+		}
 	}
-	g_vm->last_alive = g_players->team[i];
-	return (list);
 }
 
-//void 	make_op(t_prcs *k)
-//{
-//	if (k->cur_op >= 1 && k->cur_op <= 16)
-//	{
-//		valid_args();
-//	}
-//	else
-//	{
-//		if (k->cur_pos + 1 >= MEM_SIZE)
-//			k->cur_pos = k->cur_pos % MEM_SIZE;
-//		else
-//			k->cur_pos++;
-//	}
-//}
+void	valid_op_args(t_prcs *pr)
+{
+	uint32_t	codage;
+
+	handle_position(pr, 1);
+	codage = (unsigned char)g_vm->map[pr->cur_pos];
+	g_op_tab[pr->cur_op].args[0].tp = (codage & 0b11000000) >> 6;
+	g_op_tab[pr->cur_op].args[1].tp = (codage & 0b00110000) >> 4;
+	g_op_tab[pr->cur_op].args[2].tp = (codage & 0b00001100) >> 2;
+	take_args_value(&g_op_tab[pr->cur_op], pr);
+//	printf("arg %d  sz %d val %d reg_num %d\n", g_op_tab[pr->cur_op].args[0].tp, g_op_tab[pr->cur_op].args[0].sz,\
+//	g_op_tab[pr->cur_op].args[0].value, g_op_tab[pr->cur_op].args[0].reg_num);
+//	printf("arg %d  sz %d val %d reg_num %d\n", g_op_tab[pr->cur_op].args[1].tp, g_op_tab[pr->cur_op].args[1].sz,\
+//	g_op_tab[pr->cur_op].args[0].value, g_op_tab[pr->cur_op].args[1].reg_num);
+//	printf("arg %d  sz %d val %d reg_num %d\n", g_op_tab[pr->cur_op].args[2].tp, g_op_tab[pr->cur_op].args[2].sz,\
+//	g_op_tab[pr->cur_op].args[0].value, g_op_tab[pr->cur_op].args[2].reg_num);
+	g_op_tab[pr->cur_op].f(pr, g_op_tab[pr->cur_op], codage);
+}
+
+void 	check_op(t_prcs *pr)
+{
+	if (g_op_tab[pr->cur_op].codage == 0)
+		g_op_tab[pr->cur_op].f(pr, g_op_tab[pr->cur_op], 0);
+	else
+		valid_op_args(pr);
+}
 
 void	pars_process(t_list_elem *prcs)
 {
 	t_prcs	*pr;
 
 	pr = (t_prcs *)prcs->content;
-	pr->cur_op = g_vm->map[pr->cur_pos];
-	pr->cycle_count = (pr->cur_op < 1 || pr->cur_op > 16)\
-	? 0 : g_op_tab[pr->cur_op].cycles;
+	if (pr->cycle_count == 0)
+	{
+		pr->cur_op = g_vm->map[pr->cur_pos];
+		pr->cycle_count = ((pr->cur_op < 1 || pr->cur_op > 16))\
+		? 0 : g_op_tab[pr->cur_op].cycles;
+	}
 	(pr->cycle_count > 0) ? pr->cycle_count-- : 0;
-//	if (k->cycle_count == 0)
-//		make_op(k);
-
-//	ft_printf("cycles %d\n", g_ops->ops[k->cur_op]->cycles);
+	if (pr->cycle_count == 0 && pr->cur_op > 0 && pr->cur_op < 17)
+		check_op(pr);
+	else if (pr->cycle_count == 0 && (pr->cur_op < 1 || pr->cur_op > 16))
+		handle_position(pr, 1);
 }
 
-void	start_cycles(t_list *list)
+t_list_elem	*take_dead_prcs(t_list_elem *start)
 {
+	while (start)
+	{
+		if (g_vm->cycles - ((t_prcs*)start->content)->last_live_cycle\
+		>=g_vm->cycles_to_die)
+			return (start);
+		start = start->next;
+	}
+	return (NULL);
+}
+
+void	start_cycles(void)
+{
+	t_list_elem		*del;
+
 	while (1)
 	{
 		ft_lstiter(list, &pars_process); // ф-я итерируется по всему списку кареток и к каждой применяет функцию pars_process
 		g_vm->cycles++;
-		if (g_vm->cycles == 1) // условие выхода будет другое
+		g_vm->check_cycle++;
+		if (g_vm->cycles_to_die <= 0)
+		{
+			printf("hana vsem\n");
+		}
+		if (g_vm->check_cycle == g_vm->cycles_to_die)
+		{
+			g_vm->check_cycle = 0;
+			g_vm->checks++;
+			if (g_vm->count_live_op >= NBR_LIVE)
+			{
+				g_vm->cycles_to_die -= CYCLE_DELTA;
+				g_vm->checks = 0;
+			}
+			if (g_vm->checks == MAX_CHECKS && g_vm->prev_cycle_to_die == g_vm->cycles_to_die)
+			{
+				g_vm->cycles_to_die -= CYCLE_DELTA;
+				g_vm->prev_cycle_to_die = g_vm->cycles_to_die;
+				g_vm->checks = 0;
+			}
+			g_vm->count_live_op = 0;
+			while ((del = take_dead_prcs(list->start)) != NULL)
+				ft_lstdel_by_obj(list, del);
+		}
+		if (g_vm->cycles == 10000)
+//		if (list->start == NULL)
 			break ;
 	}
 }
 
+//void  mem_print(t_list list)
+//{
+//	int  i;
+//
+//	i = -1;
+//
+//	int f;
+//
+//	while (++i < 4096)
+//	{
+//		f = 0;
+//		if (i % 64 == 0)
+//			ft_printf("\n");
+//		for (int j = 0; j < list.list_size; ++j)
+//			if (((t_prcs*)list.start)->cur_pos - (int)g_vm->map == i)
+//			{
+//				ft_printf("\033[01;31m%.2x \e[0m", g_vm->map[i]);
+//				f = 1;
+//				list.start = list.start->next;
+//			}
+//		if (f)
+//			continue;
+//		ft_printf("%.2x ", g_vm->map[i]);
+//	}
+//}
+
 void	start_war(void)
 {
-	t_list	list;
-
-	init_start_positions(&list); // для кареток
-	start_cycles(&list); // выполняем основной цикл
+	init_start_positions(); // для кареток
+	start_cycles(&g_list); // выполняем основной цикл
+//	mem_print(list);
 //	ft_lstiter(&list, &show_elements);
 //	for (int i = 0; i < 16; ++i) {
 //		ft_printf("op_name = %s\n", g_op_tab[i].name);

@@ -12,94 +12,103 @@
 
 #include "includes/core.h"
 
+void	handle_position(t_pr *pr, int step)
+{
+	if (pr->cur_pos + step >= MEM_SIZE)
+		pr->cur_pos = (pr->cur_pos + step) % MEM_SIZE;
+	if (pr->cur_pos + step < 0)
+		pr->cur_pos = (pr->cur_pos + step) + MEM_SIZE;
+	else
+		pr->cur_pos += step;
+}
+
+int32_t		bytes_in_int(t_prcs *pr, int size)
+{
+	int 	i;
+	uint8_t buf[4];
+	int32_t res;
+
+	i = 0;
+	while (i < size)
+	{
+		if (pr->cur_pos + 1 >= MEM_SIZE)
+			pr->cur_pos = (pr->cur_pos + 1) % MEM_SIZE;
+		buf[i++] = g_vm->map[++pr->cur_pos];
+	}
+	if (size == 4)
+	{
+		res = (unsigned char)buf[0] << 24;
+		res |= (unsigned char)buf[1] << 16;
+		res |= (unsigned char)buf[2] << 8;
+		res |= (unsigned char)buf[3];
+		return ((int32_t)res);
+	}
+	else if (size == 2)
+	{
+		res = (unsigned char)buf[0] << 8;
+		res |= (unsigned char)buf[1];
+		return ((short)res);
+	}
+	else if (size == 1)
+		return (res = (unsigned char)buf[0]);
+	return (0);
+}
+
 void	init_vm(void)
 {
 	g_vm = ft_memalloc(sizeof(t_vm));
 	g_vm->last_alive = 0;
 	g_vm->cycles = 0;
 	g_vm->cycles_to_die = CYCLE_TO_DIE;
+	g_vm->check_cycle = 0;
 	g_vm->checks = 0;
+	g_vm->prev_cycle_to_die = CYCLE_TO_DIE;
 }
 
-//void init_op_label_size(void)
-//{
-//	g_ops->ops[0]->lable_size = 0;
-//	g_ops->ops[1]->lable_size = 4;
-//	g_ops->ops[2]->lable_size = 4;
-//	g_ops->ops[3]->lable_size = 4;
-//	g_ops->ops[4]->lable_size = 4;
-//	g_ops->ops[5]->lable_size = 4;
-//	g_ops->ops[6]->lable_size = 4;
-//	g_ops->ops[7]->lable_size = 4;
-//	g_ops->ops[8]->lable_size = 4;
-//	g_ops->ops[9]->lable_size = 2;
-//	g_ops->ops[10]->lable_size = 2;
-//	g_ops->ops[11]->lable_size = 2;
-//	g_ops->ops[12]->lable_size = 2;
-//	g_ops->ops[13]->lable_size = 4;
-//	g_ops->ops[14]->lable_size = 2;
-//	g_ops->ops[15]->lable_size = 2;
-//	g_ops->ops[16]->lable_size = 4;
-//}
-//
-//void 	init_op_cycles(void)
-//{
-//	g_ops->ops[0]->cycles = 0;
-//	g_ops->ops[1]->cycles = 10;
-//	g_ops->ops[2]->cycles = 5;
-//	g_ops->ops[3]->cycles = 5;
-//	g_ops->ops[4]->cycles = 10;
-//	g_ops->ops[5]->cycles = 10;
-//	g_ops->ops[6]->cycles = 6;
-//	g_ops->ops[7]->cycles = 6;
-//	g_ops->ops[8]->cycles = 6;
-//	g_ops->ops[9]->cycles = 20;
-//	g_ops->ops[10]->cycles = 25;
-//	g_ops->ops[11]->cycles = 25;
-//	g_ops->ops[12]->cycles = 800;
-//	g_ops->ops[13]->cycles = 10;
-//	g_ops->ops[14]->cycles = 50;
-//	g_ops->ops[15]->cycles = 1000;
-//	g_ops->ops[16]->cycles = 2;
-//}
-//
-//void 	init_ops(void)
-//{
-//	t_op	*op;
-//	int 	i;
-//
-//	i = 0;
-//	g_ops = new_array(17);
-//	while (i < 17)
-//	{
-//		op = ft_memalloc(sizeof(t_op));
-//		push_array(g_ops, op);
-//		i++;
-//	}
-//	init_op_cycles();
-//	init_op_label_size();
-//}
+void 	init_start_positions(void) // создаем первые каретки и делаем двусвязный список
+{
+	t_prcs	prcs;
+	int		i;
+	int		j;
+	int		place;
+
+	i = -1;
+	place = 0;
+	ft_lstinit(g_list, NULL);
+	while (++i < g_players->len)
+	{
+		prcs.carry = 0;
+		prcs.cycle_count = 0;
+		prcs.parent_id = i + 1;
+		prcs.cur_pos = place;
+		prcs.reg_err = 0;
+		j = -1;
+		while (++j < REG_NUMBER)
+			prcs.reg[j] = 0;
+		prcs.reg[0] = (i + 1) * -1;
+		ft_lstpush_back(list, ft_lstnew(&prcs, sizeof(t_prcs)));
+		place += MEM_SIZE / g_players->len;
+	}
+	g_vm->last_alive = g_players->team[i];
+}
 
 void	make_map(void) // создали карту и разместили по своим позициям байт коды игроков
 {
 	int 	i;
-	int 	id;
 	int		place;
 
 	i = 0;
-	id = 1;
 	place = 0;
 	init_vm();
 	while (i < g_players->len)
 	{
-		if (g_players->team[i]->id == id)
-		{
-			ft_memcpy(&(g_vm->map[place]), g_players->team[i]->code, \
-			g_players->team[i]->size);
-			id++;
-			i = -1;
-			place += MEM_SIZE / g_players->len;
-		}
+		ft_memcpy(&(g_vm->map[place]), g_players->team[i]->code, \
+		g_players->team[i]->size);
+		place += MEM_SIZE / g_players->len;
 		i++;
 	}
+//	printf("\n1\n");
+//	for (int i = 0; i < MEM_SIZE; ++i) {
+//		printf("%.2x ", g_vm->map[i]);
+//	}
 }

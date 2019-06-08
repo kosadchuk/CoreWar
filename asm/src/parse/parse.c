@@ -17,17 +17,18 @@
 
 int		parse(char const *file_content, t_asm *dst)
 {
-	if (!parse_name(file_content, &(dst->name), &dst->name_size))
+	if (!parse_header(file_content, ".name", &(dst->name), &dst->name_size))
 	{
-		ft_putendl("Error while parse .name");
+		ft_putendl("Error while parse header (probably .name)");
 		return (0);
 	}
 	printf(".name = [%s]\n", (char *)dst->name);
-	if (!parse_comment(file_content, &(dst->comment), &dst->comment_size))
+	if (!parse_header(file_content, ".comment", &(dst->comment), &dst->comment_size))
 	{
-		ft_putendl("Error while parse .comment");
+		ft_putendl("Error while parse header (probably .comment)");
 		return (0);
 	}
+	printf(".comment = [%s]\n", (char *)dst->comment);
 	if (!parse_code(file_content, &(dst->code), &dst->code_size))
 	{
 		ft_putendl("Error while parse code");

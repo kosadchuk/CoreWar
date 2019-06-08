@@ -20,10 +20,12 @@ void		not_enough_args()
 
 void		wrong_file_extension()
 {
-	ft_putendl("file must have a name with at least 1 character and .cor extension");
+	ft_putendl("Error: file must have a name with at least 1 character and .cor extension");
 }
 
-void		wrong_asm_in_file()
+void		wrong_asm_in_file(int type)
 {
-	ft_putendl("is seems like there is a faggot in front of monitor");
+	ft_putstr("Error: is seems like there is a faggot in front of monitor: ");
+	ft_putnbr(type);
+	ft_putendl("");
 }

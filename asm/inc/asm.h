@@ -36,14 +36,14 @@ char		*pre_run_validation(int const ac, char **av);
 **				parser/
 */
 int			parse(char const *file_content, t_asm *dst);
-int			parse_name(char const *file_content, void **name, t_ull *name_size);
-int			parse_comment(char const *file_content, void **comment, t_ull *comment_size);
+int			parse_header(char const *file_content, char const *part, void **name, t_ull *name_size);
 int			parse_code(char const *file_content, void **code, t_ull *code_size);
 /*
 **				reader.c
 */
 char		*read_file(char const* file_name);
 char		*get_line_from_src(char const *src, t_ull src_len, int flag_reset);
+int			get_br(char const *line, int reset);
 /*
 **				writer.c
 */
@@ -52,11 +52,12 @@ void		write_file(char const* file_name, t_asm *content);
 **				utility.c
 */
 int			is_white_space_only(char const *line);
+int			get_count(char const *line, char c);
 /*
 **				error.c
 */
 void		not_enough_args();
 void		wrong_file_extension();
-void		wrong_asm_in_file();
+void		wrong_asm_in_file(int type);
 
 #endif

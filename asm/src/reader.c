@@ -23,7 +23,10 @@ char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)
 	char			*new_line_char;
 
 	if (flag_reset)
+	{
 		start = 0;
+		return (0);
+	}
 	if (start >= src_len)
 		return (0);
 	new_line_char = ft_strchr(src + start, '\n');

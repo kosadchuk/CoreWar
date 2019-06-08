@@ -25,8 +25,20 @@ typedef struct	s_asm
 	void		*code;
 }				t_asm;
 
+typedef struct	s_pair
+{
+	char		*start;
+	char		*end;
+}				t_pair;
+
 char		*pre_run_validation(int const ac, char **av);
-char		*parse(char const *file_content, t_asm *dst);
+/*
+**				parser/
+*/
+int			parse(char const *file_content, t_asm *dst);
+int			parse_name(char const *file_content, void **name, t_ull *name_size);
+int			parse_comment(char const *file_content, void **comment, t_ull *comment_size);
+int			parse_code(char const *file_content, void **code, t_ull *code_size);
 /*
 **				reader.c
 */
@@ -36,6 +48,10 @@ char		*get_line_from_src(char const *src, t_ull src_len, int flag_reset);
 **				writer.c
 */
 void		write_file(char const* file_name, t_asm *content);
+/*
+**				utility.c
+*/
+int			is_white_space_only(char const *line);
 /*
 **				error.c
 */

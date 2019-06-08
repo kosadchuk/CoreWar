@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #include "../inc/asm.h"
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 
 #include <fcntl.h>
 
-char				*get_line_from_src(char const *src, size_t src_len, int flag_reset)
+char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)
 {
-	static size_t	start = 0;
+	static t_ull	start = 0;
 	char			*ret;
 	char			*new_line_char;
 
@@ -44,7 +44,7 @@ char				*read_file(char const* file_name)
 	char			*ret;
 	char			*tmp;
 	char			buffer[102400];
-	size_t			var[2];
+	t_ull			var[2];
 	int				fd;
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)

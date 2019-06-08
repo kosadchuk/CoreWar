@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 #include "../inc/asm.h"
 
 static char		*get_file_name_without_extension(char const *file_name)

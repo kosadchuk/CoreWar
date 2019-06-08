@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 #include "../inc/asm.h"
 
 static void	show_file_line_by_line(char const *file_content)
 {
-	size_t	len;
+	t_ull	len;
 	char	*line;
 
 	len = ft_strlen(file_content);

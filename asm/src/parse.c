@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/asm.h"
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 
 char		*parse(char const *file_content)
 {

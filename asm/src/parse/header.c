@@ -97,8 +97,8 @@ void			try_parse_header(char const *file_content, char const *curr, char const *
 		*dst = get_full_field(file_content, curr);
 	if (!*dst)
 	{
-		wrong_asm_in_file(0);
-		exit(1);
+		wrong_asm_in_file(2);
+		exit(2);
 	}
 	printf("%s = [%s]\n", part, (char *)*dst);
 }

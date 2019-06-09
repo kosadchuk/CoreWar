@@ -25,11 +25,17 @@ typedef struct	s_asm
 	void		*code;
 }				t_asm;
 
-typedef struct	s_pair
+typedef struct	s_mark
 {
-	char		*start;
-	char		*end;
-}				t_pair;
+	char		*name;
+	t_ull		location;
+}				t_mark;
+
+typedef struct	s_code
+{
+	t_list		*marks;
+	t_ull		curr_location;
+}				t_code;
 
 char		*pre_run_validation(int const ac, char **av);
 /*
@@ -37,7 +43,7 @@ char		*pre_run_validation(int const ac, char **av);
 */
 int			parse(char const *file_content, t_asm *dst);
 int			parse_header(char const *file_content, t_asm *dst, t_ull len);
-int			parse_code(char const *file_content, void **code, t_ull *code_size);
+int			parse_code(char const *file_content, t_asm *dst, t_ull len);
 /*
 **				reader.c
 */

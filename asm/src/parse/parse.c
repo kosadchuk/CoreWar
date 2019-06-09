@@ -23,8 +23,13 @@ int				parse(char const *file_content, t_asm *dst)
 	get_line_from_src(file_content, 0, 0);
 	if (!parse_header(file_content, dst, len))
 	{
-		wrong_asm_in_file(-1);
+		wrong_asm_in_file(4);
 		exit(4);
+	}
+	if (!parse_code(file_content, dst, len))
+	{
+		wrong_asm_in_file(5);
+		exit(5);
 	}
 	return (1);
 }

@@ -19,7 +19,7 @@ static t_mark	*create_mark(char const *name, t_ull curr_location)
 
 	ret = (t_mark *)ft_memalloc(sizeof(t_mark));
 	ret->location = curr_location;
-	ret->name = name;
+	ret->name = (char *)name;
 	return (ret);
 }
 
@@ -28,9 +28,9 @@ static int	contains_in_alphabet(char c)
 	return (c != '\0' && c != ':');
 }
 
-static char	*get_mark_name(char const *line)
+static char const	*get_mark_name(char const *line)
 {
-	char	*ret;
+	char const		*ret;
 
 	skip_whitespaces(&line);
 	ret = line;
@@ -43,19 +43,21 @@ static char	*get_mark_name(char const *line)
 	return (ret);
 }
 
-static int	parse_mark(char const *file_content, char const *line, t_code *code, t_ull len)
+static int		parse_mark(char const *file_content, char const *line, t_code *code, t_ull len)
 {
-	char	*name;
+	char const	*name;
 
 	if (!(name = get_mark_name(line)))
 		return (0);
-	add_to_marks(code->marks, create_mark(name, code->curr_location));
+	add_to_marks(&code->marks, create_mark(name, code->curr_location));
 	skip_whitespaces(&line);
 	line += ft_strlen(name) + 1;
 	skip_whitespaces(&line);
 	if (*line == '#' || *line == '\0')
 		return (1);
 	//process complited mark here
+	(void)file_content;
+	(void)len;
 	return (1);
 }
 
@@ -69,9 +71,9 @@ int			parse_code(char const *file_content, t_asm *dst, t_ull len)
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
 		TRY_SKIP(line);
-		if (parse_mark(file_content, line, dst, len))
+		if (parse_mark(file_content, line, &code, len))
 			SKIP(line);
 		ft_memdel((void **)&line);
 	}
-	return (dst->code);
+	return (dst->code == 0);
 }

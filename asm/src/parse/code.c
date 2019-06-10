@@ -1,6 +1,8 @@
 #include "../../inc/asm.h"
 #include "../../libft/inc/libft.h"
 
+#include <stdio.h>
+
 #define SKIP(x) ft_memdel((void **)&(x)); continue;
 #define TRY_SKIP(x) if (is_skipable((x))) { SKIP(x); }
 
@@ -63,6 +65,19 @@ static int		parse_mark(char const *file_content, char const *line, t_code *code,
 	return (1);
 }
 
+static void	print_all_marks(t_code *code)
+{
+	t_list	*lst;
+
+	lst = code->marks;
+	printf("marks:\n");
+	while (lst)
+	{
+		printf("[%s] = %zu\n", ((t_mark *)lst->content)->name, (size_t)((t_mark *)lst->content)->location);
+		lst = lst->next;
+	}
+}
+
 int			parse_code(char const *file_content, t_asm *dst, t_ull len)
 {
 	char	*line;
@@ -77,5 +92,6 @@ int			parse_code(char const *file_content, t_asm *dst, t_ull len)
 			SKIP(line);
 		ft_memdel((void **)&line);
 	}
-	return (dst->code == 0);
+	print_all_marks(&code);
+	return (dst->code != 0);
 }

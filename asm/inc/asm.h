@@ -27,7 +27,7 @@ typedef struct	s_asm
 
 typedef struct	s_mark
 {
-	char		*name;
+	char const	*name;
 	t_ull		location;
 }				t_mark;
 
@@ -49,7 +49,7 @@ int			parse_code(char const *file_content, t_asm *dst, t_ull len);
 */
 char		*read_file(char const* file_name);
 char		*get_line_from_src(char const *src, t_ull src_len, int flag_reset);
-int			get_br(char const *line, int reset);
+int			is_good_end_of_file(char const *file_content);
 /*
 **				writer.c
 */

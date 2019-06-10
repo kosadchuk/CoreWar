@@ -57,7 +57,7 @@ int			main(int ac, char **av)
 	init_main_vars(&_asm, &file_name, &file_content);
 	file_name = pre_run_validation(ac, av);
 	file_content = read_file(av[1]);
-	if (file_content && parse(file_content, &_asm))
+	if (is_good_end_of_file(file_content) && parse(file_content, &_asm))
 	{
 		write_file(file_name, &_asm);
 	}

@@ -16,6 +16,20 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+int					is_good_end_of_file(char const *file_content)
+{
+	char const		*last_line;
+
+	if (!file_content)
+		return (0);
+	last_line = ft_strrchr(file_content, '\n');
+	last_line++;
+	skip_whitespaces(&last_line);
+	if (*last_line == '\0' || *last_line == '#')
+		return (1);
+	return (0);
+}
+
 char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)
 {
 	static t_ull	start = 0;

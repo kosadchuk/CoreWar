@@ -43,7 +43,8 @@ char		*pre_run_validation(int const ac, char **av);
 */
 int			parse(char const *file_content, t_asm *dst);
 int			parse_header(char const *file_content, t_asm *dst, t_ull len);
-int			parse_code(char const *file_content, t_asm *dst, t_ull len);
+int			parse_mark(char const *line, t_code *code);
+int			parse_command(char const *line, t_asm *dst);
 /*
 **				reader.c
 */

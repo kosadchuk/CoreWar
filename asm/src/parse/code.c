@@ -103,6 +103,7 @@ int			parse_code(char const *file_content, t_asm *dst, t_ull len)
 		ANALYZE_MARK(mark_len);
 		command_memory = parse_command(mark_len ? line + mark_len - 1 : line, dst);
 		ANALYZE_COMMAND(command_memory);
+		code.curr_location += command_memory;
 		ft_memdel((void **)&line);
 	}
 	print_all_marks(&code);

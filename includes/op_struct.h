@@ -19,8 +19,6 @@
 typedef struct	s_op		t_op;
 typedef struct	s_arg		t_arg;
 typedef struct	s_prcs		t_pr;
-typedef struct	s_args		t_args;
-
 
 struct				s_arg
 {
@@ -52,6 +50,11 @@ void				op_xor(t_pr *pr, t_op op, uint32_t codage);
 void				op_zjmp(t_pr *pr, t_op op, uint32_t codage);
 void				op_ldi(t_pr *pr, t_op op, uint32_t codage);
 void				op_sti(t_pr *pr, t_op op, uint32_t codage);
+void				op_fork(t_pr *pr, t_op op, uint32_t codage);
+void				op_lld(t_pr *pr, t_op op, uint32_t codage);
+void				op_lldi(t_pr *pr, t_op op, uint32_t codage);
+void				op_lfork(t_pr *pr, t_op op, uint32_t codage);
+void				op_aff(t_pr *pr, t_op op, uint32_t codage);
 
 # define RRR	84
 # define RDR	100
@@ -85,12 +88,11 @@ static t_op    g_op_tab[] =
 	{"zjmp", 1, {T_DIR}, 20, 0, 2, &op_zjmp},
 	{"ldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 25, 1, 2, &op_ldi},
 	{"sti", 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 25, 1, 2, &op_sti},
-	{"fork", 1, {T_DIR}, 800, 0, 2},
-	{"lld", 2, {T_DIR | T_IND, T_REG}, 10, 1, 4},
-	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 50, 1, 2},
-	{"lfork", 1, {T_DIR}, 1000, 0, 2},
-	{"aff", 1, {T_REG}, 2, 1, 4}
+	{"fork", 1, {T_DIR}, 800, 0, 2, &op_fork},
+	{"lld", 2, {T_DIR | T_IND, T_REG}, 10, 1, 4, &op_lld},
+	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 50, 1, 2, &op_lldi},
+	{"lfork", 1, {T_DIR}, 1000, 0, 2, &op_lfork},
+	{"aff", 1, {T_REG}, 2, 1, 4, &op_aff}
 };
-
 
 #endif

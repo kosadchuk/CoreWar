@@ -41,13 +41,14 @@ struct				s_player // структура игрока
 
 struct				s_prcs // структура каретки
 {
+	int				pr_id;
 	int				carry; // флаг, который могут изменять некоторые операции. Изначально иниц. false;
 	int				parent_id; // номер игрока который породил эту дичь (каретку)
 	int				cur_op; // код операции на которой стоит каретка
 	int				last_live_cycle; // цикл, в котором в последний раз была выполнена операция live
 	int				cycle_count; // колличество циклов, оставшиеся до выполнения операции на которой стоит каретка
 	int				cur_pos; // текущая позиция каретки
-	int				byte_step; //колл. байт которые нужно будет перешагнуть, чтобы оказаться на следующей операции
+	int				prev_pos;
 	int				reg[REG_NUMBER]; // структура со всеми командами
 	int				reg_err;
 };
@@ -74,17 +75,20 @@ struct 				s_vm
 t_players			*g_players;
 t_players			*g_save_pl;
 t_vm				*g_vm;
-t_list				*g_list;
+t_list				g_list;
+int					g_prc_id;
+int					g_dump;
 void				pars_av(int ac, char **av);
 void				pars_champs(char *file, t_player *player);
 void				make_map(void);
 void				init_vm(void);
 void				start_war(void);
-void 				init_start_positions(g_list);
+void 				init_start_positions(void);
 int32_t				bytes_in_int(t_prcs *pr, int size);
 void				handle_position(t_pr *pr, int step);
 void				save_norm_players(void);
-
-
+void				copy_prcs(t_pr *pr, int32_t pos);
+void				pars_process(t_list_elem *prcs);
+void				int_to_byte(int32_t nbr, uint8_t *buf);
 
 #endif

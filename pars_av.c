@@ -40,10 +40,16 @@ void	save_players(char *pl, int pl_id)
 void	check_flag(char **av, int *i)
 {
 	int		num;
+	int		d;
 
+	g_dump = 0;
 	if (!ft_strcmp("-dump", av[(*i)])) // с dump разберусь попозже
-		ft_err(ft_printf("Hello! I'm dump!\n"));
-	if (!ft_strcmp("-n", av[(*i)]) && av[(*i) + 1] != NULL)
+	{
+		if ((d = ft_atoi(av[++(*i)])) < 0)
+			ft_err(ft_printf("Wrong dump cycles number!\n"));
+		g_dump = d;
+	}
+	else if (!ft_strcmp("-n", av[(*i)]) && av[(*i) + 1] != NULL)
 	{
 		if ((num = ft_atoi(av[++(*i)])) < 1 || num > MAX_PLAYERS) // если не валидный номер игрока, идем на хуй
 			ft_err(ft_printf("%s%d!\n%s%d\n", FLAG_ERR, num, FLAG_ERR_2, 4));

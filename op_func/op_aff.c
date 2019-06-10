@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op_fork.c                                          :+:      :+:    :+:   */
+/*   op_aff.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/08 15:50:03 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/08 15:50:05 by kosadchu         ###   ########.fr       */
+/*   Created: 2019/06/08 17:13:13 by kosadchu          #+#    #+#             */
+/*   Updated: 2019/06/08 17:13:15 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/core.h"
 
-void	op_fork(t_pr *pr, t_op op, uint32_t codage)
+void	op_aff(t_pr *pr, t_op op, uint32_t codage)
 {
-	int32_t		pos;
+	int32_t		value;
 
-	pos = bytes_in_int(pr, op.lable_size);
-//	ft_printf("%d ", pos);
-	pos = (pos % IDX_MOD) + pr->prev_pos;
-//	ft_printf("(%d)\n", pos);
-//	ft_printf("	op num [%d]\n", g_vm->map[pos]);
-	copy_prcs(pr, pos);
+	if (codage == R && pr->reg_err == 0)
+	{
+		value = op.args[0].value % 256;
+		ft_printf("%c\n", value);
+	}
 	handle_position(pr, 1);
 }

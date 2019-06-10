@@ -67,7 +67,6 @@ struct				s_ray
 	ssize_t			full;
 };
 
-void				ft_cnt_delptr(void *ptr, size_t ptr_size);
 void				ft_lstinit(t_list *lst, t_delptr del_list_func);
 t_list_elem			*ft_lstnew(void const *content, size_t content_size);
 t_list_elem			*ft_lstnew_ref(void *content, size_t content_size);

@@ -23,42 +23,22 @@ void	op_ld(t_pr *pr, t_op op, uint32_t codage)
 {
 	int32_t		value;
 
+
 	if (check_ld_codage(codage) == 0 && pr->reg_err == 0)
 	{
 		if (op.args[0].tp == DIR_CODE)
 			pr->reg[op.args[1].reg_num] = op.args[0].value;
-		if (op.args[0].tp == IND_CODE)
+		else if (op.args[0].tp == IND_CODE)
 		{
 			op.args[0].value %= IDX_MOD;
+			pr->cur_pos = pr->prev_pos;
 			handle_position(pr, op.args[0].value);
 			value = bytes_in_int(pr, 4);
 			pr->reg[op.args[1].reg_num] = value;
+//			pr->cur_pos = pr->prev_pos + 1 + op.args[0].sz; //???????????????
 		}
+//		ft_printf("%d r%d\n", op.args[0].value, op.args[1].reg_num + 1);
 		pr->carry = (pr->reg[op.args[1].reg_num] == 0) ? 1 : 0;
 	}
 	handle_position(pr, 1);
 }
-
-//void	op_ld(t_pr *pr, t_op op, uint32_t codage)
-//{
-//	int32_t		arg1;
-//	int32_t		arg2;
-//	int32_t		value;
-//
-//	arg1 = bytes_in_int(pr, op.args[0].sz);
-//	arg2 = bytes_in_int(pr, op.args[1].sz);
-//	if (check_ld_codage(codage) == 0 && arg2 >= 0 && arg2 <= 15)
-//	{
-//		if (op.args[0].tp == DIR_CODE)
-//			pr->reg[arg2] = (int)arg1;
-//		if (op.args[0].tp == IND_CODE)
-//		{
-//			arg1 %= IDX_MOD;
-//			handle_position(pr, arg1);
-//			value = bytes_in_int(pr, 4);
-//			pr->reg[arg2] = value;
-//		}
-//		pr->carry = (pr->reg[arg2] == 0) ? 1 : 0;
-//	}
-//	handle_position(pr, 1);
-//}

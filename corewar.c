@@ -35,10 +35,10 @@ int 	main(int ac, char **av)
 	make_map(); // созадли карту и разместили код игроков на свои позиции
 //	introduce_players(); // представили игроков перед битвой
 	start_war();
-	printf("\n2\n");
-	for (int i = 0; i < MEM_SIZE; ++i) {
-		printf("%.2x ", g_vm->map[i]);
-	}
+//	printf("\n2\n");
+//	for (int i = 0; i < MEM_SIZE; ++i) {
+//		printf("%.2x ", g_vm->map[i]);
+//	}
 //	system("leaks -q Corewar");
 	return (0);
 }

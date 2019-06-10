@@ -19,7 +19,7 @@ static t_mark	*create_mark(char const *name, t_ull curr_location)
 
 	ret = (t_mark *)ft_memalloc(sizeof(t_mark));
 	ret->location = curr_location;
-	ret->name = (char *)name;
+	ret->name = name;
 	return (ret);
 }
 
@@ -36,6 +36,8 @@ static char const	*get_mark_name(char const *line)
 	ret = line;
 	while (contains_in_alphabet(*line))
 		line++;
+	if (ret == line)
+		return (0);
 	if (*line == ':')
 		ret = ft_strsub(ret, 0, line - ret);
 	else

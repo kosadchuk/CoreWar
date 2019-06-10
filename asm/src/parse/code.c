@@ -6,6 +6,9 @@
 #define SKIP(x) ft_memdel((void **)&(x)); continue;
 #define TRY_SKIP(x) if (is_skipable((x))) { SKIP(x); }
 
+#define ANALYZE_MARK(x) if ((x) == 1) SKIP(line);
+#define ANALYZE_COMMAND(x) if ((x) == 0) { ft_memdel((void **)&line); return (0); }
+
 static void	add_to_marks(t_list	**lst, t_mark *mark)
 {
 	if (*lst)
@@ -47,22 +50,21 @@ static char const	*get_mark_name(char const *line)
 	return (ret);
 }
 
-static int		parse_mark(char const *file_content, char const *line, t_code *code, t_ull len)
+static int		parse_mark(char const *line, t_code *code)
 {
 	char const	*name;
+	t_ull		name_len;
 
 	if (!(name = get_mark_name(line)))
 		return (0);
 	add_to_marks(&code->marks, create_mark(name, code->curr_location));
 	skip_whitespaces(&line);
-	line += ft_strlen(name) + 1;
+	name_len = ft_strlen(name);
+	line += name_len + 1;
 	skip_whitespaces(&line);
 	if (*line == '#' || *line == '\0')
 		return (1);
-	//process complited mark here
-	(void)file_content;
-	(void)len;
-	return (1);
+	return (name_len + 1);
 }
 
 static void	print_all_marks(t_code *code)
@@ -78,9 +80,18 @@ static void	print_all_marks(t_code *code)
 	}
 }
 
+static int	parse_command(char const *line, t_asm *dst)
+{
+	(void)line;
+	(void)dst;
+	return (0);
+}
+
 int			parse_code(char const *file_content, t_asm *dst, t_ull len)
 {
 	char	*line;
+	t_ull	mark_len;
+	t_ull	command_memory;
 	t_code	code;
 
 	code.curr_location = 0;
@@ -88,8 +99,10 @@ int			parse_code(char const *file_content, t_asm *dst, t_ull len)
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
 		TRY_SKIP(line);
-		if (parse_mark(file_content, line, &code, len))
-			SKIP(line);
+		mark_len = parse_mark(line, &code);
+		ANALYZE_MARK(mark_len);
+		command_memory = parse_command(mark_len ? line + mark_len - 1 : line, dst);
+		ANALYZE_COMMAND(command_memory);
 		ft_memdel((void **)&line);
 	}
 	print_all_marks(&code);

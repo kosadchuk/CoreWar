@@ -101,11 +101,11 @@ void	init_vm(void)
 {
 	g_vm = ft_memalloc(sizeof(t_vm));
 	g_vm->last_alive = 0;
-	g_vm->cycles = 1;
-	g_vm->cycles_to_die = CYCLE_TO_DIE;
+	g_vm->cycles = 0;
+	g_vm->ctd = CYCLE_TO_DIE;
 	g_vm->check_cycle = 0;
 	g_vm->checks = 0;
-	g_vm->prev_cycle_to_die = CYCLE_TO_DIE;
+	g_vm->prev_ctd = CYCLE_TO_DIE;
 }
 
 void del_ptr(void *content, size_t content_size)
@@ -156,12 +156,8 @@ void	make_map(void) // создали карту и разместили по с
 	while (i < g_players->len)
 	{
 		ft_memcpy(&(g_vm->map[place]), g_players->team[i]->code, \
-		g_players->team[i]->size);
+        g_players->team[i]->size);
 		place += MEM_SIZE / g_players->len;
 		i++;
 	}
-//	printf("\n1\n");
-//	for (int i = 0; i < MEM_SIZE; ++i) {
-//		printf("%.2x ", g_vm->map[i]);
-//	}
 }

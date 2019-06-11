@@ -67,8 +67,8 @@ struct 				s_vm
 	int				cycles; // колличество циклов начиная с начала битвы
 	int				check_cycle;
 	int				count_live_op; // колл. выполненых операций live за последний период длиной в cycles_to_die
-	int				cycles_to_die; // длительность периода до проверки
-	int				prev_cycle_to_die;
+	int				ctd; // длительность периода до проверки
+	int				prev_ctd;
 	int				checks; // колл. проведенных проверок
 };
 

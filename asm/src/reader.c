@@ -21,12 +21,16 @@ int					is_good_end_of_file(char const *file_content)
 	char const		*last_line;
 
 	if (!file_content)
+	{
+		ft_putendl("error while reading");
 		return (0);
+	}
 	last_line = ft_strrchr(file_content, '\n');
 	last_line++;
 	skip_whitespaces(&last_line);
 	if (*last_line == '\0' || *last_line == '#')
 		return (1);
+	ft_putendl("missed new line at the end of file");
 	return (0);
 }
 

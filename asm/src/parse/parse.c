@@ -19,7 +19,7 @@
 #define SKIP(x) ft_memdel((void **)&(x)); continue;
 #define TRY_SKIP(x) if (is_skipable((x))) { SKIP(x); }
 
-#define ANALYZE_MARK(x) if ((x) == 1) SKIP(line);
+#define ANALYZE_MARK(x) if ((x) == 1) { SKIP(line); }
 #define ANALYZE_COMMAND(x) if ((x) == 0) { ft_memdel((void **)&line); return (0); }
 
 static void	print_all_marks(t_code *code)
@@ -49,7 +49,7 @@ static int	parse_code(char const *file_content, t_asm *dst, t_ull len)
 		TRY_SKIP(line);
 		mark_len = parse_mark(line, &code);
 		ANALYZE_MARK(mark_len);
-		command_memory = parse_command(mark_len ? line + mark_len - 1 : line, dst);
+		command_memory = parse_command(mark_len ? line + mark_len : line, dst);
 		ANALYZE_COMMAND(command_memory);
 		code.curr_location += command_memory;
 		ft_memdel((void **)&line);

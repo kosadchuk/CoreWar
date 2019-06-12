@@ -6,7 +6,7 @@
 
 int	parse_command(char const *line, t_asm *dst)
 {
-	(void)line;
+	skip_whitespaces(&line);
 	(void)dst;
-	return (0);
+	return (1);
 }

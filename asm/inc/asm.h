@@ -15,15 +15,16 @@
 
 # include "../libft/inc/libft.h"
 
-typedef struct	s_asm
+typedef struct s_command
 {
-	t_ull		name_size;
-	t_ull		comment_size;
-	t_ull		code_size;
-	void		*name;
-	void		*comment;
-	void		*code;
-}				t_asm;
+	t_ull		id_in_stack;
+	t_ull		id_type;
+	char		*arg1;
+	char		*arg2;
+	char		*arg3;
+	t_ull		bytes;
+}				t_command;
+
 
 typedef struct	s_mark
 {
@@ -35,7 +36,18 @@ typedef struct	s_code
 {
 	t_list		*marks;
 	t_ull		curr_location;
+	t_list		*commands;
 }				t_code;
+
+typedef struct	s_asm
+{
+	t_ull		name_size;
+	t_ull		comment_size;
+	void		*name;
+	void		*comment;
+	t_code		*code;
+}				t_asm;
+
 
 char		*pre_run_validation(int const ac, char **av);
 /*

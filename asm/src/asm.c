@@ -30,7 +30,6 @@
 static void	init_main_vars(t_asm *_asm, char **file_name, char **file_content)
 {
 	_asm->code = 0;
-	_asm->code_size = 0;
 	_asm->comment = 0;
 	_asm->comment_size = 0;
 	_asm->name = 0;

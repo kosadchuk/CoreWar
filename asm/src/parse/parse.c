@@ -22,40 +22,58 @@
 #define ANALYZE_MARK(x) if ((x) == 1) { SKIP(line); }
 #define ANALYZE_COMMAND(x) if ((x) == 0) { ft_memdel((void **)&line); return (0); }
 
-static void	print_all_marks(t_code *code)
+static void	print_all_parsed(t_code *code)
 {
 	t_list	*lst;
+	t_command	*tmp;
 
-	lst = code->marks;
 	printf("marks:\n");
-	while (lst)
 	{
-		printf("[%s] = %zu\n", ((t_mark *)lst->content)->name, (size_t)((t_mark *)lst->content)->location);
-		lst = lst->next;
+		lst = code->marks;
+		while (lst)
+		{
+			printf("[%s] = %zu\n", ((t_mark *)lst->content)->name, (size_t)((t_mark *)lst->content)->location);
+			lst = lst->next;
+		}
 	}
+	printf("commands:\n");
+	{
+		lst = code->commands;
+		while (lst)
+		{
+			tmp = (t_command *)lst->content;
+			printf("%zu\t%zu\t[%s]\t[%s]\t[%s]\t%zu\n", (size_t)tmp->id_in_stack, (size_t)tmp->id_type,\
+					tmp->arg1, tmp->arg2, tmp->arg3, (size_t)tmp->bytes);
+			lst = lst->next;
+		}
+	}
+	printf("end printing.\n");
+}
+
+static void	init_code(t_code **code)
+{
+	*code = (t_code *)ft_memalloc(sizeof(t_code));
+	(*code)->marks = 0;
+	(*code)->curr_location = 0;
+	(*code)->commands = 0;
 }
 
 static int	parse_code(char const *file_content, t_asm *dst, t_ull len)
 {
 	char	*line;
 	t_ull	mark_len;
-	t_ull	command_memory;
-	t_code	code;
 
-	code.curr_location = 0;
-	code.marks = 0;
+	init_code(&dst->code);
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
 		TRY_SKIP(line);
-		mark_len = parse_mark(line, &code);
+		mark_len = parse_mark(line, dst->code);
 		ANALYZE_MARK(mark_len);
-		command_memory = parse_command(mark_len ? line + mark_len : line, dst);
-		ANALYZE_COMMAND(command_memory);
-		code.curr_location += command_memory;
+		ANALYZE_COMMAND(parse_command(mark_len ? line + mark_len : line, dst));
 		ft_memdel((void **)&line);
 	}
-	print_all_marks(&code);
-	return (dst->code != 0);
+	print_all_parsed(dst->code);
+	return (1);
 }
 
 int				parse(char const *file_content, t_asm *dst)

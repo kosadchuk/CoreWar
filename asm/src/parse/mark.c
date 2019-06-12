@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+static char *g_alphabet = "abcdefghijklmnopqrstuvwxyz_0123456789";
+
 static void	add_to_marks(t_list	**lst, t_mark *mark)
 {
 	if (*lst)
@@ -24,7 +26,16 @@ static t_mark	*create_mark(char const *name, t_ull curr_location)
 
 static int	contains_in_alphabet(char c)
 {
-	return (c != '\0' && c != ':');
+	t_ull	i;
+
+	i = 0;
+	while (g_alphabet[i])
+	{
+		if (g_alphabet[i] == c)
+			return (1);
+		++i;
+	}
+	return (0);
 }
 
 static char const	*get_mark_name(char const *line)

@@ -15,6 +15,16 @@
 
 # include "../libft/inc/libft.h"
 
+typedef struct s_cm_desc {
+	int			code;
+	char		*name;
+	int			arg1_types;
+	int			arg2_types;
+	int			arg3_types;
+	int			has_type_code;
+	int			t_dir_size;
+}				t_cm_desc;
+
 typedef struct s_command
 {
 	t_ull		id_in_stack;

@@ -13,7 +13,7 @@
 #ifndef ASM_H
 # define ASM_H
 
-# include "../libft/inc/libft.h"
+# include "../libft/inc/libft_types.h"
 
 # define T_REG 1
 # define T_DIR 2

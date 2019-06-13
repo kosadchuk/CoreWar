@@ -13,7 +13,7 @@
 #include "../libft/inc/libft.h"
 #include "../inc/asm.h"
 
-static void	init_main_vars(t_asm *_asm, char **file_name, char **file_content)
+static void		init_main_vars(t_asm *_asm, char **file_name, char **file_content)
 {
 	_asm->code = 0;
 	_asm->comment = 0;
@@ -24,7 +24,7 @@ static void	init_main_vars(t_asm *_asm, char **file_name, char **file_content)
 	*file_content = 0;
 }
 
-static void	clean_main_vars(t_asm *_asm, char **file_name, char **file_content)
+static void		clean_main_vars(t_asm *_asm, char **file_name, char **file_content)
 {
 	ft_memdel((void **)&(_asm->name));
 	ft_memdel((void **)&(_asm->comment));
@@ -33,11 +33,11 @@ static void	clean_main_vars(t_asm *_asm, char **file_name, char **file_content)
 	ft_memdel((void **)file_content);
 }
 
-int			main(int ac, char **av)
+int				main(int ac, char **av)
 {
-	t_asm	_asm;
-	char	*file_name;
-	char	*file_content;
+	t_asm		_asm;
+	char const	*file_name;
+	char const	*file_content;
 
 	init_main_vars(&_asm, &file_name, &file_content);
 	file_name = pre_run_validation(ac, av);

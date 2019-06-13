@@ -42,7 +42,7 @@ static void	print_all_parsed(t_code *code)
 		while (lst)
 		{
 			tmp = (t_command *)lst->content;
-			printf("%zu\t%zu\t[%s]\t[%s]\t[%s]\t%zu\n", (size_t)tmp->id_in_stack, (size_t)tmp->id_type,\
+			printf("%zu\t%zu\t[%s]\t\t[%s]\t[%s]\t%zu\n", (size_t)tmp->id_in_stack, (size_t)tmp->id_type,\
 					tmp->arg1, tmp->arg2, tmp->arg3, (size_t)tmp->bytes);
 			lst = lst->next;
 		}
@@ -77,19 +77,19 @@ static int	parse_code(char const *file_content, t_asm *dst, t_ull len)
 }
 
 int				parse(char const *file_content, t_asm *dst)
-{//printf("%s\n", __func__);
+{
 	t_ull const	len = ft_strlen(file_content);
 
 	get_line_from_src(file_content, 0, 0);
 	if (!parse_header(file_content, dst, len))
 	{
-		wrong_asm_in_file(4);
-		exit(4);
+		wrong_asm_in_file(3);
+		exit(3);
 	}
 	if (!parse_code(file_content, dst, len))
 	{
-		wrong_asm_in_file(5);
-		exit(5);
+		wrong_asm_in_file(4);
+		exit(4);
 	}
 	return (1);
 }

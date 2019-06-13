@@ -14,19 +14,18 @@
 #include "../libft/inc/libft.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
-void		not_enough_args()
+void				not_enough_args()
 {
 	ft_putendl("usage: ./asm file.cor");
 }
 
-void		wrong_file_extension()
+void				wrong_file_extension()
 {
 	ft_putendl("Error: file must have a name with at least 1 character and .cor extension");
 }
 
-void		wrong_asm_in_file(int type)
+void				wrong_asm_in_file(int type)
 {
 	if (type == 1)
 		printf("Error: duplicate .name or .comment file\n");
@@ -82,5 +81,4 @@ void				wrong_arg_type(char const *command, int valid_type, int current_type, in
 		printf("Expected: %s\nReal one: T_DIR\n", expected);
 	else if (current_type == T_IND)
 		printf("Expected: %s\nReal one: T_IND\n", expected);
-	exit(1);
 }

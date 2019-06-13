@@ -53,13 +53,19 @@ static char const	*get_expected(int expected_arg_types)
 		ret = ft_strdup("T_REG");
 	if (expected_arg_types & T_DIR)
 	{
-		tmp = ft_strjoin(ret, ret == 0 ? "T_DIR" : " or T_DIR");
+		if (ret)
+			tmp = ft_strjoin(ret, " or T_DIR");
+		else
+			tmp = ft_strjoin("", "T_DIR");
 		ft_memdel((void **)&ret);
 		ret = tmp;
 	}
 	if (expected_arg_types & T_IND)
 	{
-		tmp = ft_strjoin(ret, ret == 0 ? "T_IND" : " or T_IND");
+		if (ret)
+			tmp = ft_strjoin(ret, " or T_IND");
+		else
+			tmp = ft_strjoin("", "T_IND");
 		ft_memdel((void **)&ret);
 		ret = tmp;
 	}
@@ -70,6 +76,7 @@ void				wrong_arg_type(char const *command, int valid_type, int current_type, in
 {
 	char const*		expected;
 
+	printf("valid type = %d\n", valid_type);
 	expected = get_expected(valid_type);
 	if (current_type == 0)
 		printf("Command: %s\nUnknown type of argument %d\n", command, index);

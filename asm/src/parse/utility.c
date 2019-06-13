@@ -6,6 +6,8 @@ void			skip_whitespaces(char const **str)
 	t_ull		i;
 	char const	*tmp;
 
+	if (!str || !str)
+		return;
 	tmp = *str;
 	i = 0;
 	while (tmp[i])

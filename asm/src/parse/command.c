@@ -9,11 +9,6 @@
 #define T_IND 4
 
 static t_ull			g_last_stack_id = 0;
-static char const*		commands[] =\
-	{
-		"live", "ld", "st", "add", "sub", "and", "or", "xor",
-		"zjmp", "ldi", "sti", "fork", "lld", "lldi", "lfork", "aff"
-	};
 
 static t_cm_desc const	g_comms[16] =\
 {
@@ -45,15 +40,15 @@ static t_ull			process_id_type(char const **line, t_ull *id_type)
 	while (ret < 16)
 	{
 		i = 0;
-		while (commands[ret][i])
+		while (g_comms[ret].name[i])
 		{
-			if (commands[ret][i] != (*line)[i])
+			if (g_comms[ret].name[i] != (*line)[i])
 				break;
 			++i;
 		}
-		if (commands[ret][i] == '\0' && (*line)[i] == ' ')
+		if (g_comms[ret].name[i] == '\0' && (*line)[i] == ' ')
 		{
-			*line = *line + ft_strlen(commands[ret]);
+			*line = *line + ft_strlen(g_comms[ret].name);
 			*id_type = ++ret;
 			return (1);
 		}
@@ -67,10 +62,12 @@ static char const		*get_arg(char const* line)
 	char const			*ret;
 	t_ull				copy_to;
 
+	if (!line)
+		return (0);
 	copy_to = 0;
 	while (line[copy_to] && line[copy_to] != ',')
 		++copy_to;
-	if (line == line + copy_to)
+	if (copy_to == 0)
 		return (0);
 	ret = ft_strsub(line, 0, copy_to);
 	return (ret);
@@ -82,7 +79,9 @@ static int				process_arg(char const **line, char const *args[3], int i)
 	args[i] = get_arg(*line);
 	if (args[i] == 0)
 		return (0);
-	*line = *line + ft_strlen(args[i]) + 1;
+	*line = *line + ft_strlen(args[i]);
+	if (**line)
+		*line = *line + 1;
 	return (1);
 }
 
@@ -102,7 +101,6 @@ int						parse_command(char const *line, t_asm *dst)
 	char				error_code;
 
 	(void)dst;
-	(void)g_comms;
 	id_type = 0;
 	bytes_len = 0;
 	error_code = 1;
@@ -111,7 +109,7 @@ int						parse_command(char const *line, t_asm *dst)
 	error_code &= process_arg(&line, args, 1);
 	error_code &= process_arg(&line, args, 2);
 	error_code &= process_bytes_len(args, id_type, &bytes_len);
-	printf("[%s][%s][%s][%s]\n", commands[id_type - 1], args[0], args[1], args[2]);
+	printf("[%s][%s][%s][%s]\n", g_comms[id_type - 1].name, args[0], args[1], args[2]);
 	++g_last_stack_id;
 	return (1);
 }

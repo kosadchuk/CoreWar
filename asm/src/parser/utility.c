@@ -27,7 +27,7 @@ int				is_skipable(char const *line)
 	return (0);
 }
 
-void		mass_memdel(void *a, void *b, void *c, void *d)
+void			mass_memdel(void *a, void *b, void *c, void *d)
 {
 	ft_memdel(&a);
 	ft_memdel(&b);

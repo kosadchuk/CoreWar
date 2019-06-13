@@ -31,7 +31,7 @@ static int		has_errors(char const* str)
 }
 
 static char const	*get_header_part(char const *line)
-{//printf("%s\n", __func__);
+{
 	skip_whitespaces(&line);
 	if (ft_strlen(line) > 5 && !ft_memcmp((void *)line, (void *)".name", 5))
 	{
@@ -77,7 +77,7 @@ static char		*get_full_field(char const *file_content, char const *curr)
 }
 
 void			try_parse_header(char const *file_content, char const *curr, char const *part, void **dst)
-{//printf("%s\n", __func__);
+{
 	char		*end;
 
 	if (*dst)

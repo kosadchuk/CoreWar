@@ -50,6 +50,7 @@ static t_ull			get_id_type(char const **line, t_ull *id_type)
 		}
 		++ret;
 	}
+	wrong_command_name(*line);
 	return (0);
 }
 
@@ -102,7 +103,7 @@ int						parse_command(char const *line, t_asm *dst)
 	bytes_len = 0;
 	error_code = 1;
 	command = line;
-	error_code &= get_id_type(&line, &id_type);
+	RETN_IF_NULL(get_id_type(&line, &id_type));
 	error_code &= process_arg(&line, args, 0);
 	error_code &= process_arg(&line, args, 1);
 	error_code &= process_arg(&line, args, 2);

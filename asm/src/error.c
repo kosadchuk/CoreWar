@@ -32,9 +32,9 @@ void				wrong_asm_in_file(int type)
 	if (type == 2)
 		printf("Error: .name or .commend without the value\n");
 	if (type == 3)
-		printf("Smth went wrong while header parsing\n");
+		printf("Error: smth went wrong while header parsing\n");
 	if (type == 4)
-		printf("Smth went wrong while commands parsing\n");
+		printf("Error: smth went wrong while commands parsing\n");
 	else
 	{
 		ft_putstr("Error: is seems like there is a faggot in front of monitor: ");
@@ -81,4 +81,20 @@ void				wrong_arg_type(char const *command, int valid_type, int current_type, in
 		printf("Expected: %s\nReal one: T_DIR\n", expected);
 	else if (current_type == T_IND)
 		printf("Expected: %s\nReal one: T_IND\n", expected);
+}
+
+void				wrong_command_name(char const *command)
+{
+	char const		*tmp;
+	t_ull			len;
+
+	tmp = command;
+	skip_whitespaces(&tmp);
+	len = 0;
+	while (tmp[len] && tmp[len] != ' ' && tmp[len] != '\t')
+		++len;
+	tmp = ft_strsub(tmp, 0, len);
+	printf("Error: unknown identifier %s\n", tmp);
+	printf("in command %s\n", command);
+	ft_memdel((void **)&tmp);
 }

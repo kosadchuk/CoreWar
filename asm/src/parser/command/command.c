@@ -56,15 +56,31 @@ static t_ull			get_id_type(char const **line, t_ull *id_type)
 
 static int				process_arg(char const **line, char const *args[3], int i)
 {
-	skip_whitespaces(line);
+	int					has_separator;
+
 	if (**line == '\0')
 		return (1);
-	args[i] = get_arg(*line);
-	if (args[i] == 0)
+	skip_whitespaces(line);
+	has_separator = **line == ',' ? 1 : 0;
+	if (i == 0 && has_separator)
+	{
+		printf("Error: unexpected separator\n");
 		return (0);
-	*line = *line + ft_strlen(args[i]);
-	if (**line)
+	}
+	if (i != 0)
+	{
+		if (!has_separator)
+			printf("missed separator\n");
 		*line = *line + 1;
+		skip_whitespaces(line);
+	}
+	args[i] = get_arg(*line);
+	*line = *line + ft_strlen(args[i]);
+	if (has_separator && !args[i])
+	{
+		printf("Error: separator without the arg at the end of command\n");
+		return (0);
+	}
 	return (1);
 }
 
@@ -76,7 +92,7 @@ static int				process_bytes_len(char const *command, char const *args[3], t_ull 
 
 	err_code = 1;
 	--id_type;
-	size = 1;// operation code
+	size = 1;
 	size += g_comms[id_type].has_type_code;
 	arg_types[0] = get_arg_type(args[0]);
 	err_code &= compare_arg_types(command, id_type, arg_types[0], 0);
@@ -107,6 +123,9 @@ int						parse_command(char const *line, t_asm *dst)
 	error_code &= process_arg(&line, args, 0);
 	error_code &= process_arg(&line, args, 1);
 	error_code &= process_arg(&line, args, 2);
+	skip_whitespaces(&line);
+	if (*line && *line != '#')
+		return (0);
 	error_code &= process_bytes_len(command, args, id_type, &bytes_len);
 	error_code &= append_command(dst, create_command(g_last_stack_id, --id_type, args, bytes_len));
 	dst->code->curr_location += bytes_len;

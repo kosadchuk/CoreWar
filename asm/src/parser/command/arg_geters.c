@@ -1,6 +1,8 @@
 #include "../../../inc/asm.h"
 #include "../../../libft/inc/libft.h"
 
+#include <stdio.h>
+
 extern t_cm_desc const	g_comms[16];
 
 char const		*get_arg(char const* line)
@@ -11,7 +13,7 @@ char const		*get_arg(char const* line)
 	if (!line)
 		return (0);
 	copy_to = 0;
-	while (line[copy_to] && line[copy_to] != ',')
+	while (line[copy_to] && line[copy_to] != ',' && line[copy_to] != ' ')
 		++copy_to;
 	if (copy_to == 0)
 		return (0);

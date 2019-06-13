@@ -1,6 +1,8 @@
 #include "../../../inc/asm.h"
 #include "../../../libft/inc/libft.h"
 
+#include <stdio.h>
+
 extern t_cm_desc const	g_comms[16];
 
 int			is_valid_t_reg(char const *arg)
@@ -12,12 +14,12 @@ int			is_valid_t_reg(char const *arg)
 		return (0);
 	if (arg_len == 2)
 	{
-		if (!ft_isalnum(arg[1]) || arg[1] == '0')
+		if (!ft_isdigit(arg[1]) || arg[1] == '0')
 			return (0);
 	}
 	else
 	{
-		if (!ft_isalnum(arg[1]) || !ft_isalnum(arg[2]) ||
+		if (!ft_isdigit(arg[1]) || !ft_isdigit(arg[2]) ||
 			(arg[1] == '0' && arg[2] == '0'))
 			return (0);
 	}
@@ -39,10 +41,10 @@ int			is_valid_t_dir(char const *arg)
 	}
 	else
 	{
-		if (!ft_isalnum(arg[1]) && arg[1] != '-')
+		if (!ft_isdigit(arg[1]) && arg[1] != '-')
 			return (0);
 		i = 2;
-		while (i < arg_len && ft_isalnum(arg[i]))
+		while (i < arg_len && ft_isdigit(arg[i]))
 			++i;
 		if (i != arg_len)
 			return (0);
@@ -65,10 +67,10 @@ int			is_valid_t_ind(char const *arg)
 	}
 	else
 	{
-		if (!ft_isalnum(arg[0]) && arg[0] != '-')
+		if (!ft_isdigit(arg[0]) && arg[0] != '-')
 			return (0);
 		i = 1;
-		while (i < arg_len && ft_isalnum(arg[i]))
+		while (i < arg_len && ft_isdigit(arg[i]))
 			++i;
 		if (i != arg_len)
 			return (0);

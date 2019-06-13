@@ -15,6 +15,10 @@
 
 # include "../libft/inc/libft.h"
 
+# define T_REG 1
+# define T_DIR 2
+# define T_IND 4
+
 typedef struct s_cm_desc {
 	int			code;
 	char		*name;

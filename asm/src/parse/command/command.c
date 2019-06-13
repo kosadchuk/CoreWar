@@ -4,10 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define T_REG 1
-#define T_DIR 2
-#define T_IND 4
-
 static t_ull			g_last_stack_id = 0;
 
 t_cm_desc const			g_comms[16] =\

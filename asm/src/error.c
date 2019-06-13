@@ -16,10 +16,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define T_REG 1
-#define T_DIR 2
-#define T_IND 4
-
 void		not_enough_args()
 {
 	ft_putendl("usage: ./asm file.cor");

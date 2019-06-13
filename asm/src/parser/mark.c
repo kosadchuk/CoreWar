@@ -5,7 +5,7 @@
 
 static char *g_alphabet = "abcdefghijklmnopqrstuvwxyz_0123456789";
 
-static void	add_to_marks(t_list	**lst, t_mark *mark)
+static void			add_to_marks(t_list	**lst, t_mark *mark)
 {
 	if (*lst)
 		ft_lstadd_before(lst, ft_lstnew((void *)mark, sizeof(t_mark)));
@@ -14,9 +14,9 @@ static void	add_to_marks(t_list	**lst, t_mark *mark)
 	ft_memdel((void **)&mark);
 }
 
-static t_mark	*create_mark(char const *name, t_ull curr_location)
+static t_mark		*create_mark(char const *name, t_ull curr_location)
 {
-	t_mark		*ret;
+	t_mark			*ret;
 
 	ret = (t_mark *)ft_memalloc(sizeof(t_mark));
 	ret->location = curr_location;
@@ -24,9 +24,9 @@ static t_mark	*create_mark(char const *name, t_ull curr_location)
 	return (ret);
 }
 
-static int	contains_in_alphabet(char c)
+static int			contains_in_alphabet(char c)
 {
-	t_ull	i;
+	t_ull			i;
 
 	i = 0;
 	while (g_alphabet[i])
@@ -55,10 +55,10 @@ static char const	*get_mark_name(char const *line)
 	return (ret);
 }
 
-int				parse_mark(char const *line, t_code *code)
+int					parse_mark(char const *line, t_code *code)
 {
-	char const	*name;
-	t_ull		name_len;
+	char const		*name;
+	t_ull			name_len;
 
 	if (!(name = get_mark_name(line)))
 		return (0);

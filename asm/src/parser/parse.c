@@ -50,7 +50,7 @@ static void	print_all_parsed(t_code *code)
 	printf("end printing.\n");
 }
 
-static void	init_code(t_code **code)
+static void		init_code(t_code **code)
 {
 	*code = (t_code *)ft_memalloc(sizeof(t_code));
 	(*code)->marks = 0;
@@ -58,10 +58,10 @@ static void	init_code(t_code **code)
 	(*code)->commands = 0;
 }
 
-static int	parse_code(char const *file_content, t_asm *dst, t_ull len)
+static int		parse_code(char const *file_content, t_asm *dst, t_ull len)
 {
-	char	*line;
-	t_ull	mark_len;
+	char		*line;
+	t_ull		mark_len;
 
 	init_code(&dst->code);
 	while ((line = get_line_from_src(file_content, len, 0)))

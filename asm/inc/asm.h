@@ -97,9 +97,13 @@ char		*read_file(char const* file_name);
 char		*get_line_from_src(char const *src, t_ull src_len, int flag_reset);
 int			is_good_end_of_file(char const *file_content);
 /*
-**				writer.c
+**				writer/writer.c
 */
 void		write_file(char const* file_name, t_asm *content);
+/*
+**				writer/validator.c
+*/
+
 /*
 **				utility.c
 */
@@ -113,5 +117,6 @@ void		not_enough_args();
 void		wrong_file_extension();
 void		wrong_asm_in_file(int type);
 void		wrong_arg_type(char const *command, int valid_type, int current_type, int index);
+void		wrong_command_name(char const *command);
 
 #endif

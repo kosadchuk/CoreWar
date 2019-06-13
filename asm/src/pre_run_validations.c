@@ -29,9 +29,9 @@ static char		*get_file_name_without_extension(char const *file_name)
 	return (ret);
 }
 
-char		*pre_run_validation(int const ac, char **av)
+char			*pre_run_validation(int const ac, char **av)
 {
-	char	*ret;
+	char		*ret;
 
 	if (ac < 2)
 	{

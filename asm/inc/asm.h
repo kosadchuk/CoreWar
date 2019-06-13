@@ -18,9 +18,9 @@
 typedef struct s_cm_desc {
 	int			code;
 	char		*name;
-	int			arg1_types;
-	int			arg2_types;
-	int			arg3_types;
+	int			arg1_type;
+	int			arg2_type;
+	int			arg3_type;
 	int			has_type_code;
 	int			t_dir_size;
 }				t_cm_desc;
@@ -29,9 +29,9 @@ typedef struct s_command
 {
 	t_ull		id_in_stack;
 	t_ull		id_type;
-	char		*arg1;
-	char		*arg2;
-	char		*arg3;
+	char const	*arg1;
+	char const	*arg2;
+	char const	*arg3;
 	t_ull		bytes;
 }				t_command;
 
@@ -89,5 +89,6 @@ void		mass_memdel(void *a, void *b, void *c, void *d);
 void		not_enough_args();
 void		wrong_file_extension();
 void		wrong_asm_in_file(int type);
+void		wrong_arg_type(char const *command, int valid_type, int current_type, int index);
 
 #endif

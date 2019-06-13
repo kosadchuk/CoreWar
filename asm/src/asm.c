@@ -13,20 +13,6 @@
 #include "../libft/inc/libft.h"
 #include "../inc/asm.h"
 
-// static void	show_file_line_by_line(char const *file_content)
-// {
-// 	t_ull	len;
-// 	char	*line;
-
-// 	len = ft_strlen(file_content);
-// 	while ((line = get_line_from_src(file_content, len, 0)))
-// 	{
-// 		ft_putendl(line);
-// 		ft_memdel((void **)&line);
-// 	}
-// 	get_line_from_src(0, 0, 0);
-// }
-
 static void	init_main_vars(t_asm *_asm, char **file_name, char **file_content)
 {
 	_asm->code = 0;

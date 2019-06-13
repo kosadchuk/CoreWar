@@ -66,7 +66,28 @@ char		*pre_run_validation(int const ac, char **av);
 int			parse(char const *file_content, t_asm *dst);
 int			parse_header(char const *file_content, t_asm *dst, t_ull len);
 int			parse_mark(char const *line, t_code *code);
+/*
+**				parser/command/
+*/
 int			parse_command(char const *line, t_asm *dst);
+/*
+**				parser/command/arg_validation.c
+*/
+int			is_valid_t_reg(char const *arg);
+int			is_valid_t_dir(char const *arg);
+int			is_valid_t_ind(char const *arg);
+int			compare_arg_types(char const *command, int command_type_id, int arg_type, int index);
+/*
+**				parser/command/arg_geters.c
+*/
+char const	*get_arg(char const* line);
+int			get_arg_type(char const *arg);
+t_ull		get_arg_size_in_bytes(int arg_type, t_ull command_type_id);
+/*
+**				parser/command/utility.c
+*/
+t_command	*create_command(t_ull id_in_stack, t_ull id_type, char const *args[3], t_ull bytes);
+int			append_command(t_asm *dst, t_command *to_append);
 /*
 **				reader.c
 */

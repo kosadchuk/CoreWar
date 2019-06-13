@@ -17,9 +17,9 @@
 #define PROCESS_COMMENT() PARSE_COMMENT(".comment");
 #define TRY_PARS_COMMENT(x) if (STREQU(x, ".comment")){ PROCESS_COMMENT(); }
 
-static int		has_errors(char const* str)
+static int			has_errors(char const* str)
 {
-	char const	*end;
+	char const		*end;
 
 	if (!(end = ft_strchr(str, '\"')))
 		return (0);
@@ -48,13 +48,13 @@ static char const	*get_header_part(char const *line)
 	return (0);
 }
 
-static char		*get_full_field(char const *file_content, char const *curr)
+static char			*get_full_field(char const *file_content, char const *curr)
 {
-	t_ull const	len = ft_strlen(file_content);
-	char		*line;
-	char		*ret;
-	char		*tmp;
-	char		*end;
+	t_ull const		len = ft_strlen(file_content);
+	char			*line;
+	char			*ret;
+	char			*tmp;
+	char			*end;
 
 	ret = ft_strdup(curr);
 	while ((line = get_line_from_src(file_content, len, 0)))
@@ -76,9 +76,9 @@ static char		*get_full_field(char const *file_content, char const *curr)
 	return (0);
 }
 
-void			try_parse_header(char const *file_content, char const *curr, char const *part, void **dst)
+void				try_parse_header(char const *file_content, char const *curr, char const *part, void **dst)
 {
-	char		*end;
+	char			*end;
 
 	if (*dst)
 	{
@@ -103,11 +103,11 @@ void			try_parse_header(char const *file_content, char const *curr, char const *
 	printf("%s = [%s]\n", part, (char *)*dst);
 }
 
-int				parse_header(char const *file_content, t_asm *dst, t_ull len)
+int					parse_header(char const *file_content, t_asm *dst, t_ull len)
 {
-	char		*line;
-	char const	*header_part;
-	int			breaker;
+	char			*line;
+	char const		*header_part;
+	int				breaker;
 
 	breaker = 0;
 	while ((line = get_line_from_src(file_content, len, 0)))

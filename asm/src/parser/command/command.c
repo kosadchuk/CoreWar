@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static t_ull			g_last_stack_id = 0;
+static t_ull	g_last_stack_id = 0;
 
-t_cm_desc const			g_comms[16] =\
+t_cm_desc const	g_comms[16] =\
 {
 	{ 0x01, "live",	T_DIR,					0,						0,				0, 4 },
 	{ 0x02, "ld",	T_DIR | T_IND,			T_REG,					0,				1, 4 },

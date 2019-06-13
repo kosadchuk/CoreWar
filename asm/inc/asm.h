@@ -39,7 +39,6 @@ typedef struct s_command
 	t_ull		bytes;
 }				t_command;
 
-
 typedef struct	s_mark
 {
 	char const	*name;
@@ -61,7 +60,6 @@ typedef struct	s_asm
 	void		*comment;
 	t_code		*code;
 }				t_asm;
-
 
 char		*pre_run_validation(int const ac, char **av);
 /*

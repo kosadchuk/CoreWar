@@ -4,35 +4,20 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static void string_two_hex_string(char *input, char **output, int flag)
+void		int_to_bytecode(char *data, int value)
 {
-	t_ull	len;
-	int		loop;
 	int		i;
+	int		size;
 
-	printf("input : %s\n", input);
-	if (flag == 1)
-		len = 128;
-	if (flag == 2)
-		len = 2048;
-	if (flag == 4)
-		len = ft_strlen(input);
-	*output = ft_memalloc(sizeof(char) * len);
-	ft_memset((void *)*output, 0, len);
 	i = 0;
-	loop = 0;
-	while (input[loop] != '\0')
+	size = 4;
+	while (size)
 	{
-		sprintf((char*)(*output+i),"%02X", input[loop]);
-		loop+=1;
-		i+=2;
+		data[size - 1] = (char)((value >> i) & 0xFF);
+		printf("c = [%c]\n", (char)((value >> i) & 0xFF));
+		i += 8;
+		size--;
 	}
-	(*output)[i++] = '\0';
-}
-
-static void	decimal10_to_16(char *input, char **output)
-{
-	
 }
 
 static int	get_exec_code_size(t_asm const *content)
@@ -53,25 +38,19 @@ static int	get_exec_code_size(t_asm const *content)
 void		write_header_in_binary(int fd, t_asm const *content)
 {
 	char	*txt;
-	char	*tmp;
-	t_ull	len;
+	int		command_bytes;
+	int		i;
 
-	len = write(fd, "00ea83f3", 16);
-
-	string_two_hex_string(content->name, &txt, 1);
-	len = write(fd, txt, 128);
-	ft_memdel((void **)&txt);
-
-	len = write(fd, "\0\0\0\0", 4);
-
-	tmp = ft_itoa((int)get_exec_code_size(content));
-	string_two_hex_string(tmp, &txt, 3);
-	len = write(fd, txt, ft_strlen(tmp));
-	ft_memdel((void **)&txt);
-	ft_memdel((void **)&tmp);
-
-	string_two_hex_string(content->comment, &txt, 2);
-	len = write(fd, txt, 2048);
-	ft_memdel((void **)&txt);
-	(void)len;
+	command_bytes = get_exec_code_size(content);
+	txt = ft_strnew(sizeof(char) * (16 + 128 + 2048 + command_bytes));
+	int_to_bytecode(txt, 0xea83f3);
+	i = 4;
+	ft_memcpy(txt + i, content->name, ft_strlen(content->name));
+	i += 128;
+	i += 4;
+	int_to_bytecode(txt + i, command_bytes);
+	i += 4;
+	ft_memcpy(txt + i, content->comment, ft_strlen(content->comment));
+	i += 2048;
+	i = write(fd, txt, i);
 }

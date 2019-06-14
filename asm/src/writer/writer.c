@@ -15,6 +15,9 @@
 
 void		write_file(char const* file_name, t_asm *content)
 {
-	(void)file_name;
-	(void)content;
+	if (!validate_parsed_data(content))
+	{
+		ft_memdel((void **)file_name);
+		return;
+	}
 }

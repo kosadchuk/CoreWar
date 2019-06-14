@@ -113,7 +113,7 @@ void		write_file(char const* file_name, t_asm *content);
 /*
 **				writer/validator.c
 */
-
+int			validate_parsed_data(t_asm const* data);
 /*
 **				utility.c
 */

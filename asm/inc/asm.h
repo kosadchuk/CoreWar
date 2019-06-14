@@ -29,13 +29,6 @@ typedef struct s_cm_desc {
 	int			t_dir_size;
 }				t_cm_desc;
 
-typedef struct	s_err_manager_storage
-{
-	t_ull		index_line;
-	char const	*curr_line;
-	t_asm		*to_del;
-}				t_err_manager_storage;
-
 typedef struct s_command
 {
 	t_ull		id_in_stack;
@@ -67,6 +60,14 @@ typedef struct	s_asm
 	void		*comment;
 	t_code		*code;
 }				t_asm;
+
+typedef struct	s_err_manager_storage
+{
+	t_ull		index_line;
+	char const	*curr_line;
+	t_asm		*to_del;
+}				t_err_manager_storage;
+
 
 char		*pre_run_validation(int const ac, char **av);
 /*

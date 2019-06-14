@@ -119,10 +119,13 @@ int			is_skipable(char const *line);
 void		skip_whitespaces(char const **str);
 void		mass_memdel(void *a, void *b, void *c, void *d);
 /*
-**				error_manager/error.c
+**				error_manager/pre_run_errors.c
 */
 void		not_enough_args();
 void		wrong_file_extension();
+/*
+**				error_manager/error.c
+*/
 void		wrong_asm_in_file(int type);
 void		wrong_arg_type(char const *command, int valid_type, int current_type, int index);
 void		wrong_command_name(char const *command);

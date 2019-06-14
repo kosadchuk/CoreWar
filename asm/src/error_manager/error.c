@@ -15,16 +15,6 @@
 
 #include <stdio.h>
 
-void				not_enough_args()
-{
-	ft_putendl("usage: ./asm file.cor");
-}
-
-void				wrong_file_extension()
-{
-	ft_putendl("Error: file must have a name with at least 1 character and .cor extension");
-}
-
 void				wrong_asm_in_file(int type)
 {
 	if (type == 1)

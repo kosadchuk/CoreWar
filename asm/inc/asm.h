@@ -111,6 +111,10 @@ int			is_good_end_of_file(char const *file_content);
 */
 void		write_file(char const* file_name, t_asm *content);
 /*
+**				writer/write_header.c
+*/
+void		write_header_in_binary(int fd, t_asm const *content);
+/*
 **				writer/validator.c
 */
 int			validate_parsed_data(t_asm const* data);

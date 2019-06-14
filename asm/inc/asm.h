@@ -63,6 +63,8 @@ typedef struct	s_asm
 
 typedef struct	s_err_manager_storage
 {
+	char const	*file_name;
+	char const	*file_content;
 	t_ull		index_line;
 	char const	*curr_line;
 	t_asm		*to_del;
@@ -123,6 +125,11 @@ void		mass_memdel(void *a, void *b, void *c, void *d);
 */
 void		not_enough_args();
 void		wrong_file_extension();
+/*
+**				error_manager/reader_errors.c
+*/
+void		fail_to_open_file();
+void		missed_new_line();
 /*
 **				error_manager/error.c
 */

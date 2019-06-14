@@ -16,21 +16,19 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+extern t_err_manager_storage g_on_error;
+
 int					is_good_end_of_file(char const *file_content)
 {
 	char const		*last_line;
 
-	if (!file_content)
-	{
-		ft_putendl("error while reading");
-		return (0);
-	}
 	last_line = ft_strrchr(file_content, '\n');
-	last_line++;
+	if (last_line)
+		last_line++;
 	skip_whitespaces(&last_line);
 	if (*last_line == '\0' || *last_line == '#')
 		return (1);
-	ft_putendl("missed new line at the end of file");
+	missed_new_line();
 	return (0);
 }
 
@@ -70,7 +68,7 @@ char				*read_file(char const* file_name)
 	int				fd;
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)
-		return (0);
+		fail_to_open_file();
 	ret = (char *)ft_memalloc(sizeof(char));
 	var[0] = 0;
 	while ((var[1] = read(fd, buffer, 102399)) > 0)
@@ -85,5 +83,6 @@ char				*read_file(char const* file_name)
 		ft_memdel((void **)&tmp);
 	}
 	ret[var[0]] = '\0';
+	g_on_error.file_content = ret;
 	return (ret);
 }

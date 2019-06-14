@@ -13,6 +13,8 @@
 #include "../libft/inc/libft.h"
 #include "../inc/asm.h"
 
+extern t_err_manager_storage g_on_error;
+
 static char		*get_file_name_without_extension(char const *file_name)
 {
 	char		*ret;
@@ -21,6 +23,7 @@ static char		*get_file_name_without_extension(char const *file_name)
 	if (last_dot == file_name || !ft_strequ(last_dot, ".cor"))
 		wrong_file_extension();
 	ret = ft_strsub(file_name, 0, last_dot - file_name);
+	g_on_error.file_name = ret;
 	return (ret);
 }
 

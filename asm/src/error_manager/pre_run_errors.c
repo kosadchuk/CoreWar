@@ -1,11 +1,10 @@
 #include "../../libft/inc/libft.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 void	not_enough_args()
 {
-	ft_putendl("Not enough arguments.");
+	ft_putendl("Error: not enough arguments.");
 	ft_putendl("usage: ./asm file.cor");
 	exit(1);
 }

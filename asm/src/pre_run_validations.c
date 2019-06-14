@@ -13,8 +13,6 @@
 #include "../libft/inc/libft.h"
 #include "../inc/asm.h"
 
-#include <stdlib.h>
-
 static char		*get_file_name_without_extension(char const *file_name)
 {
 	char		*ret;

@@ -22,6 +22,8 @@
 #define ANALYZE_MARK(x) if ((x) == 1) { SKIP(line); }
 #define ANALYZE_COMMAND(x) if ((x) == 0) { ft_memdel((void **)&line); return (0); }
 
+extern t_err_manager_storage g_on_error;
+
 static void	print_all_parsed(t_code *code)
 {
 	t_list	*lst;
@@ -66,6 +68,8 @@ static int		parse_code(char const *file_content, t_asm *dst, t_ull len)
 	init_code(&dst->code);
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
+		g_on_error.index_line++;
+		g_on_error.curr_line = line;
 		TRY_SKIP(line);
 		mark_len = parse_mark(line, dst->code);
 		ANALYZE_MARK(mark_len);
@@ -82,14 +86,8 @@ int				parse(char const *file_content, t_asm *dst)
 
 	get_line_from_src(file_content, 0, 0);
 	if (!parse_header(file_content, dst, len))
-	{
-		wrong_asm_in_file(3);
-		exit(3);
-	}
+		wrong_header_in_file(3);
 	if (!parse_code(file_content, dst, len))
-	{
 		wrong_asm_in_file(4);
-		exit(4);
-	}
 	return (1);
 }

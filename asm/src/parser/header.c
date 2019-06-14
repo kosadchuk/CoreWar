@@ -17,6 +17,8 @@
 #define PROCESS_COMMENT() PARSE_COMMENT(".comment");
 #define TRY_PARS_COMMENT(x) if (STREQU(x, ".comment")){ PROCESS_COMMENT(); }
 
+extern t_err_manager_storage g_on_error;
+
 static int			has_errors(char const* str)
 {
 	char const		*end;
@@ -82,8 +84,8 @@ void				try_parse_header(char const *file_content, char const *curr, char const 
 
 	if (*dst)
 	{
-		wrong_asm_in_file(1);
-		exit(1);
+		ft_memdel((void **)&curr);
+		wrong_header_in_file(1);
 	}
 	skip_whitespaces(&curr);
 	curr += ft_strlen(part);
@@ -96,10 +98,7 @@ void				try_parse_header(char const *file_content, char const *curr, char const 
 	else
 		*dst = get_full_field(file_content, curr);
 	if (!*dst)
-	{
-		wrong_asm_in_file(2);
-		exit(2);
-	}
+		wrong_header_in_file(2);
 	printf("%s = [%s]\n", part, (char *)*dst);
 }
 
@@ -112,6 +111,8 @@ int					parse_header(char const *file_content, t_asm *dst, t_ull len)
 	breaker = 0;
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
+		g_on_error.index_line++;
+		g_on_error.curr_line = line;
 		TRY_SKIP(line);
 		header_part = get_header_part(line);
 		++breaker;

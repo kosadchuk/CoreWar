@@ -35,6 +35,8 @@ static void		clean_main_vars(t_asm *_asm, char const **file_name, char const **f
 {
 	ft_memdel((void **)&(_asm->name));
 	ft_memdel((void **)&(_asm->comment));
+	ft_lstdel(&_asm->code->commands, command_deleter);
+	ft_lstdel(&_asm->code->marks, mark_deleter);
 	ft_memdel((void **)&(_asm->code));
 	ft_memdel((void **)file_name);
 	ft_memdel((void **)file_content);

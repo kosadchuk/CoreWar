@@ -26,7 +26,7 @@ t_cm_desc const	g_comms[16] =\
 	{ 0x10,	"aff",	T_REG,					0,						0,				1, 4 }
 };
 
-static t_ull			get_id_type(char const **line, t_ull *id_type)
+static t_ull			init_id_type(char const **line, t_ull *id_type)
 {
 	t_ull				ret;
 	t_ull				i;
@@ -84,24 +84,23 @@ static int				process_arg(char const **line, char const *args[3], int i)
 	return (1);
 }
 
-static int				process_bytes_len(char const *command, char const *args[3], t_ull id_type, t_ull *len)
+static int				process_bytes_len(char const *args[3], t_ull id_type, t_ull *len)
 {
 	t_ull				size;
 	int					arg_types[3];
 	int					err_code;
 
 	err_code = 1;
-	--id_type;
 	size = 1;
 	size += g_comms[id_type].has_type_code;
 	arg_types[0] = get_arg_type(args[0]);
-	err_code &= compare_arg_types(command, id_type, arg_types[0], 0);
+	err_code &= compare_arg_types(id_type, arg_types[0], 0);
 	size += get_arg_size_in_bytes(arg_types[0], id_type);
 	arg_types[1] = get_arg_type(args[1]);
-	err_code &= compare_arg_types(command, id_type, arg_types[1], 1);
+	err_code &= compare_arg_types(id_type, arg_types[1], 1);
 	size += get_arg_size_in_bytes(arg_types[1], id_type);
 	arg_types[2] = get_arg_type(args[2]);
-	err_code &= compare_arg_types(command, id_type, arg_types[2], 2);
+	err_code &= compare_arg_types(id_type, arg_types[2], 2);
 	size += get_arg_size_in_bytes(arg_types[2], id_type);
 	*len = size;
 	return (err_code);
@@ -110,7 +109,6 @@ static int				process_bytes_len(char const *command, char const *args[3], t_ull 
 int						parse_command(char const *line, t_asm *dst)
 {
 	char const			*args[3] = { 0, 0, 0 };
-	char const			*command;
 	t_ull				id_type;
 	t_ull				bytes_len;
 	char				error_code;
@@ -118,16 +116,16 @@ int						parse_command(char const *line, t_asm *dst)
 	id_type = 0;
 	bytes_len = 0;
 	error_code = 1;
-	command = line;
-	RETN_IF_NULL(get_id_type(&line, &id_type));
+	RETN_IF_NULL(init_id_type(&line, &id_type));
+	--id_type;
 	error_code &= process_arg(&line, args, 0);
 	error_code &= process_arg(&line, args, 1);
 	error_code &= process_arg(&line, args, 2);
 	skip_whitespaces(&line);
-	if (*line && *line != '#')
+	if ((*line && *line != '#') || !error_code)
 		return (0);
-	error_code &= process_bytes_len(command, args, id_type, &bytes_len);
-	error_code &= append_command(dst, create_command(g_last_stack_id, --id_type, args, bytes_len));
+	error_code &= process_bytes_len(args, id_type, &bytes_len);
+	error_code &= append_command(dst, create_command(g_last_stack_id, id_type, args, bytes_len));
 	dst->code->curr_location += bytes_len;
 	++g_last_stack_id;
 	return (error_code);

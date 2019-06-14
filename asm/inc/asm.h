@@ -88,7 +88,7 @@ int			parse_command(char const *line, t_asm *dst);
 int			is_valid_t_reg(char const *arg);
 int			is_valid_t_dir(char const *arg);
 int			is_valid_t_ind(char const *arg);
-int			compare_arg_types(char const *command, int command_type_id, int arg_type, int index);
+int			compare_arg_types(int command_type_id, int arg_type, int index);
 /*
 **				parser/command/arg_geters.c
 */
@@ -131,10 +131,20 @@ void		wrong_file_extension();
 void		fail_to_open_file();
 void		missed_new_line();
 /*
-**				error_manager/error.c
+**				error_manager/parsing_header_errors.c
+*/
+void		wrong_header_in_file(int type);
+/*
+**				error_manager/parsing_command_errors.c
 */
 void		wrong_asm_in_file(int type);
-void		wrong_arg_type(char const *command, int valid_type, int current_type, int index);
 void		wrong_command_name(char const *command);
+void		wrong_arg_type(int valid_type, int current_type, int index);
+/*
+**				deletors.c
+*/
+void		command_deleter(void *content, t_ull size);
+void		mark_deleter(void *content, t_ull size);
+void		on_error_deleter();
 
 #endif

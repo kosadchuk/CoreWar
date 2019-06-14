@@ -23,5 +23,6 @@ int				append_command(t_asm *dst, t_command *to_append)
 		ft_lstadd_before(&dst->code->commands, ft_lstnew(to_append, sizeof(t_command)));
 	else
 		dst->code->commands = ft_lstnew(to_append, sizeof(t_command));
+	ft_memdel((void **)&to_append);
 	return (1);
 }

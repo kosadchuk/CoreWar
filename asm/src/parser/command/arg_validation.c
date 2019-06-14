@@ -78,7 +78,7 @@ int			is_valid_t_ind(char const *arg)
 	return (1);
 }
 
-int			compare_arg_types(char const *command, int command_type_id, int arg_type, int index)
+int			compare_arg_types(int command_type_id, int arg_type, int index)
 {
 	int		needed_type;
 
@@ -92,9 +92,6 @@ int			compare_arg_types(char const *command, int command_type_id, int arg_type, 
 	if (arg_type & needed_type || arg_type == needed_type)
 		;
 	else
-	{
-		wrong_arg_type(command, needed_type, arg_type, index + 1);
-		return (0);
-	}
+		wrong_arg_type(needed_type, arg_type, index + 1);
 	return (1);
 }

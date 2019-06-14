@@ -29,6 +29,13 @@ typedef struct s_cm_desc {
 	int			t_dir_size;
 }				t_cm_desc;
 
+typedef struct	s_err_manager_storage
+{
+	t_ull		index_line;
+	char const	*curr_line;
+	t_asm		*to_del;
+}				t_err_manager_storage;
+
 typedef struct s_command
 {
 	t_ull		id_in_stack;
@@ -111,7 +118,7 @@ int			is_skipable(char const *line);
 void		skip_whitespaces(char const **str);
 void		mass_memdel(void *a, void *b, void *c, void *d);
 /*
-**				error.c
+**				error_manager/error.c
 */
 void		not_enough_args();
 void		wrong_file_extension();

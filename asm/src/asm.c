@@ -13,8 +13,13 @@
 #include "../libft/inc/libft.h"
 #include "../inc/asm.h"
 
+t_err_manager_storage	g_on_error;
+
 static void		init_main_vars(t_asm *_asm, char const **file_name, char const **file_content)
 {
+	g_on_error.to_del = _asm;
+	g_on_error.curr_line = 0;
+	g_on_error.curr_line = 0;
 	_asm->code = 0;
 	_asm->comment = 0;
 	_asm->comment_size = 0;

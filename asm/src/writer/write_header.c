@@ -42,7 +42,7 @@ void		write_header_in_binary(int fd, t_asm const *content)
 	int		i;
 
 	command_bytes = get_exec_code_size(content);
-	txt = ft_strnew(sizeof(char) * (16 + 128 + 2048 + command_bytes));
+	txt = ft_strnew(sizeof(char) * (16 + 128 + 2048));
 	int_to_bytecode(txt, 0xea83f3);
 	i = 4;
 	ft_memcpy(txt + i, content->name, ft_strlen(content->name));
@@ -53,4 +53,5 @@ void		write_header_in_binary(int fd, t_asm const *content)
 	ft_memcpy(txt + i, content->comment, ft_strlen(content->comment));
 	i += 2048;
 	i = write(fd, txt, i);
+	ft_memdel((void **)&txt);
 }

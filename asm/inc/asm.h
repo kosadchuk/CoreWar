@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 14:17:08 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/02 16:11:36 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/15 14:05:51 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,10 @@ void		write_file(char const* file_name, t_asm *content);
 **				writer/write_header.c
 */
 void		write_header_in_binary(int fd, t_asm const *content);
+/*
+**				writer/write_commands.c
+*/
+void		write_commands_in_binary(int fd, t_asm const *content);
 /*
 **				writer/validator.c
 */

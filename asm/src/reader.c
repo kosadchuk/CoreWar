@@ -11,18 +11,38 @@
 /* ************************************************************************** */
 
 #include "../inc/asm.h"
-#include "../../libft/libft.h"
+#include "../libft/inc/libft.h"
 
+#include <unistd.h>
 #include <fcntl.h>
 
-char				*get_line_from_src(char const *src, size_t src_len, int flag_reset)
+extern t_err_manager_storage g_on_error;
+
+int					is_good_end_of_file(char const *file_content)
 {
-	static size_t	start = 0;
+	char const		*last_line;
+
+	last_line = ft_strrchr(file_content, '\n');
+	if (last_line)
+		last_line++;
+	skip_whitespaces(&last_line);
+	if (*last_line == '\0' || *last_line == '#')
+		return (1);
+	missed_new_line();
+	return (0);
+}
+
+char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)
+{
+	static t_ull	start = 0;
 	char			*ret;
 	char			*new_line_char;
 
 	if (flag_reset)
+	{
 		start = 0;
+		return (0);
+	}
 	if (start >= src_len)
 		return (0);
 	new_line_char = ft_strchr(src + start, '\n');
@@ -44,11 +64,11 @@ char				*read_file(char const* file_name)
 	char			*ret;
 	char			*tmp;
 	char			buffer[102400];
-	size_t			var[2];
+	t_ull			var[2];
 	int				fd;
 
 	if ((fd = open(file_name, O_RDONLY)) < 0)
-		return (0);
+		fail_to_open_file();
 	ret = (char *)ft_memalloc(sizeof(char));
 	var[0] = 0;
 	while ((var[1] = read(fd, buffer, 102399)) > 0)
@@ -63,5 +83,6 @@ char				*read_file(char const* file_name)
 		ft_memdel((void **)&tmp);
 	}
 	ret[var[0]] = '\0';
+	g_on_error.file_content = ret;
 	return (ret);
 }

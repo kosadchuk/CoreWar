@@ -53,7 +53,7 @@ int				main(int ac, char **av)
 	file_content = read_file(av[1]);
 	if (is_good_end_of_file(file_content) && parse(file_content, &_asm))
 	{
-		write_file(ft_strjoin(file_name, ".o"), &_asm);
+		write_file(ft_strjoin(file_name, ".cor"), &_asm);
 	}
 	clean_main_vars(&_asm, &file_name, &file_content);
 	return (0);

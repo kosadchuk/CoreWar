@@ -12,6 +12,7 @@
 
 #include "../../../inc/asm.h"
 #include "../../../libft/inc/libft.h"
+#include "../../../inc/op.h"
 
 #include <stdio.h>
 
@@ -44,9 +45,9 @@ int			is_valid_t_dir(char const *arg)
 	t_ull	i;
 
 	arg_len = ft_strlen(arg);
-	if (arg_len <= 1 || arg[0] != '%')
+	if (arg_len <= 1 || arg[0] != DIRECT_CHAR)
 		return (0);
-	if (arg[1] == ':')
+	if (arg[1] == LABEL_CHAR)
 	{
 		if (arg_len == 2)
 			return (0);
@@ -72,7 +73,7 @@ int			is_valid_t_ind(char const *arg)
 	arg_len = ft_strlen(arg);
 	if (arg_len == 0)
 		return (0);
-	if (arg[0] == ':')
+	if (arg[0] == LABEL_CHAR)
 	{
 		if (arg_len == 1)
 			return (0);

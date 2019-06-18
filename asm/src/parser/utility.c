@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../libft/inc/libft.h"
+#include "../../inc/op.h"
 
 void			skip_whitespaces(char const **str)
 {
@@ -33,7 +34,7 @@ void			skip_whitespaces(char const **str)
 int				is_skipable(char const *line)
 {
 	skip_whitespaces(&line);
-	if (*line == '#' || *line == '\0')
+	if (*line == '\0' || *line == COMMENT_CHAR)
 		return (1);
 	return (0);
 }

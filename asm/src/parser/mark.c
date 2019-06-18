@@ -12,10 +12,11 @@
 
 #include "../../inc/asm.h"
 #include "../../libft/inc/libft.h"
+#include "../../inc/op.h"
 
 #include <stdio.h>
 
-static char *g_alphabet = "abcdefghijklmnopqrstuvwxyz_0123456789";
+static char *g_alphabet = LABEL_CHARS;
 
 static void			add_to_marks(t_list	**lst, t_mark *mark)
 {

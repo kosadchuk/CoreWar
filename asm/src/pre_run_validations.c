@@ -20,7 +20,7 @@ static char		*get_file_name_without_extension(char const *file_name)
 	char		*ret;
 	char const	*last_dot = ft_strrchr(file_name, '.');
 
-	if (last_dot == file_name || !ft_strequ(last_dot, ".cor"))
+	if (last_dot == file_name || !ft_strequ(last_dot, ".s"))
 		wrong_file_extension();
 	ret = ft_strsub(file_name, 0, last_dot - file_name);
 	g_on_error.file_name = ret;

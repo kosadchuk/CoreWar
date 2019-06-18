@@ -12,6 +12,7 @@
 
 #include "../inc/asm.h"
 #include "../libft/inc/libft.h"
+#include "../inc/op.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -26,7 +27,7 @@ int					is_good_end_of_file(char const *file_content)
 	if (last_line)
 		last_line++;
 	skip_whitespaces(&last_line);
-	if (*last_line == '\0' || *last_line == '#')
+	if (*last_line == '\0' || *last_line == COMMENT_CHAR)
 		return (1);
 	missed_new_line();
 	return (0);

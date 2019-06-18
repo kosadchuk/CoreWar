@@ -12,6 +12,7 @@
 
 #include "../../../inc/asm.h"
 #include "../../../libft/inc/libft.h"
+#include "../../../inc/op.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,7 +74,7 @@ static int				process_arg(char const **line, char const *args[3], int i)
 	if (**line == '\0')
 		return (1);
 	skip_whitespaces(line);
-	has_separator = **line == ',' ? 1 : 0;
+	has_separator = **line == SEPARATOR_CHAR ? 1 : 0;
 	if (i == 0 && has_separator)
 	{
 		printf("Error: unexpected separator\n");
@@ -134,7 +135,7 @@ int						parse_command(char const *line, t_asm *dst)
 	error_code &= process_arg(&line, args, 1);
 	error_code &= process_arg(&line, args, 2);
 	skip_whitespaces(&line);
-	if ((*line && *line != '#') || !error_code)
+	if ((*line && *line != COMMENT_CHAR) || !error_code)
 		return (0);
 	error_code &= process_bytes_len(args, id_type, &bytes_len);
 	error_code &= append_command(dst, create_command(g_last_stack_id, id_type, args, bytes_len));

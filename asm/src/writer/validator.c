@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/asm.h"
+#include "../../inc/op.h"
 #include "../../libft/inc/libft.h"
 
 #include <stdio.h>
@@ -22,9 +23,9 @@ static int			contains_label(t_list const *marks, char const* label)
 	t_ull			i;
 
 	i = 0;
-	if (label[0] == '%')
+	if (label[0] == DIRECT_CHAR)
 		i = 2;
-	if (label[0] == ':')
+	if (label[0] == LABEL_CHAR)
 		i = 1;
 	tmp = marks;
 	while (tmp)
@@ -41,9 +42,9 @@ static int			is_label(char const *arg)
 {
 	if (!arg || !arg[0] || !arg[1])
 		return (0);
-	if (arg[0] == ':')
+	if (arg[0] == LABEL_CHAR)
 		return (1);
-	if (arg[0] == '%' && arg[1] == ':')
+	if (arg[0] == DIRECT_CHAR && arg[1] == LABEL_CHAR)
 		return (1);
 	return (0);
 }

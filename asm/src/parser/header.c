@@ -12,6 +12,7 @@
 
 #include "../../inc/asm.h"
 #include "../../libft/inc/libft.h"
+#include "../../inc/op.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -39,7 +40,7 @@ static int			has_errors(char const* str)
 		return (0);
 	end += 1;
 	skip_whitespaces(&end);
-	if (*end == '#' || *end == '\0')
+	if (*end == COMMENT_CHAR || *end == '\0')
 		return (0);
 	return (1);
 }

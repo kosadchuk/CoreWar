@@ -36,19 +36,28 @@ static int		get_arg_type_code(t_command const *com, t_ull *len)
 
 static int		get_arg_code(t_code const *src, t_command const *com, char const *arg, t_ull *len)
 {
+	t_mark		*mark;
+	int			mark_location_byte;
 	int			ret;
 	int			type;
 
-	ret = 0;
 	type = get_arg_type(arg);
-	*len = (type == T_DIR) ? g_comms[com->id_type].t_dir_size : type;
+	*len = (type == T_REG ? 1 : 2);
+	if (type == T_DIR)
+		*len = g_comms[com->id_type].t_dir_size;
+	ret = 0;
 	if (type == T_REG)
 		ret = ft_atoi(arg + 1);
-	else if (type == T_DIR)
-		;//ret = (arg[1] == ':' ? mark_location_byte - curr_command_byte : ft_atoi(arg + 1));
-	else if (type == T_IND)
-		;//ret = (arg[0] == ':' ? mark_location_byte : ft_atoi(arg));
-	return (0);
+	else
+	{
+		if ((mark = find_mark(src->marks, arg)))
+			mark_location_byte = mark->location;
+		if (type == T_DIR)
+			ret = (arg[1] == ':' ? mark_location_byte - (int)com->starting_byte_index : ft_atoi(arg + 1));
+		if (type == T_IND)
+			ret = (arg[0] == ':' ? mark_location_byte : ft_atoi(arg));
+	}
+	return (ret);
 }
 
 static void		init_by_command_data(t_code const *src, t_command const *com, void *dst)

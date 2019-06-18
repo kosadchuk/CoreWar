@@ -16,29 +16,7 @@
 
 #include <stdio.h>
 
-static int			contains_label(t_list const *marks, char const* label)
-{
-	t_list const	*tmp;
-	t_mark const	*mark;
-	t_ull			i;
-
-	i = 0;
-	if (label[0] == DIRECT_CHAR)
-		i = 2;
-	if (label[0] == LABEL_CHAR)
-		i = 1;
-	tmp = marks;
-	while (tmp)
-	{
-		mark = (t_mark *)tmp->content;
-		if (ft_strequ(mark->name, label + i))
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-static int			is_label(char const *arg)
+static int			is_mark(char const *arg)
 {
 	if (!arg || !arg[0] || !arg[1])
 		return (0);
@@ -58,15 +36,15 @@ static int			validate_marks(t_list const *commands, t_list const *marks)
 	while (tmp)
 	{
 		command = (t_command *)tmp->content;
-		if (is_label(command->arg1) && !contains_label(marks, command->arg1))
+		if (is_mark(command->arg1) && !find_mark(marks, command->arg1))
 		{
 			return (0);
 		}
-		if (is_label(command->arg2) && !contains_label(marks, command->arg2))
+		if (is_mark(command->arg2) && !find_mark(marks, command->arg2))
 		{
 			return (0);
 		}
-		if (is_label(command->arg3) && !contains_label(marks, command->arg3))
+		if (is_mark(command->arg3) && !find_mark(marks, command->arg3))
 		{
 			return (0);
 		}

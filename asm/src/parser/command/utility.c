@@ -29,8 +29,9 @@ t_command		*create_command(t_ull id_in_stack, t_ull id_type, char const *args[3]
 
 int				append_command(t_asm *dst, t_command *to_append)
 {
-	if (!dst || !dst->code)
+	if (!dst || !dst->code || !to_append)
 		return (0);
+	to_append->starting_byte_index = dst->code->curr_location;
 	if (dst->code->commands)
 		ft_lstadd_before(&dst->code->commands, ft_lstnew(to_append, sizeof(t_command)));
 	else

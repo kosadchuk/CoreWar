@@ -37,6 +37,7 @@ typedef struct s_command
 	char const	*arg2;
 	char const	*arg3;
 	t_ull		bytes;
+	t_ull		starting_byte_index;
 }				t_command;
 
 typedef struct	s_mark
@@ -125,6 +126,7 @@ int			validate_parsed_data(t_asm const* data);
 /*
 **				writer/utility.c
 */
+t_mark		*find_mark(t_list const *marks, char const* label);
 void		int_to_bytecode(char *data, int value, int bytes);
 /*
 **				utility.c

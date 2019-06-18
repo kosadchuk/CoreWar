@@ -17,19 +17,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void		int_to_bytecode(char *data, int value)
+void		int_to_bytecode(char *data, int value, int bytes)
 {
 	int		i;
-	int		size;
 
 	i = 0;
-	size = 4;
-	while (size)
+	while (bytes)
 	{
-		data[size - 1] = (char)((value >> i) & 0xFF);
+		data[bytes - 1] = (char)((value >> i) & 0xFF);
 		printf("c = [%c]\n", (char)((value >> i) & 0xFF));
 		i += 8;
-		size--;
+		bytes--;
 	}
 }
 
@@ -59,12 +57,12 @@ void		write_header_in_binary(int fd, t_asm const *content)
 	len[1] = ft_strlen(content->comment);
 	command_bytes = get_exec_code_size(content);
 	txt = ft_strnew(sizeof(char) * (16 + PROG_NAME_LENGTH + COMMENT_LENGTH));
-	int_to_bytecode(txt, COREWAR_EXEC_MAGIC);
+	int_to_bytecode(txt, COREWAR_EXEC_MAGIC, 4);
 	i = 4;
 	ft_memcpy(txt + i, content->name, len[0] > PROG_NAME_LENGTH ? PROG_NAME_LENGTH : len[0]);
 	i += PROG_NAME_LENGTH;
 	i += 4;
-	int_to_bytecode(txt + i, command_bytes);
+	int_to_bytecode(txt + i, command_bytes, 4);
 	i += 4;
 	ft_memcpy(txt + i, content->comment, len[1] > COMMENT_LENGTH ? COMMENT_LENGTH : len[1]);
 	i += COMMENT_LENGTH;

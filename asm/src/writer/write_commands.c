@@ -10,3 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/asm.h"
+#include "../../inc/op.h"
+#include "../../libft/inc/libft.h"
+
+#include <stdio.h>
+#include <unistd.h>
+
+void		write_commands_in_binary(int fd, t_asm const *content)
+{
+	(void)fd;
+	(void)content;
+}

@@ -33,4 +33,5 @@ void		write_file(char const* file_name, t_asm *content)
 		return;
 	}
 	write_header_in_binary(fd, content);
+	write_commands_in_binary(fd, content);
 }

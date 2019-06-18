@@ -17,11 +17,21 @@
 #include <stdio.h>
 #include <unistd.h>
 
+extern t_cm_desc const	g_comms[16];
+
 static int		get_arg_type_code(t_command const *com, t_ull *len)
 {
-	(void)com;
-	(void)len;
-	return (0);
+	int			ret;
+
+	*len = 0;
+	if (g_comms[com->id_type].has_type_code == 0)
+		return (0);
+	*len = 1;
+	ret = 0;
+	ret |= get_arg_type(com->arg1) << 24;
+	ret |= get_arg_type(com->arg2) << 16;
+	ret |= get_arg_type(com->arg3) << 8;
+	return (ret);
 }
 
 static int		get_arg_code(t_code const *src, char const *arg, t_ull *len)

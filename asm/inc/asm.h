@@ -123,6 +123,10 @@ void		write_commands_in_binary(int fd, t_asm const *content);
 */
 int			validate_parsed_data(t_asm const* data);
 /*
+**				writer/utility.c
+*/
+void		int_to_bytecode(char *data, int value, int bytes);
+/*
 **				utility.c
 */
 int			is_skipable(char const *line);

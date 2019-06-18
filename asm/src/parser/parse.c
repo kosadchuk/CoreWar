@@ -76,7 +76,7 @@ static int		parse_code(char const *file_content, t_asm *dst, t_ull len)
 		ANALYZE_COMMAND(parse_command(mark_len ? line + mark_len : line, dst));
 		ft_memdel((void **)&line);
 	}
-	print_all_parsed(dst->code);
+	//print_all_parsed(dst->code);
 	return (1);
 }
 

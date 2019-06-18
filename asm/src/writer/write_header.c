@@ -52,6 +52,8 @@ void		write_header_in_binary(int fd, t_asm const *content)
 	i += 4;
 	ft_memcpy(txt + i, content->comment, len[1] > COMMENT_LENGTH ? COMMENT_LENGTH : len[1]);
 	i += COMMENT_LENGTH;
+	i += 4;
 	i = write(fd, txt, i);
+	printf("writed from header: %d\n", i);
 	ft_memdel((void **)&txt);
 }

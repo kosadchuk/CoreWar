@@ -28,9 +28,10 @@ static int		get_arg_type_code(t_command const *com, t_ull *len)
 		return (0);
 	*len = 1;
 	ret = 0;
-	ret |= get_arg_type(com->arg1) << 24;
-	ret |= get_arg_type(com->arg2) << 16;
-	ret |= get_arg_type(com->arg3) << 8;
+	ret |= get_arg_type(com->arg1) << 6;
+	ret |= get_arg_type(com->arg2) << 4;
+	ret |= get_arg_type(com->arg3) << 2;
+	//printf("arg_type_code = %d\n", ret);
 	return (ret);
 }
 
@@ -41,6 +42,9 @@ static int		get_arg_code(t_code const *src, t_command const *com, char const *ar
 	int			ret;
 	int			type;
 
+	*len = 0;
+	if (!arg)
+		return (0);
 	type = get_arg_type(arg);
 	*len = (type == T_REG ? 1 : 2);
 	if (type == T_DIR)
@@ -57,6 +61,7 @@ static int		get_arg_code(t_code const *src, t_command const *com, char const *ar
 		if (type == T_IND)
 			ret = (arg[0] == ':' ? mark_location_byte : ft_atoi(arg));
 	}
+	printf("arg = %d; len = %d\t\t", ret, (int)*len);
 	return (ret);
 }
 
@@ -64,17 +69,47 @@ static void		init_by_command_data(t_code const *src, t_command const *com, void 
 {
 	t_ull		len;
 	t_ull		i;
+	int			arg_code;
 
+	printf("%s | %s | %s\n", com->arg1, com->arg2, com->arg3);
 	i = 0;
-	len = 0;
+	len = 1;
+	int_to_bytecode((char *)dst + i, g_comms[com->id_type].code, len);
+	i += len;
 	int_to_bytecode((char *)dst + i, get_arg_type_code(com, &len), len);
 	i += len;
-	int_to_bytecode((char *)dst + i, get_arg_code(src, com, com->arg1, &len), len);
+	arg_code = get_arg_code(src, com, com->arg1, &len);
+	int_to_bytecode((char *)dst + i, arg_code, len);
 	i += len;
-	int_to_bytecode((char *)dst + i, get_arg_code(src, com, com->arg2, &len), len);
+	arg_code = get_arg_code(src, com, com->arg2, &len);
+	int_to_bytecode((char *)dst + i, arg_code, len);
 	i += len;
-	int_to_bytecode((char *)dst + i, get_arg_code(src, com, com->arg3, &len), len);
+	arg_code = get_arg_code(src, com, com->arg3, &len);
+	int_to_bytecode((char *)dst + i, arg_code, len);
 	i += len;
+	printf("\n");
+}
+
+static void		reverse_list(t_list **lst)
+{
+	t_list		*prev;
+	t_list		*curr;
+	t_list		*storage;
+	t_list		*tmp;
+
+	if (!lst || !*lst)
+		return;
+	curr = *lst;
+	prev = 0;
+	while (curr)
+	{
+		storage = curr;
+		tmp = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = tmp;
+	}
+	*lst = storage;
 }
 
 void			write_commands_in_binary(int fd, t_asm const *content)
@@ -84,14 +119,18 @@ void			write_commands_in_binary(int fd, t_asm const *content)
 	void		*data;
 
 	lst = content->code->commands;
+	int writed = 0;
+	reverse_list(&lst);
 	while (lst)
 	{
 		command = (t_command *)lst->content;
 		data = ft_memalloc(command->bytes);
-		init_by_command_data(content->code, command, &data);
+		ft_memset(data, 0, command->bytes);
+		init_by_command_data(content->code, command, data);
 		t_ull len = write(fd, data, command->bytes);
-		(void)len;
+		writed += command->bytes;
 		ft_memdel((void **)&data);
 		lst = lst->next;
 	}
+	printf("writed from command: %d\n", writed);
 }

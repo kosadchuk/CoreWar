@@ -112,7 +112,7 @@ void				try_parse_header(char const *file_content, char const *curr, char const 
 		*dst = get_full_field(file_content, curr);
 	if (!*dst)
 		wrong_header_in_file(2);
-	printf("%s = [%s]\n", part, (char *)*dst);
+	//printf("%s = [%s]\n", part, (char *)*dst);
 }
 
 int					parse_header(char const *file_content, t_asm *dst, t_ull len)

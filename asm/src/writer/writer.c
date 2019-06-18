@@ -32,6 +32,7 @@ void		write_file(char const* file_name, t_asm *content)
 		ft_putendl("Error: can't create file");
 		return;
 	}
+	//write(fd, "hello", 5);
 	write_header_in_binary(fd, content);
 	write_commands_in_binary(fd, content);
 }

@@ -35,25 +35,25 @@ static int	get_exec_code_size(t_asm const *content)
 void		write_header_in_binary(int fd, t_asm const *content)
 {
 	t_ull	len[2];
-	char	*txt;
+	void	*data;
 	int		command_bytes;
 	int		i;
 
 	len[0] = ft_strlen(content->name);
 	len[1] = ft_strlen(content->comment);
 	command_bytes = get_exec_code_size(content);
-	txt = ft_strnew(sizeof(char) * (16 + PROG_NAME_LENGTH + COMMENT_LENGTH));
-	int_to_bytecode(txt, COREWAR_EXEC_MAGIC, 4);
+	data = ft_memalloc(sizeof(char) * (16 + PROG_NAME_LENGTH + COMMENT_LENGTH));
+	int_to_bytecode((char *)data, COREWAR_EXEC_MAGIC, 4);
 	i = 4;
-	ft_memcpy(txt + i, content->name, len[0] > PROG_NAME_LENGTH ? PROG_NAME_LENGTH : len[0]);
+	ft_memcpy((char *)data + i, content->name, len[0] > PROG_NAME_LENGTH ? PROG_NAME_LENGTH : len[0]);
 	i += PROG_NAME_LENGTH;
 	i += 4;
-	int_to_bytecode(txt + i, command_bytes, 4);
+	int_to_bytecode((unsigned char *)data + i, command_bytes, 4);
 	i += 4;
-	ft_memcpy(txt + i, content->comment, len[1] > COMMENT_LENGTH ? COMMENT_LENGTH : len[1]);
+	ft_memcpy((char *)data + i, content->comment, len[1] > COMMENT_LENGTH ? COMMENT_LENGTH : len[1]);
 	i += COMMENT_LENGTH;
 	i += 4;
-	i = write(fd, txt, i);
+	i = write(fd, data, i * sizeof(char));
 	printf("writed from header: %d\n", i);
-	ft_memdel((void **)&txt);
+	ft_memdel(&data);
 }

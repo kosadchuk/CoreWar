@@ -15,13 +15,10 @@
 void	op_live(t_pr *pr, t_op op, uint32_t codage)
 {
 	int32_t		arg;
-//
-//	ft_printf("PROCESS %d\n", pr->pr_id);
-//	ft_printf("OP LIVE %d\n", g_vm->cycles);
-//	ft_printf("live reg[0] : %d\n", pr->reg[0]);
-//	ft_printf("cur_pos %d\n", pr->cur_pos);
+
 	arg = bytes_in_int(pr, 4);
-//	ft_printf("%d\n", arg);
+	if (g_flag_v == 1)
+		ft_printf("P%5d | %s %d\n", pr->pr_id, op.name, arg);
 	pr->last_live_cycle = g_vm->cycles;
 	(arg < 0) ? arg *= -1 : 0;
 	if (arg > 0 && arg <= g_players->len)

@@ -21,5 +21,7 @@ void	op_aff(t_pr *pr, t_op op, uint32_t codage)
 		value = op.args[0].value % 256;
 		ft_printf("%c\n", value);
 	}
+	if (g_flag_v == 1)
+		ft_printf("P%5d | %s\n", pr->pr_id, op.name);
 	handle_position(pr, 1);
 }

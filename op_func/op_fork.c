@@ -17,10 +17,11 @@ void	op_fork(t_pr *pr, t_op op, uint32_t codage)
 	int32_t		pos;
 
 	pos = bytes_in_int(pr, op.lable_size);
-//	ft_printf("%d ", pos);
+	if (g_flag_v == 1)
+		ft_printf("P%5d | %s %d ", pr->pr_id, op.name, pos);
 	pos = (pos % IDX_MOD) + pr->prev_pos;
-//	ft_printf("(%d)\n", pos);
-//	ft_printf("	op num [%d]\n", g_vm->map[pos]);
+	if (g_flag_v == 1)
+		ft_printf("(%d)\n", pos);
 	copy_prcs(pr, pos);
 	handle_position(pr, 1);
 }

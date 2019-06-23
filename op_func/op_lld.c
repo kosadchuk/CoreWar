@@ -14,18 +14,22 @@
 
 void	op_lld(t_pr *pr, t_op op, uint32_t codage)
 {
-	if ((codage == DR || codage == IR ) && pr->reg_err == 0)
-	{
-		int32_t		value;
+	int32_t		value;
+	int32_t		pos;
 
+	if ((codage == DR || codage == IR) && pr->reg_err == 0)
+	{
 		if (op.args[0].tp == DIR_CODE)
 			pr->reg[op.args[1].reg_num] = op.args[0].value;
-		if (op.args[0].tp == IND_CODE)
+		else if (op.args[0].tp == IND_CODE)
 		{
-			handle_position(pr, op.args[0].value);
-			value = bytes_in_int(pr, 4);
+			pos = pr->prev_pos + op.args[0].value;
+			value = read_bytes(pos);
 			pr->reg[op.args[1].reg_num] = value;
 		}
+		if (g_flag_v == 1)
+			ft_printf("P%5d | %s %d r%d\n", pr->pr_id, op.name,\
+			op.args[0].value, op.args[1].reg_num + 1);
 		pr->carry = (pr->reg[op.args[1].reg_num] == 0) ? 1 : 0;
 	}
 	handle_position(pr, 1);

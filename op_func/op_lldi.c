@@ -12,7 +12,7 @@
 
 #include "../includes/core.h"
 
-int 	check_lldi_codage(uint32_t codage)
+int		check_lldi_codage(uint32_t codage)
 {
 	if (codage == RDR || codage == RRR || codage == DDR || codage == DRR\
 	|| codage == IDR || codage == IRR)
@@ -28,14 +28,19 @@ void	op_lldi(t_pr *pr, t_op op, uint32_t codage)
 	{
 		if (op.args[0].tp == IND_CODE)
 		{
-			pos = op.args[0].value % IDX_MOD;
-			handle_position(pr, pos);
-			op.args[0].value = bytes_in_int(pr, 4);
+			pos = pr->prev_pos + (op.args[0].value % IDX_MOD);
+			op.args[0].value = read_bytes(pos);
 		}
-		pos = (op.args[0].value + op.args[1].value);
-		handle_position(pr, pos);
-		pr->reg[op.args[2].reg_num] = bytes_in_int(pr, 4);
+		pos = pr->prev_pos + op.args[0].value + op.args[1].value;
+		pr->reg[op.args[2].reg_num] = read_bytes(pos);
 		pr->carry = (pr->reg[op.args[2].reg_num] == 0) ? 1 : 0;
+		if (g_flag_v == 1)
+		{
+			ft_printf("P%5d | %s %d %d r%d\n", pr->pr_id, op.name, \
+			op.args[0].value, op.args[1].value, op.args[2].reg_num + 1);
+			ft_printf(OP_LLDI, op.args[0].value, op.args[1].value,\
+			op.args[0].value + op.args[1].value, pos);
+		}
 	}
 	handle_position(pr, 1);
 }

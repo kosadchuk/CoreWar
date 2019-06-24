@@ -1,3 +1,5 @@
 .vscode/
 asm/build/
 asm/asm
+.DS_Store
+.out

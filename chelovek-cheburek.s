@@ -23,5 +23,5 @@ tail:   ldi %1, %5, r3
         live %0
         sti r1, %:live, %1
 
-        sti r4,r1,%228
-        r2 r2,%1488
+        sti r4,r1, %228
+        st r2, %1488

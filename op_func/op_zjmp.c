@@ -14,13 +14,21 @@
 
 void	op_zjmp(t_pr *pr, t_op op, uint32_t codage)
 {
-	int32_t		step;
+	short		value;
 
-	step = bytes_in_int(pr, op.lable_size);
+	value = bytes_in_int(pr, op.lable_size);
 	if (pr->carry == 1)
 	{
-		step %= IDX_MOD;
-		handle_position(pr, step);
+		if (g_flag_v == 1)
+			ft_printf("P%5d | %s %d OK\n", pr->pr_id, op.name, value);
+		value %= IDX_MOD;
+		pr->cur_pos = pr->prev_pos;
+		handle_position(pr, value);
 	}
-	handle_position(pr, 1);
+	else
+	{
+		if (g_flag_v == 1)
+			ft_printf("P%5d | %s %d FAILED\n", pr->pr_id, op.name, value);
+		handle_position(pr, 1);
+	}
 }

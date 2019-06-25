@@ -18,73 +18,88 @@
 # include "../libft/libft.h"
 # include <stdint.h>
 # include <stdio.h>
-# include "core_errors.h"
+# include "defines.h"
 # include <sys/uio.h>
 # include <fcntl.h>
 
-typedef struct	s_player	t_player;
-typedef struct	s_players	t_players;
-typedef struct	s_prcs		t_prcs;
-typedef struct	s_vm		t_vm;
+typedef struct s_player	t_player;
+typedef struct s_players	t_players;
+typedef struct s_prcs		t_prcs;
+typedef struct s_vm		t_vm;
 
-struct				s_player // структура игрока
+struct				s_player
 {
-	unsigned int	id;	// его уникальный идентификационный номер
-	unsigned int	n_id; // это надо для корректного присвоения id, больше не понадобиться
-	char			name[PROG_NAME_LENGTH + 1]; // имя игрока, для вывода в консоль или визуализатор
-	char			comment[COMMENT_LENGTH + 1]; // его коммент
-	int32_t			size; // размер бота
-	unsigned char	*code; // его executable code для битвы
-	int				last_live; // последняя жизнь ??????
-	int				lives_in_cur; // колл жизней в текущий период
+	unsigned int	id;
+	unsigned int	n_id;
+	char			name[PROG_NAME_LENGTH + 1];
+	char			comment[COMMENT_LENGTH + 1];
+	int32_t			size;
+	unsigned char	*code;
+	int				last_live;
+	int				lives_in_cur;
 };
 
-struct				s_prcs // структура каретки
+struct				s_prcs
 {
-	int				carry; // флаг, который могут изменять некоторые операции. Изначально иниц. false;
-	int				parent_id; // номер игрока который породил эту дичь (каретку)
-	int				cur_op; // код операции на которой стоит каретка
-	int				last_live_cycle; // цикл, в котором в последний раз была выполнена операция live
-	int				cycle_count; // колличество циклов, оставшиеся до выполнения операции на которой стоит каретка
-	int				cur_pos; // текущая позиция каретки
-	int				byte_step; //колл. байт которые нужно будет перешагнуть, чтобы оказаться на следующей операции
-	int				reg[REG_NUMBER]; // структура со всеми командами
+	int				pr_id;
+	int				carry;
+	int				parent_id;
+	int				cur_op;
+	int				last_live_cycle;
+	int				cycle_count;
+	int				cur_pos;
+	int				prev_pos;
+	int				reg[REG_NUMBER];
 	int				reg_err;
 };
 
-struct				s_players // глобальная структура для хранения массива игроков
+struct				s_players
 {
 	t_player		**team;
 	ssize_t			len;
 	ssize_t			full;
 };
 
-struct 				s_vm
+struct				s_vm
 {
-	uint8_t			map[MEM_SIZE]; // арена размером 4096 байт
-	t_player		*last_alive; // последний игрок, подавший признаки жизни
-	int				cycles; // колличество циклов начиная с начала битвы
+	uint8_t			map[MEM_SIZE];
+	t_player		*last_alive;
+	int				cycles;
 	int				check_cycle;
-	int				count_live_op; // колл. выполненых операций live за последний период длиной в cycles_to_die
-	int				cycles_to_die; // длительность периода до проверки
-	int				prev_cycle_to_die;
-	int				checks; // колл. проведенных проверок
+	int				count_live_op;
+	int				ctd;
+	int				prev_ctd;
+	int				checks;
 };
 
 t_players			*g_players;
 t_players			*g_save_pl;
 t_vm				*g_vm;
-t_list				*g_list;
+t_list				g_list;
+int					g_prc_id;
+int					g_dump;
+int					g_flag_v;
+int					g_flag_v2;
+int					g_flag_v3;
 void				pars_av(int ac, char **av);
 void				pars_champs(char *file, t_player *player);
 void				make_map(void);
 void				init_vm(void);
 void				start_war(void);
-void 				init_start_positions(g_list);
+void				init_start_positions(void);
 int32_t				bytes_in_int(t_prcs *pr, int size);
 void				handle_position(t_pr *pr, int step);
 void				save_norm_players(void);
-
-
+void				copy_prcs(t_pr *pr, int32_t pos);
+void				pars_process(t_list_elem *prcs);
+void				int_to_byte(int32_t nbr, uint8_t *buf);
+void				write_in_map(int32_t pos, uint8_t *buf);
+int32_t				read_bytes(int32_t pos);
+void				validate_champ_name(char *str);
+void				save_players(char *pl, int pl_id);
+void				check_flag(char **av, int *i);
+void				del_ptr(void *content, size_t content_size);
+void				print_dump(void);
+void				valid_op_args(t_prcs *pr);
 
 #endif

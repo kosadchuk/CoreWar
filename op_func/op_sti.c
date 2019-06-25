@@ -23,18 +23,23 @@ int		check_sti_codage(uint32_t codage)
 void	op_sti(t_pr *pr, t_op op, uint32_t codage)
 {
 	int32_t		pos;
+	uint8_t		buf[4];
 
 	if (check_sti_codage(codage) == 0 && pr->reg_err == 0)
 	{
 		if (op.args[1].tp == IND_CODE)
 		{
-			pos = op.args[1].value % IDX_MOD;
-			handle_position(pr, pos);
-			op.args[1].value = bytes_in_int(pr, 4);
+			op.args[0].value %= IDX_MOD;
+			pos = pr->prev_pos + (op.args[1].value % IDX_MOD);
+			op.args[1].value = read_bytes(pos);
 		}
-		pos = (op.args[1].value + op.args[2].value) % IDX_MOD;
-		handle_position(pr, pos);
-		g_vm->map[pr->cur_pos] = op.args[0].value;
+		pos = pr->prev_pos + ((op.args[1].value + op.args[2].value) % IDX_MOD);
+		if (g_flag_v == 1)
+			ft_printf(OP_STI2, pr->pr_id, op.name, op.args[0].reg_num + 1,\
+			op.args[1].value, op.args[2].value, op.args[1].value,\
+			op.args[2].value, op.args[1].value + op.args[2].value, pos);
+		int_to_byte(op.args[0].value, buf);
+		write_in_map(pos, buf);
 	}
 	handle_position(pr, 1);
 }

@@ -1,5 +1,6 @@
 .vscode/
 asm/build/
 asm/asm
+asm/tester
 .DS_Store
 .out

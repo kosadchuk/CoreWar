@@ -6,6 +6,8 @@ t_visualization     *init_visual(void)
 
     if (!(visual = (t_visualization *)ft_memalloc(sizeof(t_visualization))))
         printf("Error in memory allocation");
+    visual->paused = true;
     visual->arena = NULL;
+    visual->state = NULL;
     return (visual);
 }

@@ -95,11 +95,11 @@ void	start_war(void)
 {
 	init_start_positions();
 
-    g_vm->visual = init_visual();
+    // g_vm->visual = init_visual();
 
-    setup_visual();
+    // setup_visual();
 
-    printf("%p\n", g_vm->visual->arena);
+    // printf("%p\n", g_vm->visual->arena);
 
-	// main_cycle();
+	main_cycle();
 }

@@ -31,7 +31,7 @@ all: libft $(TARGET)
 #		Block			#
 #	creating $(TARGET)	#
 $(TARGET): $(OBJS)
-	@$(CC) $(shell find $(OBJ_DIR) -type f -name "*.o") $(LIBS) -o $(TARGET)
+	@$(CC) -lncurses $(shell find $(OBJ_DIR) -type f -name "*.o") $(LIBS) -o $(TARGET)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@$(CC) -o $@ -c $< $(CFLAGS)

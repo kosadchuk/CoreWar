@@ -74,5 +74,5 @@ void	check_flag(char **av, int *i)
 	else if (!ft_strcmp("-v", av[(*i)]) && av[(*i) + 1] != NULL)
 		pars_v_flag(av, i);
 	else
-		ft_err(ft_printf(ERR"[%s] %s%s", av[(*i)], UNC_COMND, USG_V3));
+		ft_err(ft_printf(ERRR"[%s] %s%s", av[(*i)], UNC_COMND, USG_V3));
 }

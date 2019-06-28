@@ -20,6 +20,9 @@
 # include <stdint.h>
 # include "ft_printf/ft_printf.h"
 
+#undef true
+#undef false
+
 typedef int8_t	t_bool;
 enum	{ false, true };
 

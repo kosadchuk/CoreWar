@@ -21,6 +21,7 @@
 # include "defines.h"
 # include <sys/uio.h>
 # include <fcntl.h>
+# include "visualization.h"
 
 typedef struct s_player	t_player;
 typedef struct s_players	t_players;
@@ -70,6 +71,7 @@ struct				s_vm
 	int				ctd;
 	int				prev_ctd;
 	int				checks;
+	struct s_visualization	*visual;
 };
 
 t_players			*g_players;

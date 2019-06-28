@@ -94,5 +94,12 @@ void	main_cycle(void)
 void	start_war(void)
 {
 	init_start_positions();
-	main_cycle();
+
+    g_vm->visual = init_visual();
+
+    setup_visual();
+
+    printf("%p\n", g_vm->visual->arena);
+
+	// main_cycle();
 }

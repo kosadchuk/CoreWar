@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:49 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:06:49 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:32:54 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void			skip_whitespaces(char const **str)
 	char const	*tmp;
 
 	if (!str || !str)
-		return;
+		return ;
 	tmp = *str;
 	i = 0;
 	while (tmp[i])
 	{
 		if (!ft_isspace(tmp[i]))
-			break;
+			break ;
 		++i;
 	}
 	*str = tmp + i;

@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:54 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:06:54 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:32:18 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static char *g_alphabet = LABEL_CHARS;
 
-static void			add_to_marks(t_list	**lst, t_mark *mark)
+static void			add_to_marks(t_list **lst, t_mark *mark)
 {
 	if (*lst)
 		ft_lstadd_before(lst, ft_lstnew((void *)mark, sizeof(t_mark)));

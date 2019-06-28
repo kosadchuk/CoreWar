@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:05 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:07:05 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:51:16 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ static t_ull	g_last_stack_id = 0;
 
 t_cm_desc const	g_comms[16] =\
 {
-	{ 0x01, "live",	T_DIR,					0,						0,				0, 4 },
-	{ 0x02, "ld",	T_DIR | T_IND,			T_REG,					0,				1, 4 },
-	{ 0x03, "st",	T_REG,					T_REG | T_IND,			0,				1, 4 },
-	{ 0x04, "add",	T_REG,					T_REG,					T_REG,			1, 4 },
-	{ 0x05, "sub",	T_REG,					T_REG,					T_REG,			1, 4 },
-	{ 0x06, "and",	T_REG | T_DIR | T_IND,	T_REG | T_DIR | T_IND,	T_REG,			1, 4 },
-	{ 0x07, "or",	T_REG | T_DIR | T_IND,	T_REG | T_DIR | T_IND,	T_REG,			1, 4 },
-	{ 0x08, "xor",	T_REG | T_DIR | T_IND,	T_REG | T_DIR | T_IND,	T_REG,			1, 4 },
-	{ 0x09, "zjmp",	T_DIR,					0,						0,				0, 2 },
-	{ 0x0a, "ldi",	T_REG | T_DIR | T_IND,	T_REG | T_DIR,			T_REG,			1, 2 },
-	{ 0x0b, "sti",	T_REG,					T_REG | T_DIR | T_IND,	T_REG | T_DIR,	1, 2 },
-	{ 0x0c, "fork",	T_DIR,					0,						0,				0, 2 },
-	{ 0x0d, "lld",	T_DIR | T_IND,			T_REG,					0,				1, 4 },
-	{ 0x0e, "lldi",	T_REG | T_DIR | T_IND,	T_REG | T_DIR,			T_REG,			1, 2 },
-	{ 0x0f,	"lfork",T_DIR,					0,						0,				0, 2 },
-	{ 0x10,	"aff",	T_REG,					0,						0,				1, 4 }
+	{ 0x01, "live", T_DIR, 0, 0, 0, 4 },
+	{ 0x02, "ld", T_DIR | T_IND, T_REG, 0, 1, 4 },
+	{ 0x03, "st", T_REG, T_REG | T_IND, 0, 1, 4 },
+	{ 0x04, "add", T_REG, T_REG, T_REG, 1, 4 },
+	{ 0x05, "sub", T_REG, T_REG, T_REG, 1, 4 },
+	{ 0x06, "and", T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG, 1, 4 },
+	{ 0x07, "or", T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG, 1, 4 },
+	{ 0x08, "xor", T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG, 1, 4 },
+	{ 0x09, "zjmp", T_DIR, 0, 0, 0, 2 },
+	{ 0x0a, "ldi", T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG, 1, 2 },
+	{ 0x0b, "sti", T_REG, T_REG | T_DIR | T_IND, T_REG | T_DIR, 1, 2 },
+	{ 0x0c, "fork", T_DIR, 0, 0, 0, 2 },
+	{ 0x0d, "lld", T_DIR | T_IND, T_REG, 0, 1, 4 },
+	{ 0x0e, "lldi", T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG, 1, 2 },
+	{ 0x0f, "lfork", T_DIR, 0, 0, 0, 2 },
+	{ 0x10, "aff", T_REG, 0, 0, 1, 4 }
 };
 
 static t_ull			init_id_type(char const **line, t_ull *id_type)
@@ -52,7 +52,7 @@ static t_ull			init_id_type(char const **line, t_ull *id_type)
 		while (g_comms[ret].name[i])
 		{
 			if (g_comms[ret].name[i] != (*line)[i])
-				break;
+				break ;
 			++i;
 		}
 		if (g_comms[ret].name[i] == '\0' && (*line)[i] == ' ')
@@ -67,7 +67,8 @@ static t_ull			init_id_type(char const **line, t_ull *id_type)
 	return (0);
 }
 
-static int				process_arg(char const **line, char const *args[3], int i)
+static int				process_arg(char const **line, char const *args[3],\
+									int i)
 {
 	int					has_separator;
 
@@ -82,8 +83,6 @@ static int				process_arg(char const **line, char const *args[3], int i)
 	}
 	if (i != 0)
 	{
-		if (!has_separator)
-			printf("missed separator\n");
 		*line = *line + 1;
 		skip_whitespaces(line);
 	}
@@ -97,7 +96,8 @@ static int				process_arg(char const **line, char const *args[3], int i)
 	return (1);
 }
 
-static int				process_bytes_len(char const *args[3], t_ull id_type, t_ull *len)
+static int				process_bytes_len(char const *args[3],\
+						t_ull id_type, t_ull *len)
 {
 	t_ull				size;
 	int					arg_types[3];
@@ -138,7 +138,8 @@ int						parse_command(char const *line, t_asm *dst)
 	if ((*line && *line != COMMENT_CHAR) || !error_code)
 		return (0);
 	error_code &= process_bytes_len(args, id_type, &bytes_len);
-	error_code &= append_command(dst, create_command(g_last_stack_id, id_type, args, bytes_len));
+	error_code &= append_command(dst,\
+					create_command(g_last_stack_id, id_type, args, bytes_len));
 	dst->code->curr_location += bytes_len;
 	++g_last_stack_id;
 	return (error_code);

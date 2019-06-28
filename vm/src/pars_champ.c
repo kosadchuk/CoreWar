@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_champ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kosadchu <kosadchu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 14:56:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:33:35 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:26:07 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void			save_norm_players(void)
 {
 	int			i;
-	int			id;
+	uint32_t	id;
 
 	i = 0;
 	id = 1;

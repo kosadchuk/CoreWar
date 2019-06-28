@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_zjmp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kosadchu <kosadchu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:21:02 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:35:17 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:25:16 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	op_zjmp(t_pr *pr, t_op op, uint32_t codage)
 {
 	short		value;
 
+	codage = 0;
 	value = bytes_in_int(pr, op.lable_size);
 	if (pr->carry == 1)
 	{

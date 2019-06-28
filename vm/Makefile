@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+         #
+#    By: kosadchu <kosadchu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/02 14:45:37 by apavlyuc          #+#    #+#              #
-#    Updated: 2019/06/28 13:37:03 by apavlyuc         ###   ########.fr        #
+#    Updated: 2019/06/28 15:43:54 by kosadchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET			:= vm
+TARGET			:= corewar
 
 SRC_DIR			:= src
 INC_DIR			:= inc

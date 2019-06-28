@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_live.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kosadchu <kosadchu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 17:25:23 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:34:36 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 15:25:04 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	op_live(t_pr *pr, t_op op, uint32_t codage)
 {
 	int32_t		arg;
 
+	codage = 0;
 	arg = bytes_in_int(pr, 4);
 	if (g_flag_v == 1)
 		ft_printf("P%5d | %s %d\n", pr->pr_id, op.name, arg);

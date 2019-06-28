@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 15:39:31 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/02 16:11:45 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:40:06 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 extern t_err_manager_storage g_on_error;
 
-static void	print_all_parsed(t_code *code)
+void			print_all_parsed(t_code *code)
 {
 	t_list	*lst;
 	t_command	*tmp;

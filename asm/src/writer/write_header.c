@@ -48,7 +48,7 @@ void		write_header_in_binary(int fd, t_asm const *content)
 	ft_memcpy((char *)data + i, content->name, len[0] > PROG_NAME_LENGTH ? PROG_NAME_LENGTH : len[0]);
 	i += PROG_NAME_LENGTH;
 	i += 4;
-	int_to_bytecode((unsigned char *)data + i, command_bytes, 4);
+	int_to_bytecode((char *)data + i, command_bytes, 4);
 	i += 4;
 	ft_memcpy((char *)data + i, content->comment, len[1] > COMMENT_LENGTH ? COMMENT_LENGTH : len[1]);
 	i += COMMENT_LENGTH;

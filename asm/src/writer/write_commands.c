@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:04 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:07:45 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:40:43 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void			write_commands_in_binary(int fd, t_asm const *content)
 		ft_memset(data, 0, command->bytes);
 		init_by_command_data(content->code, command, data);
 		t_ull len = write(fd, data, command->bytes);
+		(void)len;
 		writed += command->bytes;
 		ft_memdel((void **)&data);
 		lst = lst->next;

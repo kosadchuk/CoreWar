@@ -6,18 +6,18 @@
 #    By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/02 14:45:37 by apavlyuc          #+#    #+#              #
-#    Updated: 2019/06/02 14:47:59 by apavlyuc         ###   ########.fr        #
+#    Updated: 2019/06/28 13:37:03 by apavlyuc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET			:= asm
+TARGET			:= vm
 
 SRC_DIR			:= src
 INC_DIR			:= inc
 OBJ_DIR			:= build
 
 CC				:= gcc
-CFLAGS			:= -Ofast -I./$(INC_DIR) -I./libft/ -std=c99 #-Wall -Werror -Wextra
+CFLAGS			:= -Ofast -I./$(INC_DIR) -I./libft/ -Wall -Werror -Wextra
 
 NORM_CHECK		:= $(shell command -v norminette)
 

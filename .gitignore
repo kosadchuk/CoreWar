@@ -4,3 +4,4 @@ asm/asm
 asm/tester
 .DS_Store
 .out
+*.o

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   op_sti.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 15:37:40 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/08 15:37:42 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:35:01 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 int		check_sti_codage(uint32_t codage)
 {

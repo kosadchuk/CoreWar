@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pars_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 17:09:33 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/23 17:09:35 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:39 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	pars_n_flag(char **av, int *i)
 {

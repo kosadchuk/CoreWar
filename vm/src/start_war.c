@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   start_war.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 21:29:06 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/05/31 21:29:10 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:48 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	change_cycles_to_die(void)
 {

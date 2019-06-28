@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   op_or.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:07:09 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/08 14:07:11 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:34:52 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 int		check_or_codage(uint32_t codage)
 {

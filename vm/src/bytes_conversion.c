@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   bytes_conversion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 17:16:07 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/23 17:16:09 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:32:38 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 int32_t			read_bytes(int32_t pos)
 {

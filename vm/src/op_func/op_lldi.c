@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   op_lldi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 17:08:14 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/08 17:08:16 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:34:47 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 int		check_lldi_codage(uint32_t codage)
 {

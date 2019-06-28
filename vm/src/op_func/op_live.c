@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   op_live.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 17:25:23 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/03 17:25:26 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:34:36 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	op_live(t_pr *pr, t_op op, uint32_t codage)
 {

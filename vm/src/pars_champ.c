@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pars_champ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 14:56:51 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/05/29 14:56:52 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:35 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void			save_norm_players(void)
 {

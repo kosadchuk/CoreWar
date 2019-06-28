@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pars_av.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 15:43:38 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/05/28 15:43:40 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:31 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	validate_champ_name(char *str)
 {

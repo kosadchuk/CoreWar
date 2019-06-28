@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 12:32:37 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/05/28 12:32:40 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:32:51 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	del_ptr(void *content, size_t content_size)
 {

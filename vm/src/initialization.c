@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 21:41:17 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/05/30 21:41:19 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:09 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	copy_prcs(t_pr *pr, int32_t pos)
 {

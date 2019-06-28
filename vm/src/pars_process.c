@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pars_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 17:48:09 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/23 17:48:11 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:44 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	check_op(t_prcs *pr)
 {

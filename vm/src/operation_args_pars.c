@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   operation_args_pars.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 17:46:28 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/23 17:46:29 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/28 13:33:26 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../inc/core.h"
 
 void	take_ind_arg(t_arg *arg, t_prcs *pr)
 {

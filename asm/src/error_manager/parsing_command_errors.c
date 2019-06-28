@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:36 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:07:36 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:25:16 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 extern t_err_manager_storage g_on_error;
 
-void		wrong_asm_in_file(int type)
+void				wrong_asm_in_file(int type)
 {
 	if (type == 4)
 	{
@@ -26,7 +26,8 @@ void		wrong_asm_in_file(int type)
 	}
 	else
 	{
-		ft_putstr("Error: is seems like there is a faggot in front of monitor: ");
+		ft_putstr("Error: is seems like there is\
+							a faggot in front of monitor: ");
 		ft_putnbr(type);
 		ft_putendl("");
 	}
@@ -85,14 +86,16 @@ static char const	*get_expected(int expected_arg_types)
 
 void				wrong_arg_type(int valid_type, int current_type, int index)
 {
-	char const*		expected;
+	char const		*expected;
 
 	printf("valid type = %d\n", valid_type);
 	expected = get_expected(valid_type);
 	if (current_type == 0)
-		printf("Command: %s\nUnknown type of argument %d\n", g_on_error.curr_line, index);
+		printf("Command: %s\nUnknown\
+					type of argument %d\n", g_on_error.curr_line, index);
 	else
-		printf("Command: %s\nWrong type of argument %d\n", g_on_error.curr_line, index);
+		printf("Command: %s\nWrong\
+					type of argument %d\n", g_on_error.curr_line, index);
 	if (current_type == T_REG)
 		printf("Expected: %s\nReal one: T_REG\n", expected);
 	else if (current_type == T_DIR)

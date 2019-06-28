@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:33 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:07:33 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:22:39 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void				wrong_header_in_file(int type)
 		ft_putendl("Error: smth went wrong while header parsing");
 	else
 	{
-		ft_putstr("Error: is seems like there is a faggot in front of monitor: ");
+		ft_putstr("Error: is seems like there is a faggot in front\
+							of monitor: ");
 		ft_putnbr(type);
 		ft_putendl("");
 	}

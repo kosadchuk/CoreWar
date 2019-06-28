@@ -3,10 +3,15 @@
 void    init_colors(void)
 {
     init_color(1, 355, 355, 355);
+    init_color(2, 700, 0, 0);
+    init_color(3, 255, 0, 0);
+    init_color(4, 0, 700, 0);
+    init_color(5, 0, 255, 0);
     init_pair(1, COLOR_WHITE, COLOR_WHITE);
     init_pair(2, 1, COLOR_BLACK);
     init_pair(3, COLOR_GREEN, COLOR_BLACK);
-    init_pair(4, COLOR_RED, COLOR_BLACK);
+    init_pair(4, 2, 3);
+    init_pair(5, 4, 5);
 }
 
 void                create_border(WINDOW *win)
@@ -63,9 +68,13 @@ void    render_state(void)
 {
     mvwprintw(g_vm->visual->state, 3, 6, "STATE");
     
-    wattron(g_vm->visual->state, COLOR_PAIR(3 | A_BOLD));
-    mvwprintw(g_vm->visual->state, 3, 45, "PAUSED");
-    wattroff(g_vm->visual->state, COLOR_PAIR(3 | A_BOLD));
+    wattron(g_vm->visual->state, COLOR_PAIR(4 | A_BOLD));
+    mvwprintw(g_vm->visual->state, 3, 45, " PAUSED ");
+    wattroff(g_vm->visual->state, COLOR_PAIR(4 | A_BOLD));
+
+    // wattron(g_vm->visual->state, COLOR_PAIR(5 | A_BOLD));
+    // mvwprintw(g_vm->visual->state, 3, 45, " RUNNING ");
+    // wattroff(g_vm->visual->state, COLOR_PAIR(5 | A_BOLD));
     
     mvwprintw(g_vm->visual->state, 6, 6, "Cycles/second limit");
     mvwprintw(g_vm->visual->state, 6, 45, "%d", g_vm->cycles);
@@ -77,6 +86,20 @@ void    render_state(void)
     mvwprintw(g_vm->visual->state, 10, 45, "%d", g_players->len);
 
     render_players();
+
+    int players_offset = 15 + g_players->len * 4;
+
+    mvwprintw(g_vm->visual->state, players_offset + 3, 6, "CYCLE_TO_DIE");
+    mvwprintw(g_vm->visual->state, players_offset + 3, 45, "%d", CYCLE_TO_DIE);
+
+    mvwprintw(g_vm->visual->state, players_offset + 5, 6, "CYCLE_DELTA");
+    mvwprintw(g_vm->visual->state, players_offset + 5, 45, "%d", CYCLE_DELTA);
+
+    mvwprintw(g_vm->visual->state, players_offset + 7, 6, "NBR_LIVE");
+    mvwprintw(g_vm->visual->state, players_offset + 7, 45, "%d", NBR_LIVE);
+
+    mvwprintw(g_vm->visual->state, players_offset + 9, 6, "MAX_CHECKS");
+    mvwprintw(g_vm->visual->state, players_offset + 9, 45, "%d", MAX_CHECKS);
 
     wrefresh(g_vm->visual->state);
 }

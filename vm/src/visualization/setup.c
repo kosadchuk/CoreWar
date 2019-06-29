@@ -15,22 +15,78 @@ void    setup_windows(void)
     wrefresh(g_vm->visual->state);
 }
 
+void fill_player(int32_t pos, int32_t player, int32_t size)
+{
+    int32_t i;
+    int32_t value;
+
+    i = pos;
+    value = ((player - 1) % MAX_PLAYER_ID) + 1;
+    while (i < size + pos)
+    {
+        g_vm->visual->data[i].color = get_player_color(player);
+        i++;
+    }
+}
+
+void fill_cursors()
+{
+    t_list_elem *prcs;
+
+    prcs = g_list.start;
+    while (prcs)
+    {
+        g_vm->visual->data[((t_prcs *)prcs->content)->cur_pos].color = get_player_cursor(((t_prcs *)prcs->content)->parent_id - 1);
+        prcs = prcs->next;
+    }
+}
+
+void fill_arena()
+{
+    int32_t i;
+    int32_t pos;
+
+    i = -1;
+    pos = 0;
+    while (++i < MEM_SIZE)
+    {
+        g_vm->visual->data[i].color = COLOR_PAIR(GRAY);
+    }
+    i = -1;
+    while (++i < g_players->len)
+    {
+        fill_player(pos, i, g_players->team[i]->size);
+        pos += MEM_SIZE / g_players->len;
+    }
+
+    fill_cursors();
+}
+
+// void    get_cell(int32_t index)
+// {
+//     return g_vm->visual->data[index];
+// }
+
 void    render_arena(void)
 {
     int x;
     int y;
 
     y = -1;
+
+    fill_arena();
+
     while (++y < CELLS_NUMBER)
     {
         x = -1;
         while (++x < CELLS_NUMBER)
         {
-            wattron(g_vm->visual->arena, COLOR_PAIR(GRAY | A_BOLD));
+            wattron(g_vm->visual->arena, g_vm->visual->data[y * CELLS_NUMBER + x].color);
             mvwprintw(g_vm->visual->arena, y + 1, 2 + x * 3, "%0.2x", 0xFF & g_vm->map[y * CELLS_NUMBER + x]);
-            wattroff(g_vm->visual->arena, COLOR_PAIR(GRAY | A_BOLD));
+            wattroff(g_vm->visual->arena, g_vm->visual->data[y * CELLS_NUMBER + x].color);
         }
     }
+
     wrefresh(g_vm->visual->arena);
 }
 
@@ -39,7 +95,6 @@ void    render_players(void)
     int i;
 
     i = -1;
-    wattron(g_vm->visual->state, A_BOLD);
     while (++i < g_players->len)
     {
         mvwprintw(g_vm->visual->state, 15 + i * 4, 6, "Player -%d:", g_players->team[i]->id);
@@ -51,11 +106,11 @@ void    render_players(void)
         mvwprintw(g_vm->visual->state, 17 + i * 4, 10, "Lives in current period");
         mvwprintw(g_vm->visual->state, 17 + i * 4, 45, "%d", g_players->team[i]->lives_in_cur);
     }
-    wattroff(g_vm->visual->state, A_BOLD);
 }
 
 void    render_state(void)
 {
+    werase(g_vm->visual->state);
     mvwprintw(g_vm->visual->state, 3, 6, "STATE");
     
     wattron(g_vm->visual->state, COLOR_PAIR(STATE_PAUSED | A_BOLD));
@@ -67,13 +122,13 @@ void    render_state(void)
     // wattroff(g_vm->visual->state, COLOR_PAIR(5 | A_BOLD));
     
     mvwprintw(g_vm->visual->state, 6, 6, "Cycles/second limit");
-    mvwprintw(g_vm->visual->state, 6, 45, "%d", g_vm->cycles);
+    mvwprintw(g_vm->visual->state, 6, 45, "%d", 50);
 
     mvwprintw(g_vm->visual->state, 8, 6, "Cycle");
-    mvwprintw(g_vm->visual->state, 8, 45, "0");
+    mvwprintw(g_vm->visual->state, 8, 45, "%d", g_vm->cycles);
 
     mvwprintw(g_vm->visual->state, 10, 6, "Processes");
-    mvwprintw(g_vm->visual->state, 10, 45, "%d", -1);
+    mvwprintw(g_vm->visual->state, 10, 45, "%d", g_list.list_size);
 
     render_players();
 
@@ -102,10 +157,14 @@ void    setup_visual(void)
     curs_set(false);
     cbreak();
     noecho();
+    use_default_colors();
     start_color();
     init_colors();
     setup_windows();
 
     render_arena();
     render_state();
+
+    getchar();
+    endwin();
 }

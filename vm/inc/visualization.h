@@ -19,14 +19,14 @@
 */
 
 
-# define COLOR_BLACK		0
-# define COLOR_RED			1
-# define COLOR_GREEN		2
-# define COLOR_YELLOW		3
-# define COLOR_BLUE			4
-# define COLOR_MAGENTA	5
-# define COLOR_CYAN			6
-# define COLOR_WHITE		7
+// # define COLOR_BLACK		0
+// # define COLOR_RED			1
+// # define COLOR_GREEN		2
+// # define COLOR_YELLOW		3
+// # define COLOR_BLUE			4
+// # define COLOR_MAGENTA	5
+// # define COLOR_CYAN			6
+// # define COLOR_WHITE		7
 # define COLOR_GRAY			8
 # define LIGHT_RED			9
 # define DARK_RED				10
@@ -49,20 +49,18 @@
 # define BLUE_LIVE			27
 # define MAGENTA_LIVE		28
 
-typedef struct		s_attr
+typedef struct		s_cell
 {
-	int32_t			index;
-	ssize_t			wait_cycles_store;
-	ssize_t			wait_cycles_live;
-	// t_player		*player_live;
-}									t_attr;
+	int				color;
+	ssize_t			cycles;
+}					t_cell;
 
 typedef struct  s_visualization
 {
     int         paused;
     WINDOW      *arena;
-    WINDOW			*state;
-    t_attr			data[MEM_SIZE];
+    WINDOW		*state;
+    t_cell		data[MEM_SIZE];
 }               t_visualization;
 
 t_visualization				*init_visual(void);
@@ -70,6 +68,7 @@ t_visualization				*init_visual(void);
 void	setup_visual(void);
 void	init_colors(void);
 int		get_player_color(int);
+int     get_player_cursor(int);
 
 void render_arena(void);
 void render_state(void);

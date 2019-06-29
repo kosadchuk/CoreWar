@@ -2,14 +2,14 @@
 
 void    init_colors(void)
 {
-    init_color(COLOR_BLACK, 0, 0, 0);
-    init_color(COLOR_RED, 1000, 0, 0);
-    init_color(COLOR_GREEN, 0, 1000, 0);
-    init_color(COLOR_YELLOW, 1000, 1000, 0);
-    init_color(COLOR_BLUE, 0, 0, 1000);
-    init_color(COLOR_MAGENTA, 1000, 0, 1000);
-    init_color(COLOR_CYAN, 0, 1000, 1000);
-    init_color(COLOR_WHITE, 1000, 1000, 1000);
+    // init_color(COLOR_BLACK, 0, 0, 0);
+    // init_color(COLOR_RED, 1000, 0, 0);
+    // init_color(COLOR_GREEN, 0, 1000, 0);
+    // init_color(COLOR_YELLOW, 1000, 1000, 0);
+    // init_color(COLOR_BLUE, 0, 0, 1000);
+    // init_color(COLOR_MAGENTA, 1000, 0, 1000);
+    // init_color(COLOR_CYAN, 0, 1000, 1000);
+    // init_color(COLOR_WHITE, 1000, 1000, 1000);
     init_color(COLOR_GRAY, 355, 355, 355);
     init_color(LIGHT_RED, 700, 0, 0);
     init_color(DARK_RED, 255, 0, 0);
@@ -35,11 +35,22 @@ void    init_colors(void)
 
 int    get_player_color(int index)
 {
-    int colors[15] = {
+    int colors[4] = {
         COLOR_PAIR(RED),
         COLOR_PAIR(GREEN),
         COLOR_PAIR(BLUE),
         COLOR_PAIR(MAGENTA)
     };
     return (colors[index]);
+}
+
+int     get_player_cursor(int index)
+{
+     int colors[4] = {
+        COLOR_PAIR(RED_CURSOR),
+        COLOR_PAIR(GREEN_CURSOR),
+        COLOR_PAIR(BLUE_CURSOR),
+        COLOR_PAIR(MAGENTA_CURSOR)
+    };
+    return (colors[index]);   
 }

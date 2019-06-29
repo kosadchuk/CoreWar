@@ -66,14 +66,13 @@ void	main_cycle(void)
 {
 	while (1)
 	{
-        render_arena();
-        render_state();
 		(g_flag_v2 == 1) ? ft_printf("It is now cycle %d\n", g_vm->cycles) : 0;
 		ft_lstiter(&g_list, &pars_process);
 		if (g_vm->cycles == g_dump && g_flag_v == 0 && g_dump > 0)
 			print_dump();
 		if (g_vm->ctd <= 0 || g_list.list_size == 0)
 		{
+			printf("%zu\n", g_list.list_size);
 			kill_all_processes();
 			ft_printf(WINNER, g_vm->last_alive->id, g_vm->last_alive->name);
 			break ;
@@ -100,6 +99,8 @@ void	start_war(void)
     g_vm->visual = init_visual();
 
     setup_visual();
+
+    // printf("%p\n", g_vm->visual->arena);
 
 	main_cycle();
 }

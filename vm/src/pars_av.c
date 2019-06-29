@@ -36,7 +36,10 @@ void	save_players(char *pl, int pl_id)
 	if (g_save_pl->len == 4)
 		ft_err(ft_printf("Too many champions\n"));
 	player = ft_memalloc(sizeof(t_player));
-	player->n_id = pl_id;
+	if (pl_id > 0)
+		player->n_id = pl_id;
+	else
+		player->n_id = 0;
 	player->id = 1;
 	pars_champs(pl, player);
 	push_array(g_save_pl, player);

@@ -1,19 +1,5 @@
 #include "../../inc/visualization.h"
 
-void    init_colors(void)
-{
-    init_color(1, 355, 355, 355);
-    init_color(2, 700, 0, 0);
-    init_color(3, 255, 0, 0);
-    init_color(4, 0, 700, 0);
-    init_color(5, 0, 255, 0);
-    init_pair(1, COLOR_WHITE, COLOR_WHITE);
-    init_pair(2, 1, COLOR_BLACK);
-    init_pair(3, COLOR_GREEN, COLOR_BLACK);
-    init_pair(4, 2, 3);
-    init_pair(5, 4, 5);
-}
-
 void                create_border(WINDOW *win)
 {
     box(win, 0, 0);
@@ -40,9 +26,9 @@ void    render_arena(void)
         x = -1;
         while (++x < CELLS_NUMBER)
         {
-            wattron(g_vm->visual->arena, COLOR_PAIR(2 | A_BOLD));
-            mvwprintw(g_vm->visual->arena, y + 1, 2 + x * 3, "%0.2x", 0x0);
-            wattroff(g_vm->visual->arena, COLOR_PAIR(2 | A_BOLD));
+            wattron(g_vm->visual->arena, COLOR_PAIR(GRAY | A_BOLD));
+            mvwprintw(g_vm->visual->arena, y + 1, 2 + x * 3, "%0.2x", 0xFF & g_vm->map[y * CELLS_NUMBER + x]);
+            wattroff(g_vm->visual->arena, COLOR_PAIR(GRAY | A_BOLD));
         }
     }
     wrefresh(g_vm->visual->arena);
@@ -53,24 +39,28 @@ void    render_players(void)
     int i;
 
     i = -1;
+    wattron(g_vm->visual->state, A_BOLD);
     while (++i < g_players->len)
     {
         mvwprintw(g_vm->visual->state, 15 + i * 4, 6, "Player -%d:", g_players->team[i]->id);
+        wattron(g_vm->visual->state, get_player_color(i));
         mvwprintw(g_vm->visual->state, 15 + i * 4, 17, "%s", g_players->team[i]->name);
+        wattroff(g_vm->visual->state, get_player_color(i));
         mvwprintw(g_vm->visual->state, 16 + i * 4, 10, "Last live");
         mvwprintw(g_vm->visual->state, 16 + i * 4, 45, "%d", g_players->team[i]->last_live);
         mvwprintw(g_vm->visual->state, 17 + i * 4, 10, "Lives in current period");
         mvwprintw(g_vm->visual->state, 17 + i * 4, 45, "%d", g_players->team[i]->lives_in_cur);
     }
+    wattroff(g_vm->visual->state, A_BOLD);
 }
 
 void    render_state(void)
 {
     mvwprintw(g_vm->visual->state, 3, 6, "STATE");
     
-    wattron(g_vm->visual->state, COLOR_PAIR(4 | A_BOLD));
+    wattron(g_vm->visual->state, COLOR_PAIR(STATE_PAUSED | A_BOLD));
     mvwprintw(g_vm->visual->state, 3, 45, " PAUSED ");
-    wattroff(g_vm->visual->state, COLOR_PAIR(4 | A_BOLD));
+    wattroff(g_vm->visual->state, COLOR_PAIR(STATE_PAUSED | A_BOLD));
 
     // wattron(g_vm->visual->state, COLOR_PAIR(5 | A_BOLD));
     // mvwprintw(g_vm->visual->state, 3, 45, " RUNNING ");
@@ -83,7 +73,7 @@ void    render_state(void)
     mvwprintw(g_vm->visual->state, 8, 45, "0");
 
     mvwprintw(g_vm->visual->state, 10, 6, "Processes");
-    mvwprintw(g_vm->visual->state, 10, 45, "%d", g_players->len);
+    mvwprintw(g_vm->visual->state, 10, 45, "%d", -1);
 
     render_players();
 
@@ -112,15 +102,10 @@ void    setup_visual(void)
     curs_set(false);
     cbreak();
     noecho();
-    use_default_colors();
     start_color();
     init_colors();
     setup_windows();
 
     render_arena();
     render_state();
-
-    getchar();
-
-    endwin();
 }

@@ -66,6 +66,8 @@ void	main_cycle(void)
 {
 	while (1)
 	{
+        render_arena();
+        render_state();
 		(g_flag_v2 == 1) ? ft_printf("It is now cycle %d\n", g_vm->cycles) : 0;
 		ft_lstiter(&g_list, &pars_process);
 		if (g_vm->cycles == g_dump && g_flag_v == 0 && g_dump > 0)
@@ -99,7 +101,5 @@ void	start_war(void)
 
     setup_visual();
 
-    printf("%p\n", g_vm->visual->arena);
-
-	// main_cycle();
+	main_cycle();
 }

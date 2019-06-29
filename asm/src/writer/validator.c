@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:18 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:06:18 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 19:15:07 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int			validate_marks(t_list const *commands, t_list const *marks)
 	return (1);
 }
 
-int					validate_parsed_data(t_asm const* data)
+int					validate_parsed_data(t_asm const *data)
 {
 	if (!data || !(data->name) || !(data->comment))
 	{

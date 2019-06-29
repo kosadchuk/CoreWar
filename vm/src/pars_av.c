@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 15:43:38 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:33:31 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 22:26:54 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	save_players(char *pl, int pl_id)
 {
 	t_player	*player;
 
+	if (g_save_pl->len == 4)
+		ft_err(ft_printf("Too many champions\n"));
 	player = ft_memalloc(sizeof(t_player));
 	player->n_id = pl_id;
 	player->id = 1;

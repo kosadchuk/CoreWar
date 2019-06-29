@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utility.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/28 19:13:17 by apavlyuc          #+#    #+#             */
+/*   Updated: 2019/06/28 19:13:42 by apavlyuc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/asm.h"
 #include "../../inc/op.h"
 #include "../../libft/inc/libft.h"
@@ -17,7 +29,7 @@ void				int_to_bytecode(char *data, int value, int bytes)
 	}
 }
 
-t_mark				*find_mark(t_list const *marks, char const* label)
+t_mark				*find_mark(t_list const *marks, char const *label)
 {
 	t_list const	*tmp;
 	t_mark const	*mark;

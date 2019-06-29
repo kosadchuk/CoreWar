@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:04 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 13:40:43 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 19:28:33 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,18 @@ static int		get_arg_type_code(t_command const *com, t_ull *len)
 	ret |= get_arg_type(com->arg1) << 6;
 	ret |= get_arg_type(com->arg2) << 4;
 	ret |= get_arg_type(com->arg3) << 2;
-	//printf("arg_type_code = %d\n", ret);
 	return (ret);
 }
 
-static int		get_arg_code(t_code const *src, t_command const *com, char const *arg, t_ull *len)
+static int		get_arg_code(t_code const *src, t_command const *com,\
+							char const *arg, t_ull *len)
 {
 	t_mark		*mark;
 	int			mark_location_byte;
 	int			ret;
 	int			type;
 
-	*len = 0;
-	if (!arg)
+	if (!arg && (*len = 0) == 0)
 		return (0);
 	type = get_arg_type(arg);
 	*len = (type == T_REG ? 1 : 2);
@@ -57,15 +56,16 @@ static int		get_arg_code(t_code const *src, t_command const *com, char const *ar
 		if ((mark = find_mark(src->marks, arg)))
 			mark_location_byte = mark->location;
 		if (type == T_DIR)
-			ret = (arg[1] == ':' ? mark_location_byte - (int)com->starting_byte_index : ft_atoi(arg + 1));
+			ret = (arg[1] == ':' ? mark_location_byte -\
+				(int)com->starting_byte_index : ft_atoi(arg + 1));
 		if (type == T_IND)
 			ret = (arg[0] == ':' ? mark_location_byte : ft_atoi(arg));
 	}
-	printf("arg = %d; len = %d\t\t", ret, (int)*len);
 	return (ret);
 }
 
-static void		init_by_command_data(t_code const *src, t_command const *com, void *dst)
+static void		init_by_command_data(t_code const *src,\
+					t_command const *com, void *dst)
 {
 	t_ull		len;
 	t_ull		i;
@@ -98,7 +98,7 @@ static void		reverse_list(t_list **lst)
 	t_list		*tmp;
 
 	if (!lst || !*lst)
-		return;
+		return ;
 	curr = *lst;
 	prev = 0;
 	while (curr)
@@ -116,10 +116,10 @@ void			write_commands_in_binary(int fd, t_asm const *content)
 {
 	t_command	*command;
 	t_list		*lst;
+	t_ull		len_void;
 	void		*data;
 
 	lst = content->code->commands;
-	int writed = 0;
 	reverse_list(&lst);
 	while (lst)
 	{
@@ -127,11 +127,9 @@ void			write_commands_in_binary(int fd, t_asm const *content)
 		data = ft_memalloc(command->bytes);
 		ft_memset(data, 0, command->bytes);
 		init_by_command_data(content->code, command, data);
-		t_ull len = write(fd, data, command->bytes);
-		(void)len;
-		writed += command->bytes;
+		len_void = write(fd, data, command->bytes);
+		(void)len_void;
 		ft_memdel((void **)&data);
 		lst = lst->next;
 	}
-	printf("writed from command: %d\n", writed);
 }

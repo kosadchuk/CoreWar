@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:56 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/15 14:06:56 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:41:46 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 extern t_err_manager_storage g_on_error;
 
-static int			has_errors(char const* str)
+static int			has_errors(char const *str)
 {
 	char const		*end;
 
@@ -75,7 +75,7 @@ static char			*get_full_field(char const *file_content, char const *curr)
 	while ((line = get_line_from_src(file_content, len, 0)))
 	{
 		if (has_errors(line))
-			break;
+			break ;
 		if ((end = ft_strchr(line, '\"')))
 		{
 			tmp = ft_strsub(line, 0, end - line);
@@ -91,7 +91,8 @@ static char			*get_full_field(char const *file_content, char const *curr)
 	return (0);
 }
 
-void				try_parse_header(char const *file_content, char const *curr, char const *part, void **dst)
+void				try_parse_header(char const *file_content,\
+					char const *curr, char const *part, void **dst)
 {
 	char			*end;
 
@@ -105,17 +106,17 @@ void				try_parse_header(char const *file_content, char const *curr, char const 
 	skip_whitespaces(&curr);
 	curr += 1;
 	if (has_errors(curr))
-		return;
+		return ;
 	if ((end = ft_strchr(curr, '\"')))
 		*dst = ft_strsub(curr, 0, ft_strlen(curr) - ft_strlen(end));
 	else
 		*dst = get_full_field(file_content, curr);
 	if (!*dst)
 		wrong_header_in_file(2);
-	//printf("%s = [%s]\n", part, (char *)*dst);
 }
 
-int					parse_header(char const *file_content, t_asm *dst, t_ull len)
+int					parse_header(char const *file_content,\
+								t_asm *dst, t_ull len)
 {
 	char			*line;
 	char const		*header_part;
@@ -133,7 +134,7 @@ int					parse_header(char const *file_content, t_asm *dst, t_ull len)
 		TRY_PARS_COMMENT(header_part);
 		ft_memdel((void **)&line);
 		if (breaker == 2)
-			break;
+			break ;
 	}
 	return (dst->name && dst->comment);
 }

@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/02 14:53:13 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/02 15:38:20 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 18:15:47 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int					is_good_end_of_file(char const *file_content)
 	return (0);
 }
 
-char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)
+char				*get_line_from_src(char const *src,\
+					t_ull src_len, int flag_reset)
 {
 	static t_ull	start = 0;
 	char			*ret;
@@ -60,7 +61,7 @@ char				*get_line_from_src(char const *src, t_ull src_len, int flag_reset)
 	return (ret);
 }
 
-char				*read_file(char const* file_name)
+char				*read_file(char const *file_name)
 {
 	char			*ret;
 	char			*tmp;

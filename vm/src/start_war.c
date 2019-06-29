@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 21:29:06 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:33:48 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/28 21:35:39 by kosadchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	kill_all_processes(void)
 	t_list_elem		*tmp;
 
 	tmp = g_list.start;
-	while (tmp)
+	while (tmp && tmp->next)
 	{
 		ft_lstdel_by_obj(&g_list, tmp);
 		tmp = tmp->next;

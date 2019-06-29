@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:13 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 18:30:44 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/29 18:00:41 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char const		*get_arg(char const *line)
 	if (!line)
 		return (0);
 	copy_to = 0;
-	while (line[copy_to] && line[copy_to] != SEPARATOR_CHAR &&\
-			line[copy_to] != ' ')
+	while (line[copy_to] && line[copy_to] != SEPARATOR_CHAR &&
+		line[copy_to] != COMMENT_CHAR && !ft_isspace(line[copy_to]))
 		++copy_to;
 	if (copy_to == 0)
 		return (0);

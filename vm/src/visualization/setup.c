@@ -15,7 +15,28 @@ void    setup_windows(void)
     wrefresh(g_vm->visual->state);
 }
 
-void fill_player(int32_t pos, int32_t player, int32_t size)
+int32_t     calc_addr(int32_t addr)
+{
+    addr %= MEM_SIZE;
+    if (addr < 0)
+        addr += MEM_SIZE;
+    return (addr);
+}
+
+void        update_map(int32_t player, int32_t addr, int32_t size)
+{
+    int32_t value;
+
+    value = (player - 1);
+    while (size)
+    {
+        g_vm->visual->data[calc_addr(addr + size - 1)].color = get_player_color(value);
+        g_vm->visual->data[calc_addr(addr + size - 1)].cycles = CYCLE_TO_WAIT;
+        size--;
+    }
+}
+
+void        fill_player(int32_t pos, int32_t player, int32_t size)
 {
     int32_t i;
     int32_t value;
@@ -29,7 +50,7 @@ void fill_player(int32_t pos, int32_t player, int32_t size)
     }
 }
 
-void fill_cursors()
+void        fill_cursors()
 {
     t_list_elem *prcs;
 
@@ -41,7 +62,7 @@ void fill_cursors()
     }
 }
 
-void fill_arena()
+void        fill_arena()
 {
     int32_t i;
     int32_t pos;
@@ -58,8 +79,6 @@ void fill_arena()
         fill_player(pos, i, g_players->team[i]->size);
         pos += MEM_SIZE / g_players->len;
     }
-
-    fill_cursors();
 }
 
 // void    get_cell(int32_t index)
@@ -71,10 +90,9 @@ void    render_arena(void)
 {
     int x;
     int y;
+    // int i;
 
     y = -1;
-
-    fill_arena();
 
     while (++y < CELLS_NUMBER)
     {
@@ -86,6 +104,8 @@ void    render_arena(void)
             wattroff(g_vm->visual->arena, g_vm->visual->data[y * CELLS_NUMBER + x].color);
         }
     }
+
+    fill_cursors();
 
     wrefresh(g_vm->visual->arena);
 }
@@ -162,9 +182,11 @@ void    setup_visual(void)
     init_colors();
     setup_windows();
 
+    fill_arena();
+
     render_arena();
     render_state();
 
     getchar();
-    endwin();
+    // endwin();
 }

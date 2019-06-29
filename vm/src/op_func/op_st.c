@@ -19,6 +19,28 @@ int		check_st_codage(uint32_t codage)
 	return (1);
 }
 
+// inline static void	vs_st(t_pr *pr, int32_t addr)
+// {
+// 	if (g_vm->visual)
+// 		update_map(cursor, cursor->pc + (addr % IDX_MOD), DIR_SIZE);
+// }
+
+static void	write_vs_map(int32_t player, int32_t pos)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (pos >= MEM_SIZE)
+			pos = pos % MEM_SIZE;
+		else if (pos < 0)
+			pos = pos + MEM_SIZE;
+		g_vm->visual->data[pos].color = get_player_color(player);
+		pos++;
+	}
+}
+
 void	op_st(t_pr *pr, t_op op, uint32_t codage)
 {
 	int32_t		pos;
@@ -39,6 +61,8 @@ void	op_st(t_pr *pr, t_op op, uint32_t codage)
 			pos = pr->prev_pos + (op.args[1].value % IDX_MOD);
 			int_to_byte(op.args[0].value, buf);
 			write_in_map(pos, buf);
+			write_vs_map(pr->parent_id - 1, pos);
+			// printf("pos -> %d\n", pos);
 		}
 	}
 	handle_position(pr, 1);

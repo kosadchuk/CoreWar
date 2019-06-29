@@ -14,6 +14,8 @@
 # define STATE_WIDTH			60
 # define STATE_HEIGHT			ARENA_HEIGHT
 
+# define CYCLE_TO_WAIT			50
+
 /*
 	COLORS
 */
@@ -69,6 +71,8 @@ void	setup_visual(void);
 void	init_colors(void);
 int		get_player_color(int);
 int     get_player_cursor(int);
+
+void        update_map(int32_t, int32_t, int32_t);
 
 void render_arena(void);
 void render_state(void);

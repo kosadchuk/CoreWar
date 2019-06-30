@@ -78,6 +78,7 @@ t_vm				*g_vm;
 t_list				g_list;
 int					g_prc_id;
 int					g_dump;
+int					g_dump_flag;
 int					g_flag_v;
 int					g_flag_v2;
 int					g_flag_v3;

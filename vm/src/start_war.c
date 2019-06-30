@@ -6,7 +6,7 @@
 /*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 21:29:06 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/30 16:07:01 by kmarchen         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:17:32 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,48 +64,36 @@ void	delete_dead_process(void)
 	}
 }
 
-void	main_cycle(void)
+void	check(void)
 {
-	while (1)
-	{
-		(g_flag_v2 == 1) ? ft_printf("It is now cycle %d\n", g_vm->cycles) : 0;
-		ft_lstiter(&g_list, &pars_process);
-		(g_vm->cycles == g_dump && g_dump > 0) ? print_dump() : 0;
-		if (g_vm->ctd <= 0 || g_list.list_size == 0)
-		{
-			kill_all_processes();
-			render();
-			getchar();
-		    endwin();
-			if (g_dump < 1)
-				ft_printf(WINNER, g_vm->last_alive->id, g_vm->last_alive->name);
-			break ;
-		}
-		g_vm->check_cycle--;
-		if (g_vm->check_cycle == 0)
-		{
-			g_vm->checks++;
-			delete_dead_process();
-			if (g_vm->count_live_op >= NBR_LIVE || (g_vm->checks == MAX_CHECKS\
+	g_vm->checks++;
+	delete_dead_process();
+	if (g_vm->count_live_op >= NBR_LIVE || (g_vm->checks == MAX_CHECKS\
 			&& g_vm->prev_ctd == g_vm->ctd))
-				change_cycles_to_die();
-			g_vm->count_live_op = 0;
-			g_vm->check_cycle = g_vm->ctd;
-		}
-		g_vm->cycles++;
-        // WARNING
-        render();     
-	}
+		change_cycles_to_die();
+	g_vm->count_live_op = 0;
+	g_vm->check_cycle = g_vm->ctd;
 }
 
 void	start_war(void)
 {
 	init_start_positions();
-
-    // WARNING
-    g_vm->visual = init_visual();
-    setup_visual();
-    // WARNING
-
-	main_cycle();
+	while (1)
+	{
+		(g_flag_v2 == 1) ? ft_printf("It is now cycle %d\n", g_vm->cycles) : 0;
+		ft_lstiter(&g_list, &pars_process);
+		((g_vm->cycles == g_dump && g_dump_flag == 1) ||\
+		(g_vm->cycles - 1 == 0 && g_dump_flag == 1)) ? print_dump() : 0;
+		if (g_vm->ctd <= 0 || g_list.list_size == 0)
+		{
+			kill_all_processes();
+			if (g_dump_flag == 0)
+				ft_printf(WINNER, g_vm->last_alive->id, g_vm->last_alive->name);
+			break ;
+		}
+		g_vm->check_cycle--;
+		if (g_vm->check_cycle == 0)
+			check();
+		g_vm->cycles++;
+	}
 }

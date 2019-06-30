@@ -58,6 +58,7 @@ void	check_flag(char **av, int *i)
 	int		d;
 
 	g_dump = 0;
+	g_dump_flag = 0;
 	g_flag_v = 0;
 	g_flag_v2 = 0;
 	g_flag_v3 = 0;
@@ -68,6 +69,7 @@ void	check_flag(char **av, int *i)
 		if (d < 0 || d > 2147483647)
 			ft_err(ft_printf(ERR_DUMP_NUM));
 		g_dump = d;
+		g_dump_flag = 1;
 	}
 	else if (!ft_strcmp("-n", av[(*i)]) && av[(*i) + 1] != NULL)
 		pars_n_flag(av, i);

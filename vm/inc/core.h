@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 12:57:47 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/05/28 12:57:49 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:09:49 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_vm				*g_vm;
 t_list				g_list;
 int					g_prc_id;
 int					g_dump;
+int					g_dump_flag;
 int					g_flag_v;
 int					g_flag_v2;
 int					g_flag_v3;

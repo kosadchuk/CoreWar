@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosadchu <kosadchu@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 12:45:54 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/23 19:14:51 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:24:20 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@
 # include <stdint.h>
 # include "ft_printf/ft_printf.h"
 
-#undef true
-#undef false
-
 typedef int8_t	t_bool;
-enum	{ false, true };
 
 typedef void	(*t_fatal_exit_func)(const char *message);
 extern			t_fatal_exit_func g_fef;

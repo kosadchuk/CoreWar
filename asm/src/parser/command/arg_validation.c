@@ -6,15 +6,13 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:10 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/29 18:11:35 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:45:55 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/asm.h"
 #include "../../../libft/inc/libft.h"
 #include "../../../inc/op.h"
-
-#include <stdio.h>
 
 extern t_cm_desc const	g_comms[16];
 
@@ -70,7 +68,6 @@ int			is_valid_t_ind(char const *arg)
 	t_ull	arg_len;
 	t_ull	i;
 
-	//printf("\narg = %s\n", arg);
 	arg_len = ft_strlen(arg);
 	if (arg_len == 0)
 		return (0);
@@ -86,7 +83,6 @@ int			is_valid_t_ind(char const *arg)
 		i = arg[0] == '-' ? 1 : 0;
 		while (i < arg_len && ft_isdigit(arg[i]))
 			++i;
-		//printf("%d == %d\n", (int)i, (int)arg_len);
 		if (i != arg_len)
 			return (0);
 	}

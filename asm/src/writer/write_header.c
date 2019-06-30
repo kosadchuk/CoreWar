@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:13 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 19:21:36 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:44:54 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../../inc/op.h"
 #include "../../libft/inc/libft.h"
 
-#include <stdio.h>
 #include <unistd.h>
 
 static int	get_exec_code_size(t_asm const *content)
@@ -56,6 +55,5 @@ void		write_header_in_binary(int fd, t_asm const *content)
 	i += COMMENT_LENGTH;
 	i += 4;
 	i = write(fd, data, i * sizeof(char));
-	printf("writed from header: %d\n", i);
 	ft_memdel(&data);
 }

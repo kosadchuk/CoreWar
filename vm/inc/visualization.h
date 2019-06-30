@@ -3,6 +3,7 @@
 
 # include <ncurses.h>
 # include "core.h"
+# include <time.h>
 
 # define CELLS_NUMBER       64
 # define ARENA_WIDTH        (CELLS_NUMBER * 3)
@@ -37,8 +38,14 @@
 # define PLAYER_CURSOR      2
 # define PLAYER_LIVE        3
 
+# define KEY_ESC			27
+# define KEY_SPACE			' '
+
 typedef struct		s_visualization
 {
+	int				key;
+	clock_t			time;
+	int				speed;
 	int				paused;
 	WINDOW			*arena;
 	WINDOW			*state;
@@ -66,6 +73,7 @@ void    			render_state(void);
 void				render(void);
 
 int32_t				correct_pos(int32_t pos);
+clock_t				get_delay(void);
 
 static int g_player_colors[4] = {
 	COLOR_PAIR(RED),

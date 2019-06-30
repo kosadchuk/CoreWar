@@ -6,7 +6,7 @@
 /*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 16:01:31 by kmarchen          #+#    #+#             */
-/*   Updated: 2019/06/30 16:02:10 by kmarchen         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:26:29 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,9 @@ int32_t		correct_pos(int32_t pos)
 	if (pos < 0)
 		pos += MEM_SIZE;
 	return (pos);
+}
+
+clock_t		get_delay(void)
+{
+	return (g_vm->visual->time + CLOCKS_PER_SEC / g_vm->visual->speed);
 }

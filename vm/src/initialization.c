@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 21:41:17 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:33:09 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:06:35 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void	copy_prcs(t_pr *pr, int32_t pos)
 	while (++i < REG_NUMBER)
 		new_pr.reg[i] = pr->reg[i];
 	g_prc_id++;
-	if (g_vm->visual)
-	{
-		create_cursor(new_pr.parent_id - 1, pos);
-	}
 	ft_lstpush_front(&g_list, ft_lstnew(&new_pr, sizeof(t_pr)));
 }
 
@@ -58,6 +54,7 @@ void	init_vm(void)
 	g_vm->check_cycle = CYCLE_TO_DIE;
 	g_vm->checks = 0;
 	g_vm->prev_ctd = CYCLE_TO_DIE;
+	g_vm->visual = NULL;
 }
 
 void	init_start_positions(void)

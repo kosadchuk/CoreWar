@@ -4,87 +4,88 @@
 # include <ncurses.h>
 # include "core.h"
 
-# define MIN_PLAYER_ID			1
-# define MAX_PLAYER_ID			4
+# define CELLS_NUMBER       64
+# define ARENA_WIDTH        (CELLS_NUMBER * 3)
+# define ARENA_HEIGHT       (MEM_SIZE / CELLS_NUMBER)
 
-# define CELLS_NUMBER			64
-# define ARENA_WIDTH			(CELLS_NUMBER * 3)
-# define ARENA_HEIGHT			(MEM_SIZE / CELLS_NUMBER)
+# define STATE_WIDTH        60
+# define STATE_HEIGHT       ARENA_HEIGHT
 
-# define STATE_WIDTH			60
-# define STATE_HEIGHT			ARENA_HEIGHT
-
-# define CYCLE_TO_WAIT			50
-
-/*
-	COLORS
-*/
-
-
-// # define COLOR_BLACK		0
-// # define COLOR_RED			1
-// # define COLOR_GREEN		2
-// # define COLOR_YELLOW		3
-// # define COLOR_BLUE			4
-// # define COLOR_MAGENTA	5
-// # define COLOR_CYAN			6
-// # define COLOR_WHITE		7
-# define COLOR_GRAY			8
+# define COLOR_GRAY         8
 # define LIGHT_RED			9
-# define DARK_RED				10
+# define DARK_RED			10
 # define LIGHT_GREEN		11
 # define DARK_GREEN			12
 # define STATE_PAUSED		13
-# define STATE_RUNNING	14
-# define GRAY						15
-# define RED						16
-# define GREEN					17
-# define BLUE						18
-# define MAGENTA				19
+# define STATE_RUNNING      14
+# define GRAY				15
+# define RED				16
+# define GREEN	    		17
+# define BLUE				18
+# define MAGENTA	    	19
 # define GRAY_CURSOR		20
 # define RED_CURSOR			21
 # define GREEN_CURSOR		22
 # define BLUE_CURSOR		23
-# define MAGENTA_CURSOR	24
-# define RED_LIVE				25
-# define GREEN_LIVE			26
-# define BLUE_LIVE			27
-# define MAGENTA_LIVE		28
+# define MAGENTA_CURSOR     24
+# define RED_LIVE           25
+# define GREEN_LIVE         26
+# define BLUE_LIVE          27
+# define MAGENTA_LIVE       28
 
-# define PLAYER_COLOR		1
-# define PLAYER_CURSOR	2
-# define PLAYER_LIVE		3
+# define PLAYER_COLOR       1
+# define PLAYER_CURSOR      2
+# define PLAYER_LIVE        3
 
-typedef struct		s_cell
+typedef struct		s_visualization
 {
-	int				color;
-	int				type;
-	ssize_t			cycles;
-}					t_cell;
+	int				paused;
+	WINDOW			*arena;
+	WINDOW			*state;
+	int				data[MEM_SIZE];
+	int				cursors[MEM_SIZE];
+}					t_visualization;
 
-typedef struct  s_visualization
-{
-    int         paused;
-    WINDOW      *arena;
-    WINDOW		*state;
-    t_cell		data[MEM_SIZE];
-}               t_visualization;
+t_visualization		*init_visual(void);
 
-t_visualization				*init_visual(void);
+void				setup_visual(void);
+void				init_colors(void);
+int					get_player_color(int32_t index, int32_t type);
 
-void	setup_visual(void);
-void	init_colors(void);
-int    get_player_color(int, int);
+void				fill_arena(void);
+void				fill_cursors(void);
+void				fill_map(int32_t player, int32_t pos, int32_t size);
+void				fill_player(int32_t player, int32_t pos, int32_t size);
 
-void        update_map(int32_t, int32_t, int32_t);
+void				render_arena(void);
+void				render_cursors(void);
+void				render_state(void);
+void    			render_players(void);
+void    			render_status(void);
+void    			render_state(void);
+void				render(void);
 
-void render_arena(void);
-void render_state(void);
-void render(void);
+int32_t				correct_pos(int32_t pos);
 
-void    create_cursor(int, int32_t);
-void    delete_cursor(int, int32_t);
+static int g_player_colors[4] = {
+	COLOR_PAIR(RED),
+	COLOR_PAIR(GREEN),
+	COLOR_PAIR(BLUE),
+	COLOR_PAIR(MAGENTA)
+};
 
-int32_t     calc_addr(int32_t);
+static int g_player_cursors[4] = {
+	COLOR_PAIR(RED_CURSOR),
+	COLOR_PAIR(GREEN_CURSOR),
+	COLOR_PAIR(BLUE_CURSOR),
+	COLOR_PAIR(MAGENTA_CURSOR)
+};
+
+static int g_player_lives[4] = {
+	COLOR_PAIR(RED_LIVE),
+	COLOR_PAIR(GREEN_LIVE),
+	COLOR_PAIR(BLUE_LIVE),
+	COLOR_PAIR(MAGENTA_LIVE)
+};
 
 #endif

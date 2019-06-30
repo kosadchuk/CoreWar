@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_war.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 21:29:06 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 21:35:39 by kosadchu         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:07:01 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ void	change_cycles_to_die(void)
 void	kill_all_processes(void)
 {
 	t_list_elem		*tmp;
+	t_list_elem		*tmp_2;
 
 	tmp = g_list.start;
 	while (tmp && tmp->next)
 	{
+		tmp_2 = tmp->next;
 		ft_lstdel_by_obj(&g_list, tmp);
-		tmp = tmp->next;
+		tmp = tmp_2;
 	}
 }
 
@@ -72,6 +74,9 @@ void	main_cycle(void)
 		if (g_vm->ctd <= 0 || g_list.list_size == 0)
 		{
 			kill_all_processes();
+			render();
+			getchar();
+		    endwin();
 			if (g_dump < 1)
 				ft_printf(WINNER, g_vm->last_alive->id, g_vm->last_alive->name);
 			break ;

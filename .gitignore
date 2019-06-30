@@ -2,6 +2,7 @@
 asm/build/
 asm/asm
 asm/tester
+res/
 .DS_Store
 .out
 *.o

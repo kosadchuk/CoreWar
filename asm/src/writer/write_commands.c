@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:04 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 19:28:33 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/29 18:09:49 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,23 @@ extern t_cm_desc const	g_comms[16];
 static int		get_arg_type_code(t_command const *com, t_ull *len)
 {
 	int			ret;
+	int			type;
 
 	*len = 0;
 	if (g_comms[com->id_type].has_type_code == 0)
 		return (0);
 	*len = 1;
 	ret = 0;
-	ret |= get_arg_type(com->arg1) << 6;
-	ret |= get_arg_type(com->arg2) << 4;
-	ret |= get_arg_type(com->arg3) << 2;
+	type = get_arg_type(com->arg1);
+	type = (type == T_IND ? 3 : type);
+	ret |= type << 6;
+	type = get_arg_type(com->arg2);
+	type = (type == T_IND ? 3 : type);
+	ret |= type << 4;
+	type = get_arg_type(com->arg3);
+	type = (type == T_IND ? 3 : type);
+	ret |= type << 2;
+	printf("ret = %d\n", ret);
 	return (ret);
 }
 
@@ -71,7 +79,6 @@ static void		init_by_command_data(t_code const *src,\
 	t_ull		i;
 	int			arg_code;
 
-	printf("%s | %s | %s\n", com->arg1, com->arg2, com->arg3);
 	i = 0;
 	len = 1;
 	int_to_bytecode((char *)dst + i, g_comms[com->id_type].code, len);
@@ -87,7 +94,6 @@ static void		init_by_command_data(t_code const *src,\
 	arg_code = get_arg_code(src, com, com->arg3, &len);
 	int_to_bytecode((char *)dst + i, arg_code, len);
 	i += len;
-	printf("\n");
 }
 
 static void		reverse_list(t_list **lst)

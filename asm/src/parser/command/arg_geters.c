@@ -6,15 +6,13 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:13 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/29 18:00:41 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:45:43 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/asm.h"
 #include "../../../libft/inc/libft.h"
 #include "../../../inc/op.h"
-
-#include <stdio.h>
 
 extern t_cm_desc const	g_comms[16];
 

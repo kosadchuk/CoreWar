@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:36 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 18:25:16 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:39:44 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../../libft/inc/libft.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 extern t_err_manager_storage g_on_error;
 
@@ -88,20 +87,21 @@ void				wrong_arg_type(int valid_type, int current_type, int index)
 {
 	char const		*expected;
 
-	printf("valid type = %d\n", valid_type);
 	expected = get_expected(valid_type);
-	if (current_type == 0)
-		printf("Command: %s\nUnknown\
-					type of argument %d\n", g_on_error.curr_line, index);
-	else
-		printf("Command: %s\nWrong\
-					type of argument %d\n", g_on_error.curr_line, index);
+	ft_putstr("Command: ");
+	ft_putstr(g_on_error.curr_line);
+	ft_putstr("\nWrong type of argument ");
+	ft_putnbr(index);
+	ft_putstr("\nvalid type: ");
+	ft_putnbr(valid_type);
+	ft_putstr("\nExpected: ");
+	ft_putendl(expected);
 	if (current_type == T_REG)
-		printf("Expected: %s\nReal one: T_REG\n", expected);
+		ft_putendl("Real one: T_REG");
 	else if (current_type == T_DIR)
-		printf("Expected: %s\nReal one: T_DIR\n", expected);
+		ft_putendl("Real one: T_DIR");
 	else if (current_type == T_IND)
-		printf("Expected: %s\nReal one: T_IND\n", expected);
+		ft_putendl("Real one: T_IND");
 	on_error_deleter();
 	exit(8);
 }

@@ -6,15 +6,13 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:18 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 19:15:07 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:45:03 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/asm.h"
 #include "../../inc/op.h"
 #include "../../libft/inc/libft.h"
-
-#include <stdio.h>
 
 static int			is_mark(char const *arg)
 {
@@ -57,19 +55,19 @@ int					validate_parsed_data(t_asm const *data)
 {
 	if (!data || !(data->name) || !(data->comment))
 	{
-		printf("Error: first wall in validation data\n");
+		ft_putendl("Error: first wall in validation data");
 		return (0);
 	}
 	if (!(data->code) || !(data->code->commands))
 	{
-		printf("Error: second wall in validation data\n");
-		printf("I think, file doesn't contain any command at all\n");
+		ft_putendl("Error: second wall in validation data");
+		ft_putendl("I think, file doesn't contain any command at all");
 		return (0);
 	}
 	if (!validate_marks(data->code->commands, data->code->marks))
 	{
-		printf("Error: threed wall in validation data\n");
-		printf("It seems like u try to use undeclared label.. ugly bitch!\n");
+		ft_putendl("Error: threed wall in validation data");
+		ft_putendl("It seems like u try to use undeclared label.. ugly bitch!");
 		return (0);
 	}
 	return (1);

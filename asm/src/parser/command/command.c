@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:05 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/29 16:57:04 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:46:04 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../../../libft/inc/libft.h"
 #include "../../../inc/op.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 static t_ull	g_last_stack_id = 0;
@@ -78,7 +77,7 @@ static int				process_arg(char const **line, char const *args[3],\
 	has_separator = **line == SEPARATOR_CHAR ? 1 : 0;
 	if (i == 0 && has_separator)
 	{
-		printf("Error: unexpected separator\n");
+		ft_putendl("Error: unexpected separator");
 		return (0);
 	}
 	if (i != 0 && has_separator)
@@ -90,7 +89,7 @@ static int				process_arg(char const **line, char const *args[3],\
 	*line = *line + ft_strlen(args[i]);
 	if (has_separator && !args[i])
 	{
-		printf("Error: separator without the arg at the end of command\n");
+		ft_putendl("Error: separator without the arg at the end of command");
 		return (0);
 	}
 	return (1);

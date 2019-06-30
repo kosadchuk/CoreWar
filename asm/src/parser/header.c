@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:56 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 18:41:46 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:46:16 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "../../inc/op.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 #define SKIP(x) ft_memdel((void **)&(x)); continue;
 #define TRY_SKIP(x) if (is_skipable((x))) { SKIP(x); }

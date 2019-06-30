@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:04 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/29 18:09:49 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:47:36 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../../inc/op.h"
 #include "../../libft/inc/libft.h"
 
-#include <stdio.h>
 #include <unistd.h>
 
 extern t_cm_desc const	g_comms[16];
@@ -38,7 +37,6 @@ static int		get_arg_type_code(t_command const *com, t_ull *len)
 	type = get_arg_type(com->arg3);
 	type = (type == T_IND ? 3 : type);
 	ret |= type << 2;
-	printf("ret = %d\n", ret);
 	return (ret);
 }
 

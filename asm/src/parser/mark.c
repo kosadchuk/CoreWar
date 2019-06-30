@@ -6,15 +6,13 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:06:54 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 18:32:18 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:46:23 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/asm.h"
 #include "../../libft/inc/libft.h"
 #include "../../inc/op.h"
-
-#include <stdio.h>
 
 static char *g_alphabet = LABEL_CHARS;
 

@@ -6,15 +6,13 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/28 19:13:17 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 19:13:42 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 14:46:39 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/asm.h"
 #include "../../inc/op.h"
 #include "../../libft/inc/libft.h"
-
-#include <stdio.h>
 
 void				int_to_bytecode(char *data, int value, int bytes)
 {

@@ -53,6 +53,18 @@ void	pars_v_flag(char **av, int *i)
 		ft_error(USG_V3);
 }
 
+void	pars_p_flag(char **av, int *i)
+{
+	g_flag_p = 1;
+	if (av[(*i) + 1] != NULL)
+	{
+		validate_champ_name(av[++(*i)]);
+		save_players(av[(*i)], 0);
+	}
+	else
+		ft_error(USG_V3);
+}
+
 void	check_flag(char **av, int *i)
 {
 	int		d;
@@ -62,6 +74,7 @@ void	check_flag(char **av, int *i)
 	g_flag_v = 0;
 	g_flag_v2 = 0;
 	g_flag_v3 = 0;
+	g_flag_p = 0;
 	if (!ft_strcmp("-dump", av[(*i)]) && av[(*i) + 1] != NULL\
 	&& av[(*i) + 2] != NULL)
 	{
@@ -75,6 +88,8 @@ void	check_flag(char **av, int *i)
 		pars_n_flag(av, i);
 	else if (!ft_strcmp("-v", av[(*i)]) && av[(*i) + 1] != NULL)
 		pars_v_flag(av, i);
+	else if (!ft_strcmp("-p", av[(*i)]) && av[(*i) + 1] != NULL)
+		pars_p_flag(av, i);
 	else
 		ft_err(ft_printf(ERRR"[%s] %s%s", av[(*i)], UNC_COMND, USG_V3));
 }

@@ -47,7 +47,7 @@ void	pars_v_flag(char **av, int *i)
 	if (av[(*i) + 1] != NULL)
 	{
 		validate_champ_name(av[++(*i)]);
-		save_players(av[(*i)], num);
+		save_players(av[(*i)], 0);
 	}
 	else
 		ft_error(USG_V3);

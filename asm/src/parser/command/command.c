@@ -6,7 +6,7 @@
 /*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 14:07:05 by apavlyuc          #+#    #+#             */
-/*   Updated: 2019/06/28 19:09:44 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/29 16:57:04 by apavlyuc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_ull			init_id_type(char const **line, t_ull *id_type)
 				break ;
 			++i;
 		}
-		if (g_comms[ret].name[i] == '\0' && (*line)[i] == ' ')
+		if (g_comms[ret].name[i] == '\0' && ft_isspace((*line)[i]))
 		{
 			*line = *line + ft_strlen(g_comms[ret].name);
 			*id_type = ++ret;
@@ -81,7 +81,7 @@ static int				process_arg(char const **line, char const *args[3],\
 		printf("Error: unexpected separator\n");
 		return (0);
 	}
-	if (i != 0)
+	if (i != 0 && has_separator)
 	{
 		*line = *line + 1;
 		skip_whitespaces(line);
@@ -136,7 +136,9 @@ int						parse_command(char const *line, t_asm *dst)
 	error_code &= process_arg(&line, args, 2);
 	skip_whitespaces(&line);
 	if ((*line && *line != COMMENT_CHAR) || !error_code)
+	{
 		return (0);
+	}
 	error_code &= process_bytes_len(args, id_type, &bytes_len);
 	error_code &= append_command(dst,\
 					create_command(g_last_stack_id, id_type, args, bytes_len));

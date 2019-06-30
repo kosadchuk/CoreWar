@@ -29,12 +29,14 @@ void	change_cycles_to_die(void)
 void	kill_all_processes(void)
 {
 	t_list_elem		*tmp;
+	t_list_elem		*tmp_2;
 
 	tmp = g_list.start;
 	while (tmp && tmp->next)
 	{
+		tmp_2 = tmp->next;
 		ft_lstdel_by_obj(&g_list, tmp);
-		tmp = tmp->next;
+		tmp = tmp_2;
 	}
 }
 

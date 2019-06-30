@@ -6,7 +6,7 @@
 /*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 16:01:34 by kmarchen          #+#    #+#             */
-/*   Updated: 2019/06/30 17:39:59 by kmarchen         ###   ########.fr       */
+/*   Updated: 2019/06/30 17:55:38 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ void	render_status(void)
 
 void	render_winner(void)
 {
-	mvwprintw(g_vm->visual->state, 30, 6, "WINNER");
+	int players_offset;
+
+	players_offset = 15 + g_players->len * 4;
+	mvwprintw(g_vm->visual->state, players_offset + 11, 6, "WINNER");
 	wattron(g_vm->visual->state,
 		get_player_color(g_vm->last_alive->id - 1, PLAYER_COLOR));
-	mvwprintw(g_vm->visual->state, 30, 15,
+	mvwprintw(g_vm->visual->state, players_offset + 11, 15,
 		" %.36s (%d) ", g_vm->last_alive->name, g_vm->last_alive->id);
 	wattroff(g_vm->visual->state,
 		get_player_color(g_vm->last_alive->id - 1, PLAYER_COLOR));

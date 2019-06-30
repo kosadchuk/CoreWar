@@ -20,6 +20,18 @@ int		check_sti_codage(uint32_t codage)
 	return (1);
 }
 
+static void write_vs_map(int32_t player, int32_t pos)
+{
+    int     i;
+
+    i = -1;
+    while (++i < 4)
+    {
+        g_vm->visual->data[calc_addr(pos)].color = get_player_color(player, PLAYER_COLOR);
+        pos++;
+    }
+}
+
 void	op_sti(t_pr *pr, t_op op, uint32_t codage)
 {
 	int32_t		pos;
@@ -40,6 +52,7 @@ void	op_sti(t_pr *pr, t_op op, uint32_t codage)
 			op.args[2].value, op.args[1].value + op.args[2].value, pos);
 		int_to_byte(op.args[0].value, buf);
 		write_in_map(pos, buf);
+        write_vs_map(pr->parent_id - 1, pos);
 	}
 	handle_position(pr, 1);
 }

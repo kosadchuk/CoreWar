@@ -32,11 +32,7 @@ static void	write_vs_map(int32_t player, int32_t pos)
 	i = -1;
 	while (++i < 4)
 	{
-		if (pos >= MEM_SIZE)
-			pos = pos % MEM_SIZE;
-		else if (pos < 0)
-			pos = pos + MEM_SIZE;
-		g_vm->visual->data[pos].color = get_player_color(player);
+		g_vm->visual->data[calc_addr(pos)].color = get_player_color(player, PLAYER_COLOR);
 		pos++;
 	}
 }

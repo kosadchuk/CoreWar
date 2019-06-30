@@ -33,24 +33,31 @@ void    init_colors(void)
     init_pair(MAGENTA_LIVE, COLOR_WHITE, COLOR_MAGENTA);
 }
 
-int    get_player_color(int index)
+int    get_player_color(int index, int type)
 {
-    int colors[4] = {
+    int players[4] = {
         COLOR_PAIR(RED),
         COLOR_PAIR(GREEN),
         COLOR_PAIR(BLUE),
         COLOR_PAIR(MAGENTA)
     };
-    return (colors[index]);
-}
-
-int     get_player_cursor(int index)
-{
-     int colors[4] = {
+    int cursors[4] = {
         COLOR_PAIR(RED_CURSOR),
         COLOR_PAIR(GREEN_CURSOR),
         COLOR_PAIR(BLUE_CURSOR),
         COLOR_PAIR(MAGENTA_CURSOR)
     };
-    return (colors[index]);   
+    int lives[4] = {
+        COLOR_PAIR(RED_LIVE),
+        COLOR_PAIR(GREEN_LIVE),
+        COLOR_PAIR(BLUE_LIVE),
+        COLOR_PAIR(MAGENTA_LIVE)
+    };
+    if (type == PLAYER_COLOR)
+        return (players[index]);
+    else if (type == PLAYER_CURSOR)
+        return (cursors[index]);
+    else if (type == PLAYER_LIVE)
+        return (lives[index]);
+    return (-1);
 }

@@ -51,9 +51,14 @@
 # define BLUE_LIVE			27
 # define MAGENTA_LIVE		28
 
+# define PLAYER_COLOR		1
+# define PLAYER_CURSOR	2
+# define PLAYER_LIVE		3
+
 typedef struct		s_cell
 {
 	int				color;
+	int				type;
 	ssize_t			cycles;
 }					t_cell;
 
@@ -69,12 +74,14 @@ t_visualization				*init_visual(void);
 
 void	setup_visual(void);
 void	init_colors(void);
-int		get_player_color(int);
-int     get_player_cursor(int);
+int    get_player_color(int, int);
 
 void        update_map(int32_t, int32_t, int32_t);
 
 void render_arena(void);
 void render_state(void);
+void render(void);
+
+int32_t     calc_addr(int32_t);
 
 #endif

@@ -8,11 +8,7 @@ void                create_border(WINDOW *win)
 void    setup_windows(void)
 {
     g_vm->visual->arena = newwin(ARENA_HEIGHT + 2, ARENA_WIDTH + 3, 1, 2);
-    create_border(g_vm->visual->arena);
-    wrefresh(g_vm->visual->arena);
     g_vm->visual->state = newwin(STATE_HEIGHT + 2, STATE_WIDTH, 1, ARENA_WIDTH + 8);
-    create_border(g_vm->visual->state);
-    wrefresh(g_vm->visual->state);
 }
 
 int32_t     calc_addr(int32_t addr)
@@ -30,7 +26,7 @@ void        update_map(int32_t player, int32_t addr, int32_t size)
     value = (player - 1);
     while (size)
     {
-        g_vm->visual->data[calc_addr(addr + size - 1)].color = get_player_color(value);
+        g_vm->visual->data[calc_addr(addr + size - 1)].color = get_player_color(value, PLAYER_COLOR);
         g_vm->visual->data[calc_addr(addr + size - 1)].cycles = CYCLE_TO_WAIT;
         size--;
     }
@@ -45,20 +41,8 @@ void        fill_player(int32_t pos, int32_t player, int32_t size)
     value = ((player - 1) % MAX_PLAYER_ID) + 1;
     while (i < size + pos)
     {
-        g_vm->visual->data[i].color = get_player_color(player);
+        g_vm->visual->data[i].color = get_player_color(player, PLAYER_COLOR);
         i++;
-    }
-}
-
-void        fill_cursors()
-{
-    t_list_elem *prcs;
-
-    prcs = g_list.start;
-    while (prcs)
-    {
-        g_vm->visual->data[((t_prcs *)prcs->content)->cur_pos].color = get_player_cursor(((t_prcs *)prcs->content)->parent_id - 1);
-        prcs = prcs->next;
     }
 }
 
@@ -81,9 +65,17 @@ void        fill_arena()
     }
 }
 
-// void    get_cell(int32_t index)
+// void        fill_cursors()
 // {
-//     return g_vm->visual->data[index];
+//     t_list_elem *prcs;
+
+//     prcs = g_list.start;
+//     while (prcs)
+//     {
+//         g_vm->visual->data[calc_addr(((t_prcs *)prcs->content)->cur_pos)].color = get_player_color(((t_prcs *)prcs->content)->parent_id - 1, PLAYER_CURSOR);
+//         g_vm->visual->data[calc_addr(((t_prcs *)prcs->content)->cur_pos)].type = 1;
+//         prcs = prcs->next;
+//     }
 // }
 
 void    render_arena(void)
@@ -92,8 +84,15 @@ void    render_arena(void)
     int y;
     // int i;
 
-    y = -1;
+    // i = -1;
+    // while (++i < MEM_SIZE)
+    // {
+    //     g_vm->visual->data[i].color = COLOR_PAIR(GRAY);
+    // }
 
+    // fill_cursors();
+
+    y = -1;
     while (++y < CELLS_NUMBER)
     {
         x = -1;
@@ -104,10 +103,6 @@ void    render_arena(void)
             wattroff(g_vm->visual->arena, g_vm->visual->data[y * CELLS_NUMBER + x].color);
         }
     }
-
-    fill_cursors();
-
-    wrefresh(g_vm->visual->arena);
 }
 
 void    render_players(void)
@@ -118,9 +113,9 @@ void    render_players(void)
     while (++i < g_players->len)
     {
         mvwprintw(g_vm->visual->state, 15 + i * 4, 6, "Player -%d:", g_players->team[i]->id);
-        wattron(g_vm->visual->state, get_player_color(i));
+        wattron(g_vm->visual->state, get_player_color(i, PLAYER_COLOR));
         mvwprintw(g_vm->visual->state, 15 + i * 4, 17, "%s", g_players->team[i]->name);
-        wattroff(g_vm->visual->state, get_player_color(i));
+        wattroff(g_vm->visual->state, get_player_color(i, PLAYER_COLOR));
         mvwprintw(g_vm->visual->state, 16 + i * 4, 10, "Last live");
         mvwprintw(g_vm->visual->state, 16 + i * 4, 45, "%d", g_players->team[i]->last_live);
         mvwprintw(g_vm->visual->state, 17 + i * 4, 10, "Lives in current period");
@@ -148,7 +143,7 @@ void    render_state(void)
     mvwprintw(g_vm->visual->state, 8, 45, "%d", g_vm->cycles);
 
     mvwprintw(g_vm->visual->state, 10, 6, "Processes");
-    mvwprintw(g_vm->visual->state, 10, 45, "%d", g_list.list_size);
+    mvwprintw(g_vm->visual->state, 10, 45, "%d", -1); //g_list.list_size
 
     render_players();
 
@@ -165,7 +160,17 @@ void    render_state(void)
 
     mvwprintw(g_vm->visual->state, players_offset + 9, 6, "MAX_CHECKS");
     mvwprintw(g_vm->visual->state, players_offset + 9, 45, "%d", MAX_CHECKS);
+}
 
+void    render(void)
+{
+    werase(g_vm->visual->arena);
+    werase(g_vm->visual->state);
+    render_arena();
+    create_border(g_vm->visual->arena);
+    render_state();
+    create_border(g_vm->visual->state);
+    wrefresh(g_vm->visual->arena);
     wrefresh(g_vm->visual->state);
 }
 
@@ -184,8 +189,7 @@ void    setup_visual(void)
 
     fill_arena();
 
-    render_arena();
-    render_state();
+    render();
 
     getchar();
     // endwin();

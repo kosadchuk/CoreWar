@@ -66,16 +66,17 @@ void	main_cycle(void)
 {
 	while (1)
 	{
-		render_arena();
-	    render_state();
 		(g_flag_v2 == 1) ? ft_printf("It is now cycle %d\n", g_vm->cycles) : 0;
 		ft_lstiter(&g_list, &pars_process);
 		if (g_vm->cycles == g_dump && g_flag_v == 0 && g_dump > 0)
 			print_dump();
 		if (g_vm->ctd <= 0 || g_list.list_size == 0)
 		{
-			getchar();
 			kill_all_processes();
+            // WARNING
+            getchar();
+            endwin();
+            // WARNING
 			ft_printf(WINNER, g_vm->last_alive->id, g_vm->last_alive->name);
 			break ;
 		}
@@ -91,6 +92,8 @@ void	main_cycle(void)
 			g_vm->checks++;
 		}
 		g_vm->cycles++;
+        // WARNING
+        render();     
 	}
 }
 
@@ -98,11 +101,10 @@ void	start_war(void)
 {
 	init_start_positions();
 
+    // WARNING
     g_vm->visual = init_visual();
-
     setup_visual();
-
-    printf("%p\n", g_vm->visual->arena);
+    // WARNING
 
 	main_cycle();
 }

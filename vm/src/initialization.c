@@ -17,6 +17,9 @@ void	copy_prcs(t_pr *pr, int32_t pos)
 	t_pr	new_pr;
 	int		i;
 
+	pos += pr->prev_pos;
+	pos %= MEM_SIZE;
+	(pos < 0) ? pos += MEM_SIZE : 0;
 	new_pr.pr_id = g_prc_id;
 	new_pr.carry = pr->carry;
 	new_pr.parent_id = pr->parent_id;

@@ -82,6 +82,7 @@ int					g_dump_flag;
 int					g_flag_v;
 int					g_flag_v2;
 int					g_flag_v3;
+int					g_flag_p;
 void				pars_av(int ac, char **av);
 void				pars_champs(char *file, t_player *player);
 void				make_map(void);

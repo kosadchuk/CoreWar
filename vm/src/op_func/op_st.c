@@ -19,12 +19,6 @@ int		check_st_codage(uint32_t codage)
 	return (1);
 }
 
-// inline static void	vs_st(t_pr *pr, int32_t addr)
-// {
-// 	if (g_vm->visual)
-// 		update_map(cursor, cursor->pc + (addr % IDX_MOD), DIR_SIZE);
-// }
-
 static void	write_vs_map(int32_t player, int32_t pos)
 {
 	int		i;

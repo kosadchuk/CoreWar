@@ -82,6 +82,9 @@ void render_arena(void);
 void render_state(void);
 void render(void);
 
+void    create_cursor(int, int32_t);
+void    delete_cursor(int, int32_t);
+
 int32_t     calc_addr(int32_t);
 
 #endif

@@ -29,6 +29,10 @@ void	copy_prcs(t_pr *pr, int32_t pos)
 	while (++i < REG_NUMBER)
 		new_pr.reg[i] = pr->reg[i];
 	g_prc_id++;
+	if (g_vm->visual)
+	{
+		create_cursor(new_pr.parent_id - 1, pos);
+	}
 	ft_lstpush_front(&g_list, ft_lstnew(&new_pr, sizeof(t_pr)));
 }
 

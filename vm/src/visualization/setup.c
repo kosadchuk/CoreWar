@@ -78,6 +78,17 @@ void        fill_arena()
 //     }
 // }
 
+void    create_cursor(int player, int32_t pos)
+{
+    g_vm->visual->data[calc_addr(pos)].color = get_player_color(player, PLAYER_CURSOR);
+}
+
+void    delete_cursor(int player, int32_t pos)
+{
+    printf("%d\n", player);
+    g_vm->visual->data[calc_addr(pos)].color = COLOR_PAIR(GRAY);
+}
+
 void    render_arena(void)
 {
     int x;

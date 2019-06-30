@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visualization.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/30 17:42:33 by kmarchen          #+#    #+#             */
+/*   Updated: 2019/06/30 17:42:34 by kmarchen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VISUALIZATION_H
 # define VISUALIZATION_H
 
@@ -38,13 +50,19 @@
 # define PLAYER_CURSOR      2
 # define PLAYER_LIVE        3
 
-# define KEY_ESC			27
-# define KEY_SPACE			' '
+# define KEY_ESC				27
+# define KEY_SPACE				' '
+# define KEY_SPEED_PLUS_1		'q'
+# define KEY_SPEED_PLUS_10		'w'
+# define KEY_SPEED_PLUS_100		'e'
+# define KEY_SPEED_MINUS_1		'a'
+# define KEY_SPEED_MINUS_10		's'
+# define KEY_SPEED_MINUS_100	'd'
 
 typedef struct		s_visualization
 {
 	int				key;
-	clock_t			time;
+	clock_t			offset;
 	int				speed;
 	int				paused;
 	WINDOW			*arena;
@@ -67,13 +85,17 @@ void				fill_player(int32_t player, int32_t pos, int32_t size);
 void				render_arena(void);
 void				render_cursors(void);
 void				render_state(void);
-void    			render_players(void);
-void    			render_status(void);
-void    			render_state(void);
+void				render_players(void);
+void				render_status(void);
+void				render_state(void);
+void				render_winner(void);
 void				render(void);
 
 int32_t				correct_pos(int32_t pos);
 clock_t				get_delay(void);
+
+void				start_war_vs(void);
+void				finish_vs(void);
 
 static int g_player_colors[4] = {
 	COLOR_PAIR(RED),

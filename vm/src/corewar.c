@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 12:32:37 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:32:51 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 17:05:59 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int		main(int ac, char **av)
 	pars_av(ac, av);
 	make_map();
 	introduce_players();
-	start_war();
+	if (g_flag_p)
+		start_war_vs();
+	else
+		start_war();
 	return (0);
 }

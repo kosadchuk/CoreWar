@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_sti.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apavlyuc <apavlyuc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 15:37:40 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/28 13:35:01 by apavlyuc         ###   ########.fr       */
+/*   Updated: 2019/06/30 17:42:54 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	op_sti(t_pr *pr, t_op op, uint32_t codage)
 			op.args[2].value, op.args[1].value + op.args[2].value, pos);
 		int_to_byte(op.args[0].value, buf);
 		write_in_map(pos, buf);
-        if (g_vm->visual)
+		if (g_vm->visual)
 			fill_map(pr->parent_id - 1, pos, 4);
 	}
 	handle_position(pr, 1);

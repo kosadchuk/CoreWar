@@ -6,7 +6,7 @@
 /*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 12:57:47 by kosadchu          #+#    #+#             */
-/*   Updated: 2019/06/30 16:09:49 by kmarchen         ###   ########.fr       */
+/*   Updated: 2019/06/30 16:47:39 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void				pars_champs(char *file, t_player *player);
 void				make_map(void);
 void				init_vm(void);
 void				start_war(void);
+void				check(void);
 void				init_start_positions(void);
 int32_t				bytes_in_int(t_prcs *pr, int size);
 void				handle_position(t_pr *pr, int step);
@@ -105,5 +106,6 @@ void				check_flag(char **av, int *i);
 void				del_ptr(void *content, size_t content_size);
 void				print_dump(void);
 void				valid_op_args(t_prcs *pr);
+void				kill_all_processes(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kmarchen <kmarchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 16:01:34 by kmarchen          #+#    #+#             */
-/*   Updated: 2019/06/30 16:01:35 by kmarchen         ###   ########.fr       */
+/*   Updated: 2019/06/30 17:39:59 by kmarchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	render_players(void)
 			"Player -%d:", g_players->team[i]->id);
 		wattron(g_vm->visual->state, get_player_color(i, PLAYER_COLOR));
 		mvwprintw(g_vm->visual->state, 15 + i * 4, 17,
-			"%s", g_players->team[i]->name);
+			"%.36s", g_players->team[i]->name);
 		wattroff(g_vm->visual->state, get_player_color(i, PLAYER_COLOR));
 		mvwprintw(g_vm->visual->state, 16 + i * 4, 10, "Last live");
 		mvwprintw(g_vm->visual->state, 16 + i * 4, 45,
@@ -52,6 +52,17 @@ void	render_status(void)
 	}
 }
 
+void	render_winner(void)
+{
+	mvwprintw(g_vm->visual->state, 30, 6, "WINNER");
+	wattron(g_vm->visual->state,
+		get_player_color(g_vm->last_alive->id - 1, PLAYER_COLOR));
+	mvwprintw(g_vm->visual->state, 30, 15,
+		" %.36s (%d) ", g_vm->last_alive->name, g_vm->last_alive->id);
+	wattroff(g_vm->visual->state,
+		get_player_color(g_vm->last_alive->id - 1, PLAYER_COLOR));
+}
+
 void	render_state(void)
 {
 	int players_offset;
@@ -59,7 +70,7 @@ void	render_state(void)
 	players_offset = 15 + g_players->len * 4;
 	render_status();
 	mvwprintw(g_vm->visual->state, 6, 6, "Cycles/second limit");
-	mvwprintw(g_vm->visual->state, 6, 45, "%d", 50);
+	mvwprintw(g_vm->visual->state, 6, 45, "%d", g_vm->visual->speed);
 	mvwprintw(g_vm->visual->state, 8, 6, "Cycle");
 	mvwprintw(g_vm->visual->state, 8, 45, "%d", g_vm->cycles);
 	mvwprintw(g_vm->visual->state, 10, 6, "Processes");
@@ -73,4 +84,6 @@ void	render_state(void)
 	mvwprintw(g_vm->visual->state, players_offset + 7, 45, "%d", NBR_LIVE);
 	mvwprintw(g_vm->visual->state, players_offset + 9, 6, "MAX_CHECKS");
 	mvwprintw(g_vm->visual->state, players_offset + 9, 45, "%d", MAX_CHECKS);
+	if (g_vm->ctd <= 0 || g_list.list_size == 0)
+		render_winner();
 }

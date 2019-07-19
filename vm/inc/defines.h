@@ -21,7 +21,7 @@
 # define FLAG_ERR_2		"Please, try again from 1 to "
 # define USG_TITLE USAGE"[-dump N] || [-v N] || [-n N] || [-p] <champ.cor> ..\n"
 # define USG_D USG_TITLE"	-dump N : Dumps memory after N cycles then exits\n"
-# define USG_P USG_D	"	-p		: Visualisation"
+# define USG_P USG_D	"	-p		: Visualisation\n"
 # define USG_N USG_P	"	-n N    : Сhange the order of champions\n"
 # define USG_V USG_N	"	-v N    : Shows information\n"
 # define USG_V1 USG_V	"		 1 : Show operations\n"
